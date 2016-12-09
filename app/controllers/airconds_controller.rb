@@ -1,0 +1,2 @@
+class AircondsController < ApplicationController
+end

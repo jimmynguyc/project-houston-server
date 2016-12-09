@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class DeviceTest < ActiveSupport::TestCase
+class AircondsControllerTest < ActionDispatch::IntegrationTest
   # test "the truth" do
   #   assert true
   # end
