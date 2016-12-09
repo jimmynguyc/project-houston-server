@@ -1,0 +1,6 @@
+<tr>
+	<td><%=device.id%></td>
+	<td><%=device.device_type%></td>
+	<td><%=device.aircond.status%></td>
+	<td><%= button_to 'Show', device_path(device), method:'get' %></td>
+</tr>

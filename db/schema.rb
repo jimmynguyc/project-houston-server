@@ -10,7 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161209030415) do
+ActiveRecord::Schema.define(version: 20161209031735) do
+
+  create_table "airconds", force: :cascade do |t|
+    t.integer  "device_id"
+    t.integer  "status",      default: 2
+    t.integer  "temperature"
+    t.integer  "fan_speed"
+    t.integer  "mode"
+    t.string   "state"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.index ["device_id"], name: "index_airconds_on_device_id"
+  end
+
+  create_table "devices", force: :cascade do |t|
+    t.string   "url"
+    t.string   "access_token"
+    t.integer  "device_type"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.datetime "created_at",                     null: false
