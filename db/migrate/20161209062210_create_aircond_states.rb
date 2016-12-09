@@ -5,6 +5,7 @@ class CreateAircondStates < ActiveRecord::Migration[5.0]
     	t.integer	:mode
     	t.integer	:fan_speed
     	t.integer :temperature
+    	t.string	:ir_signal
       t.timestamps
     end
   end

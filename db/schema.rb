@@ -17,21 +17,22 @@ ActiveRecord::Schema.define(version: 20161209062210) do
     t.integer  "mode"
     t.integer  "fan_speed"
     t.integer  "temperature"
+    t.string   "ir_signal"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
 
   create_table "airconds", force: :cascade do |t|
     t.integer  "device_id"
-    t.integer  "state_id"
-    t.integer  "status",      default: 2
+    t.integer  "aircond_state_id"
+    t.integer  "status",           default: 2
     t.integer  "mode"
     t.integer  "fan_speed"
     t.integer  "temperature"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.index ["aircond_state_id"], name: "index_airconds_on_aircond_state_id"
     t.index ["device_id"], name: "index_airconds_on_device_id"
-    t.index ["state_id"], name: "index_airconds_on_state_id"
   end
 
   create_table "devices", force: :cascade do |t|

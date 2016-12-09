@@ -1,5 +1,10 @@
 <tr>
 	<td><%=aircond.id%></td>
 	<td><%=aircond.status%></td>
-	<td><%= button_to 'Show', aircond_path(aircond), method:'get' %></td>
+	<td><%=aircond.mode%></td>
+	<td><%=aircond.fan_speed%></td>
+	<td><%=aircond.temperature%></td>		
+	<td>
+		<%= button_to 'Edit', edit_aircond_path(aircond), method:'get' %>
+	</td>
 </tr>
