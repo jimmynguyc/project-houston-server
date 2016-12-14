@@ -1,3 +1,5 @@
+require 'unirest'
+
 class Aircond < ApplicationRecord
 	belongs_to :device
 	belongs_to :aircond_state,  optional: true
@@ -16,12 +18,26 @@ class Aircond < ApplicationRecord
 	    'MEDIUM' =>2,
 	    'HIGH' =>3
 	  }
+	def get_state
+		#obtain state of aircond
+		path = self.device.url + "/get_state"
+		response = Unirest.get(path)
+		#tentative set that if on (assume returned result is a string "ON"), return ON
+		#response.body.status == "ON"
+		return "ON"
+	end
+
 	def send_signal(status:,mode:,temperature:,fan_speed:)
-		self.device.url
-		true
-		#send http request with access token to raspberry pi to get current state
-		#evaluate remote state and compare with current state
-		#send http request to modify state if different
-		#else 
+		path = self.device.url + "/get_state"
+		#possible ways to change state
+		#1. store IR signals in database that correspond to each attribute value and use them to compile a conf file
+		#2. store IR signals directly as the value of attribute in the databaser
+		#ALT
+		#v3 : obtain corresponding state directly from state database
+		params = {status:'ON'} #should send IR signal over OR send the entire test for the conf file
+		response = Unirest.post(path,parameters:params)
+	end
+
+	def decipher_signal
 	end
 end
