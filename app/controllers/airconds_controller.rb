@@ -29,7 +29,6 @@ class AircondsController < ApplicationController
 		else
 			@aircond.send_signal(aircond_params.to_h.symbolize_keys)
 			response = @aircond.get_state
-			byebug
 			if response.body["status"] == aircond_params[:status]
 				#update aircond_attr
 				@aircond.update(aircond_params) 
