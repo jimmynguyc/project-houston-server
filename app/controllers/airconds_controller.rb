@@ -20,14 +20,17 @@ class AircondsController < ApplicationController
 	def update
 		@aircond = Aircond.find(params[:id])
 		#v1 change ON/OFF state
-		if @aircond.get_state == aircond_params[:status]
+		response = @aircond.get_state
+		if response.body[:status] == aircond_params[:status]
 			flash[:warning] = 'Aircond is already #{aircond_params[:status]}'
 		elsif response.code != 200
 			flash[:warning] = 'Current state was not obtained! Please try again.'
 			render :edit
 		else
 			@aircond.send_signal(aircond_params.to_h.symbolize_keys)
-			if @aircond.get_state == aircond_params[:status]
+			response = @aircond.get_state
+			byebug
+			if response.body["status"] == aircond_params[:status]
 				#update aircond_attr
 				@aircond.update(aircond_params) 
 				flash[:notice] = 'Aircond state was successfuly changed'
