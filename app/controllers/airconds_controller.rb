@@ -1,5 +1,6 @@
 class AircondsController < ApplicationController
 	def new
+		byebug
 		@aircond = Aircond.new
 	end
 
@@ -19,7 +20,6 @@ class AircondsController < ApplicationController
 
 	def update
 		@aircond = Aircond.find(params[:id])
-		byebug
 		if @aircond.send_signal(aircond_params.to_h.symbolize_keys)
 			#update aircond_attr
 			@aircond.update(aircond_params)
@@ -28,6 +28,9 @@ class AircondsController < ApplicationController
 			flash[:warning] = 'Signal was not sent correctly!'
 			render :edit
 		end
+	end
+
+	def get_state
 	end
 
 	private

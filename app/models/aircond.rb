@@ -17,6 +17,11 @@ class Aircond < ApplicationRecord
 	    'HIGH' =>3
 	  }
 	def send_signal(status:,mode:,temperature:,fan_speed:)
+		self.device.url
 		true
+		#send http request with access token to raspberry pi to get current state
+		#evaluate remote state and compare with current state
+		#send http request to modify state if different
+		#else 
 	end
 end
