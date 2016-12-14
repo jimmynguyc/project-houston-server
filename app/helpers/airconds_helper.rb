@@ -1,0 +1,2 @@
+module AircondsHelper
+end

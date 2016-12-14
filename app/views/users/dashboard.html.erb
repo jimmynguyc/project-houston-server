@@ -1,0 +1,16 @@
+
+<h1>Airconds</h1>
+<table>
+	<head>
+		<th>Id</th>
+		<th>Status</th>
+		<th>Mode</th>
+		<th>Fan Speed</th>
+		<th>Temperature</th>
+		<th>Options</th>
+	</head>
+	<body>
+		<%= render @airconds%>
+	</body>
+</table>
+<%= button_to "Add Aircond", new_aircond_path, method:'get'%>

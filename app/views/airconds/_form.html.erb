@@ -1,0 +1,14 @@
+
+	<%= form.label :status %>	
+	<%= form.select :status, Aircond.statuses.keys%>
+
+	<%= form.label :mode %>
+	<%= form.select :mode,Aircond.modes.keys %>
+
+	<%= form.label :fan_speed %>
+	<%= form.select :fan_speed, Aircond.fan_speeds.keys %>
+
+	<%= form.label :temperature %>
+	<%= form.select :temperature, (16..30).to_a%>
+
+	<%= form.submit%>
