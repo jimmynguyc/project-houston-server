@@ -21,7 +21,7 @@ class Aircond < ApplicationRecord
 	def get_state
 		#obtain state of aircond
 		raspi = self.device
-		path = raspi.url + "/get_state"
+		path = raspi.url + "/state"
 		response = Unirest.get(path,parameters:{access_token:raspi.access_token}) 
 		#tentative set that if on (assume returned result is a string "ON"), return ON
 		#response.body.status == "ON"
@@ -30,7 +30,7 @@ class Aircond < ApplicationRecord
 
 	def send_signal(status:,mode:,temperature:,fan_speed:)
 		raspi = self.device
-		path = raspi.url + "/change_state"
+		path = raspi.url + "/state"
 		#possible ways to change state
 		#1. store IR signals in database that correspond to each attribute value and use them to compile a conf file
 		#2. store IR signals directly as the value of attribute in the databaser
@@ -38,9 +38,8 @@ class Aircond < ApplicationRecord
 		#v3 : obtain corresponding state directly from state database
 		state = {status:status} #future versions can extend more arguments
 		params = {state:state,access_token:raspi.access_token}  #should send IR signal over OR send the entire test for the conf file
+		# send to validate_AC_command(user_mode, user_temperature)
 		response = Unirest.post(path,parameters:params)
 	end
 
-	def decipher_signal
-	end
 end
