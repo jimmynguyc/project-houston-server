@@ -23,11 +23,15 @@ class AircondsController < ApplicationController
 		response = @aircond.get_state
 		if response.body[:status] == aircond_params[:status]
 			flash[:warning] = 'Aircond is already #{aircond_params[:status]}'
+			redirect_to root_path
 		elsif response.code != 200
 			flash[:warning] = 'Current state was not obtained! Please try again.'
 			render :edit
 		else
-			@aircond.send_signal(aircond_params.to_h.symbolize_keys)
+			if @aircond.send_signal(aircond_params.to_h.symbolize_keys) == "Invalid command signal"
+				flash[:warning] = "Invalid command signal"
+				render :edit
+			end
 			response = @aircond.get_state
 			if response.body["status"] == aircond_params[:status]
 				#update aircond_attr

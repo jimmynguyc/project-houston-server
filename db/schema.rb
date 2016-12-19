@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161209062210) do
+ActiveRecord::Schema.define(version: 20161216030853) do
 
   create_table "aircond_states", force: :cascade do |t|
     t.integer  "status"
@@ -40,6 +40,13 @@ ActiveRecord::Schema.define(version: 20161209062210) do
     t.string   "access_token"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+  end
+
+  create_table "infrared_signals", force: :cascade do |t|
+    t.string   "command"
+    t.string   "ir_signal_in_conf"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
   end
 
   create_table "users", force: :cascade do |t|

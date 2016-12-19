@@ -1,0 +1,2 @@
+class InfraredSignal < ApplicationRecord
+end
