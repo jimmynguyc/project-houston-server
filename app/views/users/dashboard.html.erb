@@ -1,4 +1,9 @@
+<%= button_tag 'Set Time Zone', id:'timezone_button'%>
+<%= render 'timeform'%>
 
+
+<div id=current_time><span id=current_hour><%= "#{@current_time.hour}".rjust(2,'0')%></span>:<span id=current_min><%="#{@current_time.min}".rjust(2,'0')%></span>:<span id=current_sec><%="#{@current_time.sec}".rjust(2,'0')%></span></div>
+	<div>Timezone: <%=current_user.timezone%></div>
 <h1>Airconds</h1>
 <table>
 	<head>

@@ -1,4 +1,5 @@
-class AircondsController < ApplicationController
+class AircondsController < ApplicationController 
+	before_action :set_aircond, only: [:edit,:update,:timer,:timer_set]
 	def new
 		@aircond = Aircond.new
 	end
@@ -14,11 +15,9 @@ class AircondsController < ApplicationController
 	end
 
 	def edit
-		@aircond = Aircond.find(params[:id])
 	end
 
 	def update
-		@aircond = Aircond.find(params[:id])
 		#v1 change ON/OFF state
 		response = @aircond.get_state
 		if response.body[:status] == aircond_params[:status]
@@ -45,6 +44,19 @@ class AircondsController < ApplicationController
 		end 
 	end
 
+	def timer
+		Time.zone = current_user.timezone
+		@current_timer = Time.zone.parse(@aircond.timer.to_s)
+		render 'airconds/timer_form'
+	end
+
+	def timer_set
+		Time.zone = current_user.timezone
+		trigger_time = Time.zone.parse(params.permit![:aircond][:timer])
+		@aircond.update(timer:Time.zone.local_to_utc(trigger_time))
+		redirect_to root_path
+	end
+
 	private
 	def device_params
 		params.require(:aircond).require(:device).permit(:url,:access_token)
@@ -52,5 +64,9 @@ class AircondsController < ApplicationController
 
 	def aircond_params
 		params.require(:aircond).permit(:status,:mode,:temperature,:fan_speed)
+	end
+
+	def set_aircond
+		@aircond = Aircond.find(params[:id])
 	end
 end
