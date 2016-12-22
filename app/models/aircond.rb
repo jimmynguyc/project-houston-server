@@ -34,16 +34,18 @@ class Aircond < ApplicationRecord
 		state = validate_AC_controls(status:status)  #future versions can extend more arguments v1
 
 		if state
-		
-			lircd_conf = 'begin remote\n\n   name  Daikin\n   flags RAW_CODES\n   eps            30\n   aeps          100\n\n   frequency    38000\n\n       begin raw_codes\n           ' + state[:signal] + '\n       end raw_codes\n\nend remote'
-			
-			params = {text:lircd_conf,access_token:raspi.access_token}  #sends the entire text for the conf file
+			create_lircd_conf_file(state[:signal] )
+
+			byebug
+			params = {access_token:raspi.access_token, file: File.new('lircd.conf')}  #sends the entire text for the conf file
 
 			response = Unirest.post(path,parameters:params)
 		else
 			return "Invalid command signal"
 		end
 	end
+
+	private
 
 	def validate_AC_controls(status:)
 		if InfraredSignal.pluck(:command).include? status
@@ -54,5 +56,11 @@ class Aircond < ApplicationRecord
 		return state
 	end
 
+	def create_lircd_conf_file(signal)
+			lircd_conf = 'begin remote\n\n   name  Daikin\n   flags RAW_CODES\n   eps            30\n   aeps          100\n\n   frequency    38000\n\n       begin raw_codes\n           ' + signal + '\n       end raw_codes\n\nend remote'
+			%x'rm -rf lircd.conf'
+			%x'echo "#{lircd_conf}">> lircd.conf'		
+
+	end
 end
 
