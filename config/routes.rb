@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   constraints Clearance::Constraints::SignedOut.new do
     root to: 'clearance/sessions#new'
   end
+  patch 'user/:id/timezone_set' => 'users#timeset', as: :set_time_zone
   resources :devices
   resources :airconds
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
