@@ -21,7 +21,7 @@ class Aircond < ApplicationRecord
 	def get_state
 		#obtain state of aircond
 		raspi = self.device
-		path = 'http://' + raspi.url + "/state"
+		path = 'http://' + raspi.url + "/state.py"
 		response = Unirest.get(path,parameters:{access_token:raspi.access_token}) 
 		#assumes that receive a hash {status:"ON"}
 		return response	
@@ -32,10 +32,8 @@ class Aircond < ApplicationRecord
 		path = 'http://'+ raspi.url + "/state.py"
 
 		state = validate_AC_controls(status:status)  #future versions can extend more arguments v1
-		byebug
 		if state
 			create_lircd_conf_file(state[:signal] )
-			byebug
 			# params = {access_token:raspi.access_token, file: File.new('lircd.conf')}  #sends the entire text for the conf file
       params = {access_token:raspi.access_token, status:'OFF'}
 
