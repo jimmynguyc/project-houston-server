@@ -60,8 +60,20 @@ class AircondsController < ApplicationController
 	def timer_set
 		Time.zone = current_user.timezone
 		trigger_time = Time.zone.parse(params.permit![:aircond][:timer])
-		@aircond.update(timer:Time.zone.local_to_utc(trigger_time))
-		redirect_to root_path
+
+		job = Sidekiq::Cron::Job.find(name:"AcTimer worker - #{@aircond.alias}")
+		job.destroy if job
+		job = Sidekiq::Cron::Job.new(name:"AcTimer worker - #{@aircond.alias}", cron: " #{trigger_time.min} #{trigger_time.hour} * * 1-5 #{Time.zone.name}", class:'AcTimerWorker', args:{aircond_id:@aircond.id,status:'ON'})
+		if job.valid?
+			job.save
+			@aircond.update(timer:Time.zone.local_to_utc(trigger_time))
+			redirect_to root_path
+		else
+			flash[:warning] = 'Invalid Job'
+			put job.errors
+			redirect_to set_timer_path
+		end
+
 	end
 
 	private

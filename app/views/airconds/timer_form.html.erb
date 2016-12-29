@@ -1,6 +1,7 @@
 <%=form_for @aircond, url:timer_set_path(@aircond) do |f|%>
 	<%=f.time_field :timer, value:@current_timer.strftime('%H:%M')
 %>
+	<%=f.select :status, Aircond.statuses.keys%>
 	<%=f.submit "Set Timer"%>
 <%end%>
 
