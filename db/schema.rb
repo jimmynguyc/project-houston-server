@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 20161216030853) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "aircond_states", force: :cascade do |t|
     t.integer  "status"
     t.integer  "mode"
@@ -29,11 +32,12 @@ ActiveRecord::Schema.define(version: 20161216030853) do
     t.integer  "mode"
     t.integer  "fan_speed"
     t.integer  "temperature"
-    t.time     "timer"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
-    t.index ["aircond_state_id"], name: "index_airconds_on_aircond_state_id"
-    t.index ["device_id"], name: "index_airconds_on_device_id"
+    t.time     "timer",            default: '2000-01-01 17:13:14'
+    t.string   "alias"
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
+    t.index ["aircond_state_id"], name: "index_airconds_on_aircond_state_id", using: :btree
+    t.index ["device_id"], name: "index_airconds_on_device_id", using: :btree
   end
 
   create_table "devices", force: :cascade do |t|
@@ -59,8 +63,8 @@ ActiveRecord::Schema.define(version: 20161216030853) do
     t.string   "remember_token",     limit: 128,                 null: false
     t.integer  "role"
     t.string   "timezone",                       default: "UTC"
-    t.index ["email"], name: "index_users_on_email"
-    t.index ["remember_token"], name: "index_users_on_remember_token"
+    t.index ["email"], name: "index_users_on_email", using: :btree
+    t.index ["remember_token"], name: "index_users_on_remember_token", using: :btree
   end
 
 end

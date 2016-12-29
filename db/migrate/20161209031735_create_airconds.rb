@@ -7,7 +7,8 @@ class CreateAirconds < ActiveRecord::Migration[5.0]
       t.integer :mode
       t.integer :fan_speed
       t.integer :temperature
-      t.time    :timer
+      t.time    :timer, default: Time.new(0)
+      t.string  :alias
       t.timestamps
     end
   end
