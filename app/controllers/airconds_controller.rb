@@ -18,39 +18,37 @@ class AircondsController < ApplicationController
 	end
 
 	def update
-		#v1 change ON/OFF state
+		#v1 change ON/OFF 
 
-# FOR TESTING (UNCOMMENT AFTER READY)		
-		# response = @aircond.get_state
-
-
-		# if response.body[:status] == aircond_params[:status]
-		# 	flash[:warning] = 'Aircond is already #{aircond_params[:status]}'
-		# 	redirect_to root_path
+		aircond_params[:status] 
+		response = @aircond.get_state
+		
+		if response.body == "0\n" && aircond_params[:status] == 'OFF'
+			flash[:warning] = "Aircond is already #{aircond_params[:status]}"
+			redirect_to root_path
 		# elsif response.code != 200
 		# 	flash[:warning] = 'Current state was not obtained! Please try again.'
 		# 	render :edit
-		# else
-			byebug
+	  elsif response.body == "1\n" && aircond_params[:status] == 'ON'
+			flash[:warning] = "Aircond is already #{aircond_params[:status]}"
+			redirect_to root_path
+		else
 			if @aircond.send_signal(aircond_params.to_h.symbolize_keys.select { |k,v| k == :status }) == "Invalid command signal"
 				flash[:warning] = "Invalid command signal"
 				render :edit
 			end
-			redirect_to root_path
 
-# FOR TESTING (UNCOMMENT AFTER READY)
-
-			# response = @aircond.get_state
-			# if response.body["status"] == aircond_params[:status]
-			# 	#update aircond_attr
-			# 	@aircond.update(aircond_params) 
-			# 	flash[:notice] = 'Aircond state was successfuly changed'
-			# 	redirect_to root_path
-			# else
-			# flash[:warning] = 'Signal could not be send! Please try again.'
-			# render :edit
-			# end
-		# end 
+			response = @aircond.get_state
+			if response.body["status"] == aircond_params[:status]
+				#update aircond_attr
+				@aircond.update(aircond_params) 
+				flash[:notice] = 'Aircond state was successfuly changed'
+				redirect_to root_path
+			else
+			flash[:warning] = 'Signal could not be send! Please try again.'
+			render :edit
+			end
+		end 
 	end
 
 	def timer
