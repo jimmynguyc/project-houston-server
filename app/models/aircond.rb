@@ -19,12 +19,12 @@ class Aircond < ApplicationRecord
 	    'HIGH' =>3
 	  }
 	def get_state
-		#obtain state of aircond
 		raspi = self.device
 		path = 'http://' + raspi.url + "/state.py"
 		response = Unirest.get(path,parameters:{access_token:raspi.access_token}) 
 		#assumes that receive a hash {status:"ON"}
-		return response	
+		
+		return {status:response.body.split("\n")[0]}	
 	end
 
 	def send_signal(status:) #,mode:,temperature:,fan_speed:
@@ -33,7 +33,7 @@ class Aircond < ApplicationRecord
 
 		state = validate_AC_controls(status:status)  #future versions can extend more arguments v1
 		if state
-			create_lircd_conf_file(state[:signal] )
+			# create_lircd_conf_file(state[:signal] )
 			# params = {access_token:raspi.access_token, file: File.new('lircd.conf')}  #sends the entire text for the conf file
       params = {access_token:raspi.access_token, status:'OFF'}
 
@@ -54,11 +54,11 @@ class Aircond < ApplicationRecord
 		return state
 	end
 
-	def create_lircd_conf_file(signal)
-			lircd_conf = 'begin remote\n\n   name  Daikin\n   flags RAW_CODES\n   eps            30\n   aeps          100\n\n   frequency    38000\n\n       begin raw_codes\n           ' + signal + '\n       end raw_codes\n\nend remote'
-			%x'rm -rf lircd.conf'
-			%x'echo "#{lircd_conf}">> lircd.conf'		
-
-	end
+#Temporary removal: Current version does not require sending of lircd file
+	# def create_lircd_conf_file(signal)
+	# 		lircd_conf = 'begin remote\n\n   name  Daikin\n   flags RAW_CODES\n   eps            30\n   aeps          100\n\n   frequency    38000\n\n       begin raw_codes\n           ' + signal + '\n       end raw_codes\n\nend remote'
+	# 		%x'rm -rf lircd.conf'
+	# 		%x'echo "#{lircd_conf}">> lircd.conf'		
+	# end
 end
 

@@ -19,34 +19,32 @@ class AircondsController < ApplicationController
 
 	def update
 		#v1 change ON/OFF 
+		if aircond_params[:alias]
+			@aircond.update(alias:aircond_params[:alias])
+			render :edit
+		end
 
-		aircond_params[:status] 
-		response = @aircond.get_state
-		
-		if response.body == "0\n" && aircond_params[:status] == 'OFF'
-			flash[:warning] = "Aircond is already #{aircond_params[:status]}"
-			redirect_to root_path
-		# elsif response.code != 200
-		# 	flash[:warning] = 'Current state was not obtained! Please try again.'
-		# 	render :edit
-	  elsif response.body == "1\n" && aircond_params[:status] == 'ON'
+
+		ac_state = @aircond.get_state
+		signal_status = 'pending'
+
+		if ac_state[:status]== aircond_params[:status]
 			flash[:warning] = "Aircond is already #{aircond_params[:status]}"
 			redirect_to root_path
 		else
-			if @aircond.send_signal(aircond_params.to_h.symbolize_keys.select { |k,v| k == :status }) == "Invalid command signal"
+			if @aircond.send_signal(status:aircond_params[:status]) == "Invalid command signal"
 				flash[:warning] = "Invalid command signal"
 				render :edit
-			end
-
-			response = @aircond.get_state
-			if response.body["status"] == aircond_params[:status]
-				#update aircond_attr
-				@aircond.update(aircond_params) 
-				flash[:notice] = 'Aircond state was successfuly changed'
-				redirect_to root_path
 			else
-			flash[:warning] = 'Signal could not be send! Please try again.'
-			render :edit
+				ac_state = @aircond.get_state
+				if true  #ac_state[:status] == aircond_params[:status]
+					@aircond.update(aircond_params) 
+					flash[:notice] = 'Aircond state was successfuly changed'
+					redirect_to root_path
+				else
+					flash[:warning] = "Aircond state was not change. Remains as #{ac_state[:status]}"
+					render :edit
+				end
 			end
 		end 
 	end
@@ -60,9 +58,6 @@ class AircondsController < ApplicationController
 	def timer_set
 		Time.zone = current_user.timezone
 		trigger_time = Time.zone.parse(params.permit![:aircond][:timer])
-
-		job = Sidekiq::Cron::Job.find(name:"AcTimer worker - #{@aircond.alias}")
-		job.destroy if job
 		job = Sidekiq::Cron::Job.new(name:"AcTimer worker - #{@aircond.alias}", cron: " #{trigger_time.min} #{trigger_time.hour} * * 1-5 #{Time.zone.name}", class:'AcTimerWorker', args:{aircond_id:@aircond.id,status:'ON'})
 		if job.valid?
 			job.save
@@ -82,10 +77,11 @@ class AircondsController < ApplicationController
 	end
 
 	def aircond_params
-		params.require(:aircond).permit(:status,:mode,:temperature,:fan_speed)
+		params.require(:aircond).permit(:status,:mode,:temperature,:fan_speed,:alias)
 	end
 
 	def set_aircond
 		@aircond = Aircond.find(params[:id])
 	end
+
 end

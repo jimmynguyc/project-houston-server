@@ -2,6 +2,11 @@
 	<%= render partial: 'form', object:form%>
 <%end%>
 	
+<%= form_for(@aircond, remote:true) do |form|%>
+	<%= form.label :alias, 'Aircond Alias' %>
+	<%= form.text_field :alias%>
+	<%= form.submit 'Update Alias'%>
+<%end%>
 
 	<%= flash[:warning]%>
 	<%= flash[:notice]%>

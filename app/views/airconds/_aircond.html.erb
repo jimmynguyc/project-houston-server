@@ -6,6 +6,8 @@
 	<td><%=aircond.temperature%></td>		
 	<td>
 		<%= button_to 'Edit', edit_aircond_path(aircond), method:'get' %>
+	</td>
+	<td>
 		<%= button_to 'Set Timer', set_timer_path(aircond),method:'get'%>
 	</td>
 </tr>

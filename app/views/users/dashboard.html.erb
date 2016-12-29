@@ -1,24 +1,34 @@
-<%= button_tag 'Set Time Zone', id:'timezone_button'%>
-<%= render 'timeform'%>
 
 
-<div id=current_time><span id=current_hour><%= "#{@current_time.hour}".rjust(2,'0')%></span>:<span id=current_min><%="#{@current_time.min}".rjust(2,'0')%></span>:<span id=current_sec><%="#{@current_time.sec}".rjust(2,'0')%></span></div>
-	<div>Timezone: <%=current_user.timezone%></div>
-<h1>Airconds</h1>
-<table>
-	<head>
-		<th>Id</th>
-		<th>Status</th>
-		<th>Mode</th>
-		<th>Fan Speed</th>
-		<th>Temperature</th>
-		<th>Options</th>
-	</head>
-	<body>
-		<%= render @airconds%>
-	</body>
-</table>
-<%= button_to "Add Aircond", new_aircond_path, method:'get'%>
 
-	<%= flash[:warning]%>
-	<%= flash[:notice]%>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-8" style='border-style: solid; padding: 20px' >
+			<h1>Airconds</h1>
+				<%= flash[:warning]%>
+				<%= flash[:notice]%>
+			<table style = 'width: 600px'>
+				<head>
+					<th>Id</th>
+					<th>Status</th>
+					<th>Mode</th>
+					<th>Fan Speed</th>
+					<th>Temperature</th>
+					<th >Options</th>
+					<th ></th>
+				</head>
+				<body>
+					<%= render @airconds%>
+				</body>
+			</table>
+			<%= button_to "Add Aircond", new_aircond_path, method:'get'%>
+    </div>
+    <div class="col-sm-4">
+    	<%= button_tag 'Set Time Zone', id:'timezone_button'%>
+			<%= render 'timeform'%>
+			<div id=current_time><span id=current_hour><%= "#{@current_time.hour}".rjust(2,'0')%></span>:<span id=current_min><%="#{@current_time.min}".rjust(2,'0')%></span>:<span id=current_sec><%="#{@current_time.sec}".rjust(2,'0')%></span></div>
+			<div>Timezone: <%=current_user.timezone%></div>
+    </div>
+  </div>
+</div>
+
