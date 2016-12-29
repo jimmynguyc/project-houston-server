@@ -65,10 +65,19 @@ class AircondsController < ApplicationController
 			redirect_to root_path
 		else
 			flash[:warning] = 'Invalid Job'
-			put job.errors
+			puts job.errors
 			redirect_to set_timer_path
 		end
+	end
 
+	def set_all_state
+		@airconds= Aircond.all
+		@airconds.each do |ac|
+			ac.send_signal(status:params[:status])
+			ac.update(status:ac.get_state[:status])
+		end	
+		flash[:warning] = "Airconds with aliases  #{Aircond.where('status != ?', params[:status]).pluck(:alias)} were not successfully #{params[:status]}"
+		redirect_to root_path
 	end
 
 	private

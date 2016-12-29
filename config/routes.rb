@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   patch 'user/:id/timezone_set' => 'users#timeset', as: :set_time_zone
   get 'aircond/:id/timer' => 'airconds#timer', as: :set_timer
   patch 'aircond/:id/timer' => 'airconds#timer_set', as: :timer_set
+  post 'set_all_state/:status' => 'airconds#set_all_state', as: :set_all_state
   resources :devices
   resources :airconds
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

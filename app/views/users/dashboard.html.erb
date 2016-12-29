@@ -21,7 +21,11 @@
 					<%= render @airconds%>
 				</body>
 			</table>
-			<%= button_to "Add Aircond", new_aircond_path, method:'get'%>
+				<span style= 'float:left'><%= button_to "Add Aircond", new_aircond_path, method:'get'%></span>
+
+				<span style= 'float:right'><%= button_to "#ON ALL", set_all_state_path('ON')%></span>
+				<span style= 'float:right'><%= button_to "#OFF ALL", set_all_state_path('OFF')%></span>
+
     </div>
     <div class="col-sm-4">
     	<%= button_tag 'Set Time Zone', id:'timezone_button'%>
