@@ -76,7 +76,7 @@ class AircondsController < ApplicationController
 			ac.send_signal(status:params[:status])
 			ac.update(status:ac.get_state[:status])
 		end	
-		flash[:warning] = "Airconds with aliases  #{Aircond.where('status != ?', params[:status]).pluck(:alias)} were not successfully #{params[:status]}"
+		flash[:warning] = "Airconds with aliases  #{Aircond.where('status != ?', Aircond.statuses[params[:status]]).pluck(:alias)} were not successfully #{params[:status]}"
 		redirect_to root_path
 	end
 
