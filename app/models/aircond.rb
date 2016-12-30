@@ -10,7 +10,8 @@ class Aircond < ApplicationRecord
 	  }
 	  enum mode:{
 	    'DRY' =>0,
-	    'HEALTHY' =>1
+	    'WET' =>1,
+	    'COLD' => 2
 	  }
 	  enum fan_speed:{
 	    'AUTO' =>0,

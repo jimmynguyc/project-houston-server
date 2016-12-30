@@ -4,10 +4,10 @@
 	<td><%=aircond.mode%></td>
 	<td><%=aircond.fan_speed%></td>
 	<td><%=aircond.temperature%></td>		
-	<td>
-		<%= button_to 'Edit', edit_aircond_path(aircond), method:'get' %>
+	<td style='width:100px' >
+		<%= button_to 'Edit', edit_aircond_path(aircond), method:'get' ,style: "width:100%"%>
 	</td>
-	<td>
-		<%= button_to 'Set Timer', set_timer_path(aircond),method:'get'%>
+	<td style='width:100px' >
+		<%= button_to 'Set Timer', set_timer_path(aircond),method:'get',style: "width:100%"%>
 	</td>
 </tr>
