@@ -3,9 +3,7 @@
     <div class="navbar-header">
       <a class="navbar-brand" href=<%=root_path%>>Houston Control</a>
     </div>
-    <ul class="nav navbar-nav">
-      <li class="active"><a href=<%=root_path%>>Device Index</a></li>
-    </ul>
+
     <ul class="nav navbar-nav navbar-right">
 	    <%if signed_in?%>
 	    	<li><a href=<%=sign_out_path%> data-method= delete ><span class="glyphicon glyphicon-user"></span> Sign Out</a></li>

@@ -23,7 +23,6 @@ class Aircond < ApplicationRecord
 		path = 'http://' + raspi.url + "/state.py"
 		response = Unirest.get(path,parameters:{access_token:raspi.access_token}) 
 		#assumes that receive a hash {status:"ON"}
-		
 		return {status:response.body.split("\n")[0]}	
 	end
 
@@ -31,8 +30,7 @@ class Aircond < ApplicationRecord
 		raspi = self.device
 		path = 'http://'+ raspi.url + "/state.py"
 
-		state = validate_AC_controls(status:status)  #future versions can extend more arguments v1
-		if state
+		if validate_AC_controls(status:status)  #future versions can extend more arguments v1
 			# create_lircd_conf_file(state[:signal] )
 			# params = {access_token:raspi.access_token, file: File.new('lircd.conf')}  #sends the entire text for the conf file
       params = {access_token:raspi.access_token, status:'OFF'}
@@ -46,11 +44,9 @@ class Aircond < ApplicationRecord
 	private
 
 	def validate_AC_controls(status:)
-		if InfraredSignal.pluck(:command).include? status
-			state = {signal:InfraredSignal.find_by_command(status).ir_signal_in_conf}
-		else
-			state = nil
-		end
+		#ENSURE no invalid commands sent
+		state = nil
+		state = {signal:InfraredSignal.find_by_command(status).ir_signal_in_conf} if InfraredSignal.pluck(:command).include? status	
 		return state
 	end
 

@@ -24,11 +24,10 @@ class AircondsController < ApplicationController
 			render :edit
 		end
 
-
-		ac_state = @aircond.get_state
 		signal_status = 'pending'
-
-		if ac_state[:status]== aircond_params[:status]
+		byebug
+		if same_status?
+			@aircond.update(status:aircond_params[:status]) if @aircond.status != aircond_params[:status]
 			flash[:warning] = "Aircond is already #{aircond_params[:status]}"
 			redirect_to root_path
 		else
@@ -36,8 +35,7 @@ class AircondsController < ApplicationController
 				flash[:warning] = "Invalid command signal"
 				render :edit
 			else
-				ac_state = @aircond.get_state
-				if true  #ac_state[:status] == aircond_params[:status]
+				if same_status?
 					@aircond.update(aircond_params) 
 					flash[:notice] = 'Aircond state was successfuly changed'
 					redirect_to root_path
@@ -80,6 +78,15 @@ class AircondsController < ApplicationController
 		redirect_to root_path
 	end
 
+	def update_all_state
+		@airconds= Aircond.all
+		@airconds.each do |ac|
+			ac_state=ac.get_state
+			ac.update(status:ac_state[:status]) if ac_state[:status]
+		end
+		redirect_to root_path
+	end
+
 	private
 	def device_params
 		params.require(:aircond).require(:device).permit(:url,:access_token)
@@ -93,4 +100,8 @@ class AircondsController < ApplicationController
 		@aircond = Aircond.find(params[:id])
 	end
 
+	def same_status?
+		ac_state= @aircond.get_state
+		ac_state[:status]==aircond_params[:status]	
+	end
 end
