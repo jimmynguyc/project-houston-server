@@ -23,7 +23,7 @@ class Aircond < ApplicationRecord
 		path = 'http://' + raspi.url + "/state.py"
 		response = Unirest.get(path,parameters:{access_token:raspi.access_token}) 
 		#assumes that receive a hash {status:"ON"}
-		return {status:response.body.split("\n")[0]}	
+		return {status:response.body.strip}	
 	end
 
 	def send_signal(status:) #,mode:,temperature:,fan_speed:

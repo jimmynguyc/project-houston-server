@@ -21,16 +21,15 @@ class AircondsController < ApplicationController
 		#v1 change ON/OFF 
 		if aircond_params[:alias]
 			@aircond.update(alias:aircond_params[:alias])
+			flash[:notice] = "Alias Updated"
 			render :edit
 		end
 
-		signal_status = 'pending'
-		byebug
 		if same_status?
 			@aircond.update(status:aircond_params[:status]) if @aircond.status != aircond_params[:status]
 			flash[:warning] = "Aircond is already #{aircond_params[:status]}"
 			redirect_to root_path
-		else
+		elsif aircond_params[:status]
 			if @aircond.send_signal(status:aircond_params[:status]) == "Invalid command signal"
 				flash[:warning] = "Invalid command signal"
 				render :edit
