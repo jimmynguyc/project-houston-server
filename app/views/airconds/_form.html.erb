@@ -1,14 +1,29 @@
+	<div id = ac_status>
+		<%= form.label :status %>	
+		<%= form.select :status, Aircond.statuses.keys%>
+	</div>
 
-	<%= form.label :status %>	
-	<%= form.select :status, Aircond.statuses.keys%>
+	<div id = ac_mode>	
+		<%= form.label :mode %>
+		<%= form.select :mode,Aircond.modes.keys %>
+	</div>
 
-	<%= form.label :mode %>
-	<%= form.select :mode,Aircond.modes.keys %>
 
-	<%= form.label :fan_speed %>
-	<%= form.select :fan_speed, Aircond.fan_speeds.keys %>
+	<div id = ac_fan_speed>
+		<% if !@fan_speed_selection.empty?%>
+			<%= form.label :fan_speed %>
+			<%= form.select :fan_speed, @fan_speed_selection %>
+		<% end%>
+	</div>
 
-	<%= form.label :temperature %>
-	<%= form.select :temperature, (16..30).to_a%>
+
+
+	<div id = ac_temperature>
+		<% if !@temperature_selection.empty?%>
+			<%= form.label :temperature %>
+			<%= form.select :temperature, @temperature_selection%>
+		<% end%>
+	</div>
+
 
 	<%= form.submit%>

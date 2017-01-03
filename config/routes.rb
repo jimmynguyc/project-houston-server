@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   patch 'aircond/:id/timer' => 'airconds#timer_set', as: :timer_set
   post 'set_all_state/:status' => 'airconds#set_all_state', as: :set_all_state
   post 'update_all_state' => 'airconds#update_all_state', as: :update_all_state
+  post 'limit_options' => 'airconds#limit_options', as: :limit_options
   resources :devices
   resources :airconds
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
