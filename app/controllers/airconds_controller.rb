@@ -15,10 +15,12 @@ class AircondsController < ApplicationController
 	end
 
 	def edit
+		generate_selection(@aircond.mode)
 	end
 
 	def update
 		#v1 change ON/OFF 
+		byebug
 		if aircond_params[:alias]
 			@aircond.update(alias:aircond_params[:alias])
 			flash[:notice] = "Alias Updated"
@@ -86,6 +88,11 @@ class AircondsController < ApplicationController
 		redirect_to root_path
 	end
 
+	def limit_options
+		generate_selection(params[:mode])
+		render json:{fan_speed:@fan_speed_selection, temperature:@temperature_selection}
+	end
+
 	private
 	def device_params
 		params.require(:aircond).require(:device).permit(:url,:access_token)
@@ -102,5 +109,16 @@ class AircondsController < ApplicationController
 	def same_status?
 		ac_state= @aircond.get_state
 		ac_state[:status]==aircond_params[:status]	
+	end
+
+	def generate_selection(mode)
+		@fan_speed_selection = Aircond.fan_speeds.keys
+		@temperature_selection = (16..30).to_a
+		if mode == 'DRY'
+			@fan_speed_selection = @fan_speed_selection - ["AUTO"]
+			@temperature_selection = []
+		elsif mode == 'WET'
+			@fan_speed_selection = []
+		end
 	end
 end
