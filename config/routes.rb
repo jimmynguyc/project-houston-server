@@ -9,8 +9,8 @@ Rails.application.routes.draw do
   patch 'user/:id/timezone_set' => 'users#timeset', as: :set_time_zone
   get 'aircond/:id/timer' => 'airconds#timer', as: :set_timer
   patch 'aircond/:id/timer' => 'airconds#timer_set', as: :timer_set
-  post 'set_all_state/:status' => 'airconds#set_all_state', as: :set_all_state
-  post 'update_all_state' => 'airconds#update_all_state', as: :update_all_state
+  post 'set_all_status/:status' => 'airconds#set_all_status', as: :set_all_status
+  post 'update_all_status' => 'airconds#update_all_status', as: :update_all_status
   post 'limit_options' => 'airconds#limit_options', as: :limit_options
   resources :devices
   resources :airconds

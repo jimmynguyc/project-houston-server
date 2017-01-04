@@ -19,31 +19,31 @@ class AircondsController < ApplicationController
 	end
 
 	def update
-		#v1 change ON/OFF 
-		byebug
 		if aircond_params[:alias]
 			@aircond.update(alias:aircond_params[:alias])
 			flash[:notice] = "Alias Updated"
 			render :edit
 		end
-
+		cmd = decipher_command
 		if same_status?
 			@aircond.update(status:aircond_params[:status]) if @aircond.status != aircond_params[:status]
+			@aircond.send_signal(cmd) if validate_AC_controls(cmd)
 			flash[:warning] = "Aircond is already #{aircond_params[:status]}"
 			redirect_to root_path
 		elsif aircond_params[:status]
-			if @aircond.send_signal(status:aircond_params[:status]) == "Invalid command signal"
+			if validate_AC_controls(cmd) && validate_AC_controls(aircond_params[:status])
+				@aircond.send_signal(aircond_params[:status] + ' ' + cmd)
+					if same_status?
+						@aircond.update(aircond_params) 
+						flash[:notice] = 'Aircond state was successfuly changed'
+						redirect_to root_path
+					else
+						flash[:warning] = "Aircond state was not change. Remains as #{ac_state[:status]}"
+						render :edit
+					end
+			else
 				flash[:warning] = "Invalid command signal"
 				render :edit
-			else
-				if same_status?
-					@aircond.update(aircond_params) 
-					flash[:notice] = 'Aircond state was successfuly changed'
-					redirect_to root_path
-				else
-					flash[:warning] = "Aircond state was not change. Remains as #{ac_state[:status]}"
-					render :edit
-				end
 			end
 		end 
 	end
@@ -69,17 +69,17 @@ class AircondsController < ApplicationController
 		end
 	end
 
-	def set_all_state
+	def set_all_status
 		@airconds= Aircond.all
 		@airconds.each do |ac|
-			ac.send_signal(status:params[:status])
+			ac.send_signal(params[:status]) if ac.get_state[:status] != params[:status] 
 			ac.update(status:ac.get_state[:status])
 		end	
 		flash[:warning] = "Airconds with aliases  #{Aircond.where('status != ?', Aircond.statuses[params[:status]]).pluck(:alias)} were not successfully #{params[:status]}"
 		redirect_to root_path
 	end
 
-	def update_all_state
+	def update_all_status
 		@airconds= Aircond.all
 		@airconds.each do |ac|
 			ac_state=ac.get_state
@@ -94,6 +94,7 @@ class AircondsController < ApplicationController
 	end
 
 	private
+
 	def device_params
 		params.require(:aircond).require(:device).permit(:url,:access_token)
 	end
@@ -111,6 +112,22 @@ class AircondsController < ApplicationController
 		ac_state[:status]==aircond_params[:status]	
 	end
 
+	def decipher_command
+		mode,temperature,fan_speed = '','',''
+		aircond_params.each do |key,value|
+			if key == 'mode'
+				mode = value.to_s
+			elsif key == 'fan_speed'
+				value = 'A' if value = 'AUTO'
+				value = Aircond.fan_speeds.keys.index(value) if Aircond.fan_speeds.keys.include?(value)
+				fan_speed = "F"+value.to_s
+			elsif key == 'temperature'
+				temperature = "T"+value.to_s
+			end
+		end
+		mode+fan_speed+temperature
+	end
+
 	def generate_selection(mode)
 		@fan_speed_selection = Aircond.fan_speeds.keys
 		@temperature_selection = (16..30).to_a
@@ -120,5 +137,12 @@ class AircondsController < ApplicationController
 		elsif mode == 'WET'
 			@fan_speed_selection = []
 		end
+	end
+
+	def validate_AC_controls(command)
+		#ENSURE no invalid commands sent
+		state = nil
+		state = {signal:InfraredSignal.find_by_command(command).ir_signal_in_conf} if InfraredSignal.pluck(:command).include? command	
+		return state
 	end
 end
