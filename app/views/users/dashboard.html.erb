@@ -1,5 +1,7 @@
-<div class="container">
+<div class="container" style = 'width:100%'>
   <div class="row">
+    <div class="col-sm-2" style = 'text-align : right'>
+    </div>
     <div class="col-sm-8" style='border-style: solid; padding: 20px' >
 			<h1>Airconds</h1>
 				<%= flash[:warning]%>
@@ -19,15 +21,15 @@
 				</body>
 			</table>
 				<span style= 'float:left'><%= button_to "Add Aircond", new_aircond_path, method:'get'%></span>
-				<span style= 'float:right'><%= button_to "#UPDATE ALL", update_all_state_path, style: "width:110px"%></span>
-				<span style= 'float:right'><%= button_to "#ON ALL", set_all_state_path('ON'), style: "width:110px"%></span>
-				<span style= 'float:right'><%= button_to "#OFF ALL", set_all_state_path('OFF'), style: "width:110px"%></span>
+				<span style= 'float:right'><%= button_to "#UPDATE ALL", update_all_status_path, style: "width:110px"%></span>
+				<span style= 'float:right'><%= button_to "#ON ALL", set_all_status_path('ON'), style: "width:110px"%></span>
+				<span style= 'float:right'><%= button_to "#OFF ALL", set_all_status_path('OFF'), style: "width:110px"%></span>
 
     </div>
-    <div class="col-sm-4">
+    <div class="col-sm-2" style = 'text-align : right'>
+			<div id=current_time style='font-size: 50px'><span id=current_hour><%= "#{@current_time.hour}".rjust(2,'0')%></span>:<span id=current_min><%="#{@current_time.min}".rjust(2,'0')%></span>:<span id=current_sec><%="#{@current_time.sec}".rjust(2,'0')%></span></div>
     	<%= button_tag 'Set Time Zone', id:'timezone_button'%>
 			<%= render 'timeform'%>,
-			<div id=current_time><span id=current_hour><%= "#{@current_time.hour}".rjust(2,'0')%></span>:<span id=current_min><%="#{@current_time.min}".rjust(2,'0')%></span>:<span id=current_sec><%="#{@current_time.sec}".rjust(2,'0')%></span></div>
 			<div>Timezone: <%=current_user.timezone%></div>
     </div>
   </div>
