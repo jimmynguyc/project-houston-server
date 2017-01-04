@@ -19,11 +19,14 @@ class AircondsController < ApplicationController
 	end
 
 	def update
+		#path to edit the alias of aircond for easier understanding of location
 		if aircond_params[:alias]
 			@aircond.update(alias:aircond_params[:alias])
 			flash[:notice] = "Alias Updated"
 			render :edit
 		end
+
+		#path to changing status and state of aircond.
 		cmd = decipher_command
 		if same_status?
 			@aircond.update(status:aircond_params[:status]) if @aircond.status != aircond_params[:status]
@@ -49,12 +52,14 @@ class AircondsController < ApplicationController
 	end
 
 	def timer
+		#renders the form for setting aircond timer
 		Time.zone = current_user.timezone
 		@current_timer = Time.zone.parse(@aircond.timer.to_s)
 		render 'airconds/timer_form'
 	end
 
 	def timer_set
+		#sets the job for timer to execute
 		Time.zone = current_user.timezone
 		trigger_time = Time.zone.parse(params.permit![:aircond][:timer])
 		job = Sidekiq::Cron::Job.new(name:"AcTimer worker - #{@aircond.alias}", cron: " #{trigger_time.min} #{trigger_time.hour} * * 1-5 #{Time.zone.name}", class:'AcTimerWorker', args:{aircond_id:@aircond.id,status:'ON'})
@@ -70,6 +75,7 @@ class AircondsController < ApplicationController
 	end
 
 	def set_all_status
+		#sets all the aircond statuses..
 		@airconds= Aircond.all
 		@airconds.each do |ac|
 			ac.send_signal(params[:status]) if ac.get_state[:status] != params[:status] 
@@ -80,6 +86,7 @@ class AircondsController < ApplicationController
 	end
 
 	def update_all_status
+		#updates the server database with the current status of all airconds
 		@airconds= Aircond.all
 		@airconds.each do |ac|
 			ac_state=ac.get_state
@@ -89,6 +96,7 @@ class AircondsController < ApplicationController
 	end
 
 	def limit_options
+		#ajax path to responsively limit the options on edit page on selection of aircond mode
 		generate_selection(params[:mode])
 		render json:{fan_speed:@fan_speed_selection, temperature:@temperature_selection}
 	end
@@ -108,11 +116,13 @@ class AircondsController < ApplicationController
 	end
 
 	def same_status?
+
 		ac_state= @aircond.get_state
 		ac_state[:status]==aircond_params[:status]	
 	end
 
 	def decipher_command
+		#create the command for the raspi to send
 		mode,temperature,fan_speed = '','',''
 		aircond_params.each do |key,value|
 			if key == 'mode'
@@ -129,6 +139,7 @@ class AircondsController < ApplicationController
 	end
 
 	def generate_selection(mode)
+		#generate the options available for views
 		@fan_speed_selection = Aircond.fan_speeds.keys
 		@temperature_selection = (16..30).to_a
 		if mode == 'DRY'
