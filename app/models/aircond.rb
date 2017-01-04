@@ -31,7 +31,6 @@ class Aircond < ApplicationRecord
 		raspi = self.device
 		path = 'http://'+ raspi.url + "/state.py"
     params = {access_token:raspi.access_token, command:command}
-    byebug
 		response = Unirest.post(path,parameters:params)
 	end
 
