@@ -41,7 +41,7 @@ class AircondsController < ApplicationController
 						flash[:notice] = 'Aircond state was successfuly changed'
 						redirect_to root_path
 					else
-						flash[:warning] = "Aircond state was not change. Remains as #{ac_state[:status]}"
+						flash[:warning] = "Aircond state was not change. Remains as #{@aircond.get_state[:status]}"
 						render :edit
 					end
 			else
@@ -116,7 +116,6 @@ class AircondsController < ApplicationController
 	end
 
 	def same_status?
-
 		ac_state= @aircond.get_state
 		ac_state[:status]==aircond_params[:status]	
 	end
