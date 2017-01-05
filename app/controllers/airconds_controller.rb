@@ -1,5 +1,5 @@
 class AircondsController < ApplicationController 
-	before_action :set_aircond, only: [:edit,:update,:timer,:timer_set]
+	before_action :set_aircond, only: [:edit,:update,:timer,:timer_set,:app_set]
 	def new
 		@aircond = Aircond.new
 	end
@@ -105,12 +105,11 @@ class AircondsController < ApplicationController
 		if validate_app_token(params[:app_token])
 			all_airconds = {}
 			Aircond.all.each do |ac|
-				# ac_state=ac.get_state
-				# ac.update(status:ac_state[:status]) if ac_state[:status]
+				ac_state=ac.get_state
+				ac.update(status:ac_state[:status]) if ac_state[:status]
 				all_airconds[ac.id]= ac.slice(:status,:mode,:fan_speed,:temperature,:alias)
 			end
-			output= {airconds:all_airconds}
-			render json:output
+			render json:{airconds:all_airconds}
 		else
 			render json:{response:"Invalid Token"}
 		end
@@ -118,6 +117,8 @@ class AircondsController < ApplicationController
 
 	def app_set
 		if validate_app_token(params[:app_token])
+			cmd = decipher_command
+			@aircond.send_signal(cmd)
 		else
 			render json:{response:"Invalid Token"}
 		end
