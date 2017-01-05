@@ -1,5 +1,5 @@
 class AircondsController < ApplicationController 
-	before_action :set_aircond, only: [:edit,:update,:timer,:timer_set]
+	before_action :set_aircond, only: [:edit,:update,:timer,:timer_set,:app_set]
 	def new
 		@aircond = Aircond.new
 	end
@@ -101,6 +101,29 @@ class AircondsController < ApplicationController
 		render json:{fan_speed:@fan_speed_selection, temperature:@temperature_selection}
 	end
 
+	def app_get_all
+		if validate_app_token(params[:app_token])
+			all_airconds = {}
+			Aircond.all.each do |ac|
+				ac_state=ac.get_state
+				ac.update(status:ac_state[:status]) if ac_state[:status]
+				all_airconds[ac.id]= ac.slice(:status,:mode,:fan_speed,:temperature,:alias)
+			end
+			render json:{airconds:all_airconds}
+		else
+			render json:{response:"Invalid Token"}
+		end
+	end
+
+	def app_set
+		if validate_app_token(params[:app_token])
+			cmd = decipher_command
+			@aircond.send_signal(cmd)
+		else
+			render json:{response:"Invalid Token"}
+		end
+	end
+
 	private
 
 	def device_params
@@ -108,7 +131,7 @@ class AircondsController < ApplicationController
 	end
 
 	def aircond_params
-		params.require(:aircond).permit(:status,:mode,:temperature,:fan_speed,:alias)
+		params.require(:aircond).permit(:status,:mode,:fan_speed,:temperature,:alias)
 	end
 
 	def set_aircond
@@ -154,5 +177,10 @@ class AircondsController < ApplicationController
 		state = nil
 		state = {signal:InfraredSignal.find_by_command(command).ir_signal_in_conf} if InfraredSignal.pluck(:command).include? command	
 		return state
+	end
+
+	def validate_app_token(token)
+		app_token = '12345678' #temp
+		app_token == token
 	end
 end
