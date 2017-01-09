@@ -8,7 +8,7 @@
 	    <%if signed_in?%>
 	    	<li><a href=<%=sign_out_path%> data-method= delete ><span class="glyphicon glyphicon-log-out"></span> Sign Out</a></li>
 	    <%else%>
-
+        <li><a href=<%=sign_up_path%>><span class="glyphicon glyphicon-log-in"></span> Sign Up</a></li>
 	      <li><a href=<%=sign_in_path%>><span class="glyphicon glyphicon-log-in"></span> Sign In</a></li>
     	<%end%>
     </ul>

@@ -1,5 +1,8 @@
+
 class AircondsController < ApplicationController 
 	before_action :set_aircond, only: [:edit,:update,:timer,:timer_set,:app_set]
+	skip_before_filter  :verify_authenticity_token
+	include ApplicationHelper
 	def new
 		@aircond = Aircond.new
 	end
@@ -7,6 +10,8 @@ class AircondsController < ApplicationController
 	def create
 		device= Device.new(device_params)
 		if device.save
+			device.update(access_token:generate_security_token)
+			Unirest.
 			ac = Aircond.create(device_id:device.id)
 			redirect_to root_path
 		else 
@@ -31,6 +36,7 @@ class AircondsController < ApplicationController
 		if same_status?
 			@aircond.update(status:aircond_params[:status]) if @aircond.status != aircond_params[:status]
 			@aircond.send_signal(cmd) if validate_AC_controls(cmd)
+			@aircond.update(aircond_params) 
 			flash[:warning] = "Aircond is already #{aircond_params[:status]}"
 			redirect_to root_path
 		elsif aircond_params[:status]
@@ -118,7 +124,26 @@ class AircondsController < ApplicationController
 	def app_set
 		if validate_app_token(params[:app_token])
 			cmd = decipher_command
-			@aircond.send_signal(cmd)
+			#refactor for readability/ similar to update method
+			if same_status?
+				@aircond.update(status:aircond_params[:status]) if @aircond.status != aircond_params[:status]
+				@aircond.send_signal(cmd) if validate_AC_controls(cmd)
+				@aircond.update(aircond_params) 
+				render json:{response: "Aircond is already #{aircond_params[:status]}"}
+			elsif aircond_params[:status]
+				if validate_AC_controls(cmd) && validate_AC_controls(aircond_params[:status])
+					@aircond.send_signal(aircond_params[:status] + ' ' + cmd)
+						if same_status?
+							@aircond.update(aircond_params) 
+							render json:{response:'Aircond state was successfuly changed'}
+						else
+							render json:{response:"Aircond state was not change. Remains as #{@aircond.get_state[:status]}"}
+						end
+				else
+					render json:{response:"Invalid command signal"}
+				end
+			end 	
+
 		else
 			render json:{response:"Invalid Token"}
 		end
@@ -127,7 +152,7 @@ class AircondsController < ApplicationController
 	private
 
 	def device_params
-		params.require(:aircond).require(:device).permit(:url,:access_token)
+		params.require(:aircond).require(:device).permit(:url)
 	end
 
 	def aircond_params
@@ -146,14 +171,16 @@ class AircondsController < ApplicationController
 	def decipher_command
 		#create the command for the raspi to send
 		mode,temperature,fan_speed = '','',''
+
 		aircond_params.each do |key,value|
-			if key == 'mode'
+
+			if key == 'mode' || (value == "" && key == 'mode')
 				mode = value.to_s
-			elsif key == 'fan_speed'
-				value = 'A' if value = 'AUTO'
+			elsif key == 'fan_speed'  || (value == "" && key == 'fan_speed')
+				value = 'A' if value == 'AUTO'
 				value = Aircond.fan_speeds.keys.index(value) if Aircond.fan_speeds.keys.include?(value)
 				fan_speed = "F"+value.to_s
-			elsif key == 'temperature'
+			elsif key == 'temperature'  || (value == "" && key == 'temperature')
 				temperature = "T"+value.to_s
 			end
 		end

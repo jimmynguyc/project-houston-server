@@ -32,6 +32,7 @@ class Aircond < ApplicationRecord
 		path = 'http://'+ raspi.url + "/state.py"
     params = {access_token:raspi.access_token, command:command}
 		response = Unirest.post(path,parameters:params)
+
 	end
 
 end
