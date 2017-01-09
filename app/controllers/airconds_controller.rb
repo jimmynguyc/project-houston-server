@@ -131,6 +131,7 @@ class AircondsController < ApplicationController
 				@aircond.update(aircond_params) 
 				render json:{response: "Aircond is already #{aircond_params[:status]}"}
 			elsif aircond_params[:status]
+				byebug
 				if validate_AC_controls(cmd) && validate_AC_controls(aircond_params[:status])
 					@aircond.send_signal(aircond_params[:status] + ' ' + cmd)
 						if same_status?
@@ -174,16 +175,17 @@ class AircondsController < ApplicationController
 
 		aircond_params.each do |key,value|
 
-			if key == 'mode' || (value == "" && key == 'mode')
+			if key == 'mode' && value != ''
 				mode = value.to_s
-			elsif key == 'fan_speed'  || (value == "" && key == 'fan_speed')
+			elsif key == 'fan_speed'  && value != ''
 				value = 'A' if value == 'AUTO'
 				value = Aircond.fan_speeds.keys.index(value) if Aircond.fan_speeds.keys.include?(value)
 				fan_speed = "F"+value.to_s
-			elsif key == 'temperature'  || (value == "" && key == 'temperature')
+			elsif key == 'temperature' && value != ''
 				temperature = "T"+value.to_s
 			end
 		end
+	
 		mode+fan_speed+temperature
 	end
 
