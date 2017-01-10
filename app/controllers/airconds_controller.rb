@@ -125,6 +125,7 @@ class AircondsController < ApplicationController
 		if validate_app_token(params[:app_token])
 			cmd = decipher_command
 			#refactor for readability/ similar to update method
+			byebug
 			if same_status?
 				@aircond.update(status:aircond_params[:status]) if @aircond.status != aircond_params[:status]
 				@aircond.send_signal(cmd) if validate_AC_controls(cmd)
@@ -185,7 +186,7 @@ class AircondsController < ApplicationController
 				temperature = "T"+value.to_s
 			end
 		end
-	
+
 		mode+fan_speed+temperature
 	end
 
