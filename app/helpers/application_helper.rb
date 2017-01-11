@@ -8,4 +8,8 @@ module ApplicationHelper
 	def generate_security_token
 		@token = SecureRandom.hex
 	end
+
+	def is_admin?
+		current_user.role == 'admin'
+	end
 end

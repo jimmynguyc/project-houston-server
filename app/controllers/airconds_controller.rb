@@ -1,7 +1,7 @@
 
 class AircondsController < ApplicationController 
 	before_action :set_aircond, only: [:edit,:update,:timer,:timer_set,:app_set]
-	skip_before_filter  :verify_authenticity_token
+	skip_before_filter  :verify_authenticity_token, only: [:app_get_all,:app_set]
 	include ApplicationHelper
 	def new
 		@aircond = Aircond.new
@@ -108,6 +108,7 @@ class AircondsController < ApplicationController
 	end
 
 	def app_get_all
+		#will consider usng firebase for real time changes
 		if validate_app_token(params[:app_token])
 			all_airconds = {}
 			Aircond.all.each do |ac|
@@ -122,17 +123,16 @@ class AircondsController < ApplicationController
 	end
 
 	def app_set
+		byebug
 		if validate_app_token(params[:app_token])
 			cmd = decipher_command
 			#refactor for readability/ similar to update method
-			byebug
 			if same_status?
 				@aircond.update(status:aircond_params[:status]) if @aircond.status != aircond_params[:status]
 				@aircond.send_signal(cmd) if validate_AC_controls(cmd)
 				@aircond.update(aircond_params) 
 				render json:{response: "Aircond is already #{aircond_params[:status]}"}
 			elsif aircond_params[:status]
-				byebug
 				if validate_AC_controls(cmd) && validate_AC_controls(aircond_params[:status])
 					@aircond.send_signal(aircond_params[:status] + ' ' + cmd)
 						if same_status?
@@ -210,7 +210,7 @@ class AircondsController < ApplicationController
 	end
 
 	def validate_app_token(token)
-		app_token = '12345678' #temp
+		app_token = '12345678' #temp, may be validated against database record with PhoneApp.find_by(access_token:token)
 		app_token == token
 	end
 end
