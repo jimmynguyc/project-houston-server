@@ -76,15 +76,16 @@ server "192.168.1.228",
     # password: "please use keys"
   }
 
+ask(:source)
+ask(:destination)
 
 desc "Update text file with another text file"
-
-
 task :update_file do
 
   on roles(:web) do |host|
     # execute "cp #{fetch(:source)} #{fetch(:destination)}"
-    execute "echo 'testing123' >> '/home/pi/Testing.txt'"
+    upload!("#{fetch(:source)}", "/home/pi/update_files")
+    execute "./set_up.sh #{fetch(:source).split('/').last} #{fetch(:destination)} "
     # info "#{fetch(:source)} #{fetch(:destination)}"
     # info "Host #{host} (#{host.roles.to_a.join(', ')}):\t#{capture(:update_file)}"
   end
