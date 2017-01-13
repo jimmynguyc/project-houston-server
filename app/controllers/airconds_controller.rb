@@ -123,7 +123,7 @@ class AircondsController < ApplicationController
 	end
 
 	def app_set
-		byebug
+		# byebug
 		if validate_app_token(params[:app_token])
 			cmd = decipher_command
 			#refactor for readability/ similar to update method
