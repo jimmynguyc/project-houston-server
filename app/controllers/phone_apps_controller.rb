@@ -1,17 +1,17 @@
 class PhoneAppsController < ApplicationController
-	scope :filter_by_status, -> (status){where(status:status)}
+	skip_before_filter  :verify_authenticity_token
 	include ApplicationHelper
 	def create
-		PhoneApp.create(phone_app_params)
-		render json:{response:'PhoneApp record created, awaiting approval'}
+		phoneapp=PhoneApp.new(phone_app_params)
+		if phoneapp.save
+			render json:{response:'PhoneApp record created, awaiting approval'}
+		else
+			render json:{response:'PhoneApp record not created, check you code.'}
+		end
 	end
 
 	def index
-		@phone_apps = PhoneApp.filter_by_status(params[:status])
-		@phone_apps = PhoneApp.all if params[:status] == nil
 	end
-
-
 
 	def app_approve_token
 		@phone_app = PhoneApp.find(params[:id])
@@ -32,3 +32,10 @@ class PhoneAppsController < ApplicationController
 		params.require(:phone_app).permit('user_name')
 	end
 end
+
+# {user_name: "test"}
+
+# Create Phone App  >> Firebase
+#  {user_name, password, acess_token}
+
+#  

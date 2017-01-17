@@ -35,3 +35,13 @@
   </div>
 </div>
 
+<script type="text/javascript">
+  var houston_db= firebase.database();
+
+  $('.aircond').find('.ac_status').each(function(index,value){
+    houston_db.ref('airconds/'+ $(value).parent().attr('id')).on('value', function(snapshot) { 
+      $(value).text(String(snapshot.val().status))})
+  })
+  // use for setting database
+  // firebase.database().ref('airconds/2').set({status:0})
+</script>>

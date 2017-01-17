@@ -18,4 +18,4 @@ txt.split(/\n\n/).each do |cmd_signal|
 	InfraredSignal.create(command:cmd_signal.split(' ')[1],ir_signal_in_conf:cmd_signal)
 end
 
-User.create(userrole:'admin',email:ENV['user_email'),password:ENV['user_password'])
+User.create(role:'admin',email:ENV['user_email'],password:ENV['user_password'])

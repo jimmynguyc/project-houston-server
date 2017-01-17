@@ -2,6 +2,19 @@
 <html>
   <head>
     <title>ProjectHoustonServer</title>
+<script src="https://www.gstatic.com/firebasejs/3.6.5/firebase.js"></script>
+
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyCLKRXSFeRPrG5Vk_bZLY1zB0nXsyIqYt4",
+    authDomain: "project-houston.firebaseapp.com",
+    databaseURL: "https://project-houston.firebaseio.com",
+    // storageBucket: "project-houston.appspot.com",
+    // messagingSenderId: "234693173302"
+  };
+  firebase.initializeApp(config);
+</script>
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
