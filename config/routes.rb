@@ -15,9 +15,9 @@ Rails.application.routes.draw do
   get '/app_state' => 'airconds#app_get_all', as: :app_get
   post '/app_state/:id' => 'airconds#app_set', as: :app_set
   post '/app_create' => 'phone_apps#create', as: :app_create
-
+  
   resources :devices
   resources :airconds
-  resources :phone_apps, only: [:create,:index]
+  resources :phone_apps, only: [:index]
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

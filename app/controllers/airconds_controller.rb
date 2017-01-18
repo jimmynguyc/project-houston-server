@@ -11,7 +11,7 @@ class AircondsController < ApplicationController
 		device= Device.new(device_params)
 		if device.save
 			device.update(access_token:generate_security_token)
-			Unirest.
+
 			ac = Aircond.create(device_id:device.id)
 			redirect_to root_path
 		else 
@@ -109,7 +109,7 @@ class AircondsController < ApplicationController
 
 	def app_get_all
 		#will consider usng firebase for real time changes
-		if validate_app_token(params[:app_token])
+		if validate_app_token(params[:email],params[:app_token])
 			all_airconds = {}
 			Aircond.all.each do |ac|
 				ac_state=ac.get_state
@@ -124,7 +124,7 @@ class AircondsController < ApplicationController
 
 	def app_set
 		# byebug
-		if validate_app_token(params[:app_token])
+		if validate_app_token(params[:email],params[:app_token])
 			cmd = decipher_command
 			#refactor for readability/ similar to update method
 			if same_status?
@@ -209,8 +209,8 @@ class AircondsController < ApplicationController
 		return state
 	end
 
-	def validate_app_token(token)
-		app_token = '12345678' #temp, may be validated against database record with PhoneApp.find_by(access_token:token)
+	def validate_app_token(email,token)
+		app_token = PhoneApp.find_by(user_name:email).access_token #temp, may be validated against database record with PhoneApp.find_by(access_token:token)
 		app_token == token
 	end
 end
