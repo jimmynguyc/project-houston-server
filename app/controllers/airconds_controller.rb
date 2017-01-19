@@ -1,6 +1,6 @@
 
 class AircondsController < ApplicationController 
-	before_action :set_aircond, only: [:edit,:update,:timer,:timer_set,:app_set]
+	before_action :set_aircond, only: [:edit,:update,:timer,:timer_set,:app_set,:firebase_update]
 	skip_before_filter  :verify_authenticity_token, only: [:app_get_all,:app_set]
 	include ApplicationHelper
 	def new
@@ -151,6 +151,13 @@ class AircondsController < ApplicationController
 		end
 	end
 
+	def firebase_update
+		arguments = aircond_params
+		sanitize_params(arguments)
+
+		@aircond.update(arguments) 
+	end
+
 	private
 
 	def device_params
@@ -163,6 +170,11 @@ class AircondsController < ApplicationController
 
 	def set_aircond
 		@aircond = Aircond.find(params[:id])
+	end
+
+	def sanitize_params(arguments)
+		arguments[:temperature] = arguments[:temperature].to_i
+		arguments[:fan_speed] = arguments[:fan_speed].to_i		
 	end
 
 	def same_status?
@@ -214,3 +226,6 @@ class AircondsController < ApplicationController
 		app_token == token
 	end
 end
+
+
+# firebase.update('/airconds/3',{status:'OFF',mode:'DRY',temperature:18,fan_speed:2})
