@@ -42,18 +42,6 @@
 
   var houston_db= firebase.database();
 
-  // $('.aircond').find('.ac_status').each(function(index,value){
-  //   houston_db.ref('airconds/'+ $(value).parent().attr('id')).on('value', function(snapshot) { 
-  //     $(value).text(String(snapshot.val().status))
-  //     $.ajax({
-  //       type: 'POST',
-  //       beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
-  //       url: '/firebase_update/' + $(value).parent().attr('id'),
-  //       data: {aircond: snapshot.val()},
-  //     })
-  //   })
-  // })
-
 
   $('.aircond').each(function(index,selector){
     console.log('At the beginning')

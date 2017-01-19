@@ -1,0 +1,27 @@
+<h1>Mobile Phone Applications</h1>
+
+<%= select_tag 'Status', options_for_select(PhoneApp.statuses.keys) %>
+  <script type="text/javascript">
+    $('#Status').on('change',function(){
+      var selection = $(this).children('option:selected').text()
+      $.ajax({
+        type: 'GET',
+        beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+        url: '/phone_apps.js',
+        data: {filter: selection}
+      })
+    })
+  </script>
+
+  <table style = 'width: 100%'>
+    <thead>
+      <th>Id</th>
+      <th>User Name</th>
+      <th>Status</th>
+    </head>
+    <tbody>
+      <%= render @phone_apps%>
+    </body>
+  </table>
+  <%= flash[:notice]%>
+  <%= flash[:warning]%>

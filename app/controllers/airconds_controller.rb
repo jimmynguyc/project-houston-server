@@ -1,6 +1,6 @@
 
 class AircondsController < ApplicationController 
-	before_action :set_aircond, only: [:edit,:update,:timer,:timer_set,:app_set,:firebase_update]
+	before_action :set_aircond, only: [:edit,:update,:timer,:timer_set,:app_set,:update_website_from_firebase]
 	skip_before_filter  :verify_authenticity_token, only: [:app_get_all,:app_set]
 	include ApplicationHelper
 	def new
@@ -11,8 +11,9 @@ class AircondsController < ApplicationController
 		device= Device.new(device_params)
 		if device.save
 			device.update(access_token:generate_security_token)
-
+			#Unirest.post('http://' + device.url + 'give_token.py',parameters:{access_token:device.access_token})
 			ac = Aircond.create(device_id:device.id)
+			update_firebase_from_website(ac)
 			redirect_to root_path
 		else 
 			render :new
@@ -36,7 +37,10 @@ class AircondsController < ApplicationController
 		if same_status?
 			@aircond.update(status:aircond_params[:status]) if @aircond.status != aircond_params[:status]
 			@aircond.send_signal(cmd) if validate_AC_controls(cmd)
+
 			@aircond.update(aircond_params) 
+			update_firebase_from_website(@aircond)
+
 			flash[:warning] = "Aircond is already #{aircond_params[:status]}"
 			redirect_to root_path
 		elsif aircond_params[:status]
@@ -44,6 +48,8 @@ class AircondsController < ApplicationController
 				@aircond.send_signal(aircond_params[:status] + ' ' + cmd)
 					if same_status?
 						@aircond.update(aircond_params) 
+						update_firebase_from_website(@aircond)
+
 						flash[:notice] = 'Aircond state was successfuly changed'
 						redirect_to root_path
 					else
@@ -86,6 +92,7 @@ class AircondsController < ApplicationController
 		@airconds.each do |ac|
 			ac.send_signal(params[:status]) if ac.get_state[:status] != params[:status] 
 			ac.update(status:ac.get_state[:status])
+			update_firebase_from_website(ac)
 		end	
 		flash[:warning] = "Airconds with aliases  #{Aircond.where('status != ?', Aircond.statuses[params[:status]]).pluck(:alias)} were not successfully #{params[:status]}"
 		redirect_to root_path
@@ -108,7 +115,7 @@ class AircondsController < ApplicationController
 	end
 
 	def app_get_all
-		#will consider usng firebase for real time changes
+		#will consider user_nameg firebase for real time changes
 		if validate_app_token(params[:email],params[:app_token])
 			all_airconds = {}
 			Aircond.all.each do |ac|
@@ -131,12 +138,14 @@ class AircondsController < ApplicationController
 				@aircond.update(status:aircond_params[:status]) if @aircond.status != aircond_params[:status]
 				@aircond.send_signal(cmd) if validate_AC_controls(cmd)
 				@aircond.update(aircond_params) 
+				update_firebase_from_website(@aircond)
 				render json:{response: "Aircond is already #{aircond_params[:status]}"}
 			elsif aircond_params[:status]
 				if validate_AC_controls(cmd) && validate_AC_controls(aircond_params[:status])
 					@aircond.send_signal(aircond_params[:status] + ' ' + cmd)
 						if same_status?
 							@aircond.update(aircond_params) 
+							update_firebase_from_website(@aircond)
 							render json:{response:'Aircond state was successfuly changed'}
 						else
 							render json:{response:"Aircond state was not change. Remains as #{@aircond.get_state[:status]}"}
@@ -151,13 +160,17 @@ class AircondsController < ApplicationController
 		end
 	end
 
-	def firebase_update
+	def update_website_from_firebase
 		arguments = aircond_params
 		sanitize_params(arguments)
 
 		@aircond.update(arguments) 
 	end
 
+	def update_firebase_from_website(aircond)
+		firebase = Firebase::Client.new("https://project-houston.firebaseio.com")
+		firebase.update('/airconds/'+aircond.id.to_s,aircond.slice(:status,:temperature,:mode,:fan_speed))		
+	end
 	private
 
 	def device_params
@@ -221,11 +234,11 @@ class AircondsController < ApplicationController
 		return state
 	end
 
-	def validate_app_token(email,token)
-		app_token = PhoneApp.find_by(user_name:email).access_token #temp, may be validated against database record with PhoneApp.find_by(access_token:token)
+	def validate_app_token(user_name,token)
+		app_token = PhoneApp.find_by(user_name:user_name).access_token #temp, may be validated against database record with PhoneApp.find_by(access_token:token)
 		app_token == token
 	end
 end
 
 
-# firebase.update('/airconds/3',{status:'OFF',mode:'DRY',temperature:18,fan_speed:2})
+

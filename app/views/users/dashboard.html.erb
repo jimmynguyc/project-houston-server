@@ -6,8 +6,9 @@
 			<h1>Air Conditioners</h1>
 				<%= flash[:warning]%>
 				<%= flash[:notice]%>
+        <span style = 'float:right'><%= button_to 'Mobile Apps', phone_apps_path, method:'get'%></span>
 			<table style = 'width: 100%'>
-				<head>
+				<thead>
 					<th>Id</th>
 					<th>Status</th>
 					<th>Mode</th>
@@ -15,10 +16,10 @@
 					<th>Temperature</th>
 					<th >Options</th>
 					<th ></th>
-				</head>
-				<body>
+				</thead>
+				<tbody>
 					<%= render @airconds%>
-				</body>
+				</tbody>
 			</table>
 				<span style= 'float:left'><%= button_to "Add Aircond", new_aircond_path, method:'get'%></span>
 				<span style= 'float:right'><%= button_to "#UPDATE ALL", update_all_status_path, style: "width:110px"%></span>

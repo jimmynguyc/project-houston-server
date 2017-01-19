@@ -12,18 +12,40 @@ class PhoneAppsController < ApplicationController
 	end
 
 	def index
+		if is_admin?
+			@phone_apps = PhoneApp.all
+			@phone_apps = PhoneApp.filter_by_status(params[:filter]) if params[:filter]
+			respond_to do |format|
+				format.html {render 'index.html.erb'}
+				format.js {render 'index.js.erb'}
+			end
+		else
+			flash[:warning] = "You are not authorized."
+			rediect_to root_path
+		end
 	end
 
-	def app_approve_token
-		if is_admin
-			@phone_app = PhoneApp.find_or_initialize_by(user_name:params[:email])
-			@phone_app.status = params[:status]
-			@phone_app.access_token = generate_security_token if @phone_app.status == "ACCEPTED"
-			@phone_app.access_token.save
-			#how to send to specifc app
-			render json:{app_token:@phone_app.access_token}
+	def approve_token
+		@phone_app = PhoneApp.find(params[:id])
+		if is_admin?
+			@phone_app.update(status:params[:phone_app][:status])
+			flash[:notice] = "Mobile app approved"
+			redirect_to phone_apps_path
 		else
-			render json:{response:'Failed to approve. You are not an admin'}
+			flash[:warning] = "You do not have authority to execute this action"
+			redirect_to root_path
+		end
+	end
+
+	def provide_token
+		phone_app = PhoneApp.find_by(user_name:params[:user_name])
+		if phone_app.status == 'ACCEPTED'
+			phone_app.update(access_token:generate_security_token)
+			render json:{app_token:phone_app.access_token}
+		elsif phone_app.status == 'REJECTED'
+			render json: {response:'Your app ha been rejected'}
+		else
+			render json: {response:'Your app has not been approved'}
 		end
 	end
 
@@ -34,22 +56,16 @@ class PhoneAppsController < ApplicationController
 end
 
 
-# 	def app_approve_token
-# 		@phone_app = PhoneApp.find(params[:id])
-# 		if is_admin
-# 			@phone_app.status = params[:status]
-# 			@phone_app.access_token = generate_security_token if @phone_app.status == "ACCEPTED"
-# 			@phone_app.access_token.save
-# 			#how to send to specifc app
-# 			redirect_to :index
-# 		else
-# 			flash[:warning] = "You do not have authority to execute this action"
-# 			redirect_to root_path
-# 		end
-# 	end
 
-# 	private
-# 	def phone_app_params
-# 		params.require(:phone_app).permit('user_name')
-# 	end
-# end
+	# def app_approve_token
+	# 	if is_admin
+	# 		@phone_app = PhoneApp.find_or_initialize_by(user_name:params[:email])
+	# 		@phone_app.status = params[:status]
+	# 		@phone_app.access_token = generate_security_token if @phone_app.status == "ACCEPTED"
+	# 		@phone_app.access_token.save
+	# 		#how to send to specifc app
+	# 		render json:{app_token:@phone_app.access_token}
+	# 	else
+	# 		render json:{response:'Failed to approve. You are not an admin'}
+	# 	end
+	# end

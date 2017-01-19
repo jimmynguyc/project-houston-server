@@ -81,12 +81,21 @@ ask(:destination)
 
 desc "Update text file with another text file"
 task :update_file do
-
   on roles(:web) do |host|
-    # execute "cp #{fetch(:source)} #{fetch(:destination)}"
     upload!("#{fetch(:source)}", "/home/pi/update_files")
     execute "./set_up.sh #{fetch(:source).split('/').last} #{fetch(:destination)} "
-    # info "#{fetch(:source)} #{fetch(:destination)}"
-    # info "Host #{host} (#{host.roles.to_a.join(', ')}):\t#{capture(:update_file)}"
+
   end
 end
+
+ask(:command)
+desc "Execute a command"
+task :execute_command do
+  on roles(:web) do |host|
+    execute "./execute.sh #{fetch(:command)} "
+  end
+end
+
+    # execute "cp #{fetch(:source)} #{fetch(:destination)}"
+    # info "#{fetch(:source)} #{fetch(:destination)}"
+    # info "Host #{host} (#{host.roles.to_a.join(', ')}):\t#{capture(:update_file)}"

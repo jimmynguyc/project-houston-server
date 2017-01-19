@@ -1,0 +1,11 @@
+<tr>
+  <td><%=phone_app.id%></td>
+  <td><%=phone_app.user_name%></td>
+  <td>
+
+    <%= form_for phone_app, url:approve_token_path(phone_app.id) do |f|%>
+      <%= f.select :status, PhoneApp.statuses.keys%>
+      <%= f.submit 'Set'%>
+    <% end %>
+  </td>
+</tr>
