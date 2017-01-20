@@ -13,7 +13,7 @@ class AircondsController < ApplicationController
 			device.update(access_token:generate_security_token)
 			#Unirest.post('http://' + device.url + 'give_token.py',parameters:{access_token:device.access_token})
 			ac = Aircond.create(device_id:device.id)
-			update_firebase_from_website(ac)
+			update_firebase_from_website(ac,true)
 			redirect_to root_path
 		else 
 			render :new
@@ -169,8 +169,10 @@ class AircondsController < ApplicationController
 
 	def update_firebase_from_website(aircond)
 		firebase = Firebase::Client.new("https://project-houston.firebaseio.com")
-		firebase.update('/airconds/'+aircond.id.to_s,aircond.slice(:status,:temperature,:mode,:fan_speed))		
+		data = aircond.slice(:status,:temperature,:mode,:fan_speed)
+		firebase.update('/airconds/'+aircond.id.to_s, data)		
 	end
+
 	private
 
 	def device_params

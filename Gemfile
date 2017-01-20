@@ -63,5 +63,4 @@ gem 'sidekiq'
 gem "sidekiq-cron", "~> 0.4.0"  
 
 gem 'figaro'
-
-gem 'localtunnel'
+gem 'bcrypt'

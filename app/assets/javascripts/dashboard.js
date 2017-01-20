@@ -49,7 +49,7 @@
       ['.ac_status','.ac_mode','.ac_temperature','.ac_fan_speed'].forEach(function(filter){
         realtime_view_updates(selector,filter,snapshot)    
       })
-
+      
 
       console.log('Triggered update')
       $.ajax({
@@ -60,6 +60,8 @@
       })
     })
  })
+
+  
 }
 
 var realtime_view_updates = function(selector,class_filter,snapshot){
