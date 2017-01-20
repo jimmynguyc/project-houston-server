@@ -7,7 +7,7 @@ class PhoneAppsController < ApplicationController
 		if phone_app.save
 			render json:{response:'PhoneApp record created, awaiting approval'}
 		else
-			render json:{response:'PhoneApp record not created, check you code.'}
+			render json:{response:'PhoneApp record not created, check your code.'}
 		end
 	end
 
@@ -40,15 +40,17 @@ class PhoneAppsController < ApplicationController
 	def provide_token
 		phone_app = PhoneApp.find_by(user_name:params[:user_name])
 		phone_app = phone_app.authenticate(params[:password]) if !phone_app.nil?
-		if !phone_app.nil?
+		if phone_app
 			if phone_app.status == 'ACCEPTED'
 				phone_app.update(access_token:generate_security_token)
 				render json:{app_token:phone_app.access_token}
 			elsif phone_app.status == 'REJECTED'
-				render json: {response:'Your app ha been rejected'}
+				render json:{response:'Your app ha been rejected'}
 			else
-				render json: {response:'Your app has not been approved'}
+				render json:{response:'Your app has not been approved'}
 			end
+		else
+			render json:{response: 'Invalid user_name or password'}
 		end
 	end
 
@@ -57,8 +59,6 @@ class PhoneAppsController < ApplicationController
 		params.require(:phone_app).permit('user_name','password')
 	end
 
-	def verify_phone_password	
-	end
 end
 
 

@@ -1,6 +1,6 @@
 <tr id = <%= "#{aircond.id}"%> class = aircond>
 	<td><%=aircond.id%></td>
-	<td class = "ac_status"><%=aircond.status%></td>
+	<td class = "ac_status" id = <%="#{aircond.alias}"%>><%=aircond.status%></td>
 	<td class = "ac_mode"><%=aircond.mode%></td>
 	<td class = "ac_fan_speed"><%=aircond.fan_speed%></td>
 	<td class = "ac_temperature"><%=aircond.temperature%></td>		

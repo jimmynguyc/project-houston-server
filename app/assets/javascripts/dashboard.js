@@ -44,14 +44,14 @@
 
 
   $('.aircond').each(function(index,selector){
-    console.log('At the beginning')
+    // console.log('At the beginning')
     houston_db.ref('airconds/'+ $(selector).attr('id')).on('value', function(snapshot) { 
       ['.ac_status','.ac_mode','.ac_temperature','.ac_fan_speed'].forEach(function(filter){
         realtime_view_updates(selector,filter,snapshot)    
       })
       
 
-      console.log('Triggered update')
+      // console.log('Triggered update')
       $.ajax({
         type: 'POST',
         beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
@@ -61,14 +61,38 @@
     })
  })
 
-  
+  $('#location').on('change',function(event){
+    var filter = $('#location').val()
+    $('.layout').hide() 
+    $('.layout#' + filter).show()
+  })
+
+  // $('#add_tile').on('click',function(event){
+  //   event.preventDefault()
+  //   console.log(this)
+  //   var filter = $('#location').val() 
+
+  //   $('.layout#' + filter).append('<div class = layout_tile></div>')
+  //   $('.layout_tile').draggable({containment:'parent'})
+  // })
+
+
+
 }
 
 var realtime_view_updates = function(selector,class_filter,snapshot){
   $(selector).find(class_filter).each(function(index,value){
-    console.log('Triggered selector ' + class_filter)
+    // console.log('Triggered selector ' + class_filter)
     $(value).text(
       String(snapshot.val()[class_filter.split('.ac_')[1]])
     )
+    if(class_filter == '.ac_status'){
+      if($(this).text() == 'ON'){
+        $('#' + $(this).attr('id')+'.layout_tile').css('background','green')
+      } else if ($(this).text() == 'OFF'){
+        console.log('OFF')
+        $('#' + $(this).attr('id')+'.layout_tile').css('background','red')
+      }
+    }
   })
 }

@@ -11,7 +11,7 @@ class AircondsController < ApplicationController
 		device= Device.new(device_params)
 		if device.save
 			device.update(access_token:generate_security_token)
-			#Unirest.post('http://' + device.url + 'give_token.py',parameters:{access_token:device.access_token})
+			Unirest.post('http://' + device.url + 'give_token.py',parameters:{access_token:device.access_token})
 			ac = Aircond.create(device_id:device.id)
 			update_firebase_from_website(ac,true)
 			redirect_to root_path
@@ -28,39 +28,42 @@ class AircondsController < ApplicationController
 		#path to edit the alias of aircond for easier understanding of location
 		if aircond_params[:alias]
 			@aircond.update(alias:aircond_params[:alias])
+			generate_selection(@aircond.mode)
 			flash[:notice] = "Alias Updated"
 			render :edit
+		else
+			#path to changing status and state of aircond.
+			cmd = decipher_command
+			if same_status?
+				@aircond.update(status:aircond_params[:status]) if @aircond.status != aircond_params[:status]
+				@aircond.send_signal(cmd) if validate_AC_controls(cmd)
+
+				@aircond.update(aircond_params) 
+				update_firebase_from_website(@aircond)
+
+				flash[:warning] = "Aircond is already #{aircond_params[:status]}"
+				redirect_to root_path
+			elsif aircond_params[:status]
+				if validate_AC_controls(cmd) && validate_AC_controls(aircond_params[:status])
+					@aircond.send_signal(aircond_params[:status] + ' ' + cmd)
+						if same_status?
+							@aircond.update(aircond_params) 
+							update_firebase_from_website(@aircond)
+
+							flash[:notice] = 'Aircond state was successfuly changed'
+							redirect_to root_path
+						else
+							flash[:warning] = "Aircond state was not change. Remains as #{@aircond.get_state[:status]}"
+							render :edit
+						end
+				else
+					flash[:warning] = "Invalid command signal"
+					render :edit
+				end
+			end 
 		end
 
-		#path to changing status and state of aircond.
-		cmd = decipher_command
-		if same_status?
-			@aircond.update(status:aircond_params[:status]) if @aircond.status != aircond_params[:status]
-			@aircond.send_signal(cmd) if validate_AC_controls(cmd)
 
-			@aircond.update(aircond_params) 
-			update_firebase_from_website(@aircond)
-
-			flash[:warning] = "Aircond is already #{aircond_params[:status]}"
-			redirect_to root_path
-		elsif aircond_params[:status]
-			if validate_AC_controls(cmd) && validate_AC_controls(aircond_params[:status])
-				@aircond.send_signal(aircond_params[:status] + ' ' + cmd)
-					if same_status?
-						@aircond.update(aircond_params) 
-						update_firebase_from_website(@aircond)
-
-						flash[:notice] = 'Aircond state was successfuly changed'
-						redirect_to root_path
-					else
-						flash[:warning] = "Aircond state was not change. Remains as #{@aircond.get_state[:status]}"
-						render :edit
-					end
-			else
-				flash[:warning] = "Invalid command signal"
-				render :edit
-			end
-		end 
 	end
 
 	def timer
@@ -116,7 +119,8 @@ class AircondsController < ApplicationController
 
 	def app_get_all
 		#will consider user_nameg firebase for real time changes
-		if validate_app_token(params[:email],params[:app_token])
+
+		if validate_app_token(params[:user_name],params[:app_token])
 			all_airconds = {}
 			Aircond.all.each do |ac|
 				ac_state=ac.get_state
@@ -131,7 +135,7 @@ class AircondsController < ApplicationController
 
 	def app_set
 		# byebug
-		if validate_app_token(params[:email],params[:app_token])
+		if validate_app_token(params[:user_name],params[:app_token])
 			cmd = decipher_command
 			#refactor for readability/ similar to update method
 			if same_status?
@@ -237,8 +241,8 @@ class AircondsController < ApplicationController
 	end
 
 	def validate_app_token(user_name,token)
-		app_token = PhoneApp.find_by(user_name:user_name).access_token #temp, may be validated against database record with PhoneApp.find_by(access_token:token)
-		app_token == token
+		app_token = PhoneApp.find_by(user_name:user_name)#temp, may be validated against database record with PhoneApp.find_by(access_token:token)
+		app_token.access_token  == token if !app_token.nil?
 	end
 end
 
