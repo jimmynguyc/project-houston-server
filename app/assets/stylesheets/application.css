@@ -13,3 +13,10 @@
  *= require_tree .
  *= require_self
  */
+table.index, .index th,  .index td {
+   border-bottom: 2px solid black;
+}
+
+.index td, .index th {
+  padding:2px;
+}

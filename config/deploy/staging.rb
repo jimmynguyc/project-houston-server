@@ -89,7 +89,7 @@ task :update_file do
 end
 
 ask(:command)
-desc "Execute a command"
+desc "Execute a command that accepts up to 8 words  "
 task :execute_command do
   on roles(:web) do |host|
     execute "./execute.sh #{fetch(:command)} "

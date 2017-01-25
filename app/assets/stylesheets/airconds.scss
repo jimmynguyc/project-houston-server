@@ -2,16 +2,19 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.layout{
+  position:relative;
+  display: none;
+  padding: 30px;
+  border-style: dotted;
+  height: auto; 
+}
+
 .layout_tile{
+  position: relative;
   height:50px;
   width:100px;
   background:white;
   border-style: solid 
 }
 
-.layout{
-  display: none;
-  height:300px;
-  width:600px;
-  border-style: solid
-}

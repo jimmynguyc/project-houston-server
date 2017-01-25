@@ -13,8 +13,11 @@ class PhoneAppsController < ApplicationController
 
 	def index
 		if is_admin?
-			@phone_apps = PhoneApp.all
-			@phone_apps = PhoneApp.filter_by_status(params[:filter]) if params[:filter]
+			if params[:filter] == nil || params[:filter] == "ALL"
+				@phone_apps = PhoneApp.all.order(:id)
+			else
+				@phone_apps = PhoneApp.filter_by_status(params[:filter]).order(:id)
+			end
 			respond_to do |format|
 				format.html {render 'index.html.erb'}
 				format.js {render 'index.js.erb'}
@@ -48,6 +51,19 @@ class PhoneAppsController < ApplicationController
 				render json:{response:'Your app ha been rejected'}
 			else
 				render json:{response:'Your app has not been approved'}
+			end
+		else
+			render json:{response: 'Invalid user_name or password'}
+		end
+	end
+
+	def check_token
+		phone_app = PhoneApp.find_by(user_name:params[:user_name])
+		if phone_app
+			if phone_app.access_token == params[:app_token]
+				render json:{response:'Your current token is valid'}
+			else	
+				render json:{response:'Your current token is invalid'}
 			end
 		else
 			render json:{response: 'Invalid user_name or password'}

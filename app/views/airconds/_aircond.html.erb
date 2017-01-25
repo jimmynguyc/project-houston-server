@@ -1,13 +1,12 @@
 <tr id = <%= "#{aircond.id}"%> class = aircond>
 	<td><%=aircond.id%></td>
+	<td><%=aircond.alias%></td>
 	<td class = "ac_status" id = <%="#{aircond.alias}"%>><%=aircond.status%></td>
 	<td class = "ac_mode"><%=aircond.mode%></td>
 	<td class = "ac_fan_speed"><%=aircond.fan_speed%></td>
 	<td class = "ac_temperature"><%=aircond.temperature%></td>		
 	<td style='width:100px' >
 		<%= button_to 'Edit', edit_aircond_path(aircond), method:'get' ,style: "width:100%"%>
-	</td>
-	<td style='width:100px' >
 		<%= button_to 'Set Timer', set_timer_path(aircond),method:'get',style: "width:100%"%>
 	</td>
 </tr>

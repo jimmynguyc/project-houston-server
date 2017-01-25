@@ -1,13 +1,15 @@
-<%= form_for @aircond do |f|%>
-	<%= f.fields_for :device do |device_field|%>
-	
-		<%= device_field.label :url%>
-		<%= device_field.text_field :url %>
+<div class="col-sm-8" style='border-style: solid; padding: 20px'>
+  <%= form_for @aircond do |f|%>
+  	<%= f.fields_for :device do |device_field|%>
+  	
+  		<%= device_field.label :url%>
+  		<%= device_field.text_field :url %>
 
-	<%end%>
+  	<%end%>
 
-	<%= f.label :alias, 'Aircond Alias' %>
-	<%= f.text_field :alias%>
+  	<%= f.label :alias, 'Aircond Alias' %>
+  	<%= f.text_field :alias%>
 
-	<%= f.submit%>
-<%end%>
+  	<%= f.submit%>
+  <%end%>
+</div>

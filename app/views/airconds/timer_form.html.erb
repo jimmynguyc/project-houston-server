@@ -1,9 +1,11 @@
-<%=form_for @aircond, url:timer_set_path(@aircond) do |f|%>
-	<%=f.time_field :timer, value:@current_timer.strftime('%H:%M')
-%>
-	<%=f.select :status, Aircond.statuses.keys%>
-	<%=f.submit "Set Timer"%>
-<%end%>
+<div class="col-sm-8" style='border-style: solid; padding: 20px'>
+  <%=form_for @aircond, url:timer_set_path(@aircond) do |f|%>
+  	<%=f.time_field :timer, value:@current_timer.strftime('%H:%M')
+  %>
+  	<%=f.select :status, Aircond.statuses.keys%>
+  	<%=f.submit "Set Timer"%>
+  <%end%>
 
-<div id=current_timer><span id=hour><%= "#{@current_timer.hour}".rjust(2,'0')%></span>:<span id=min><%="#{@current_timer.min}".rjust(2,'0')%></span>:<span id=sec><%="#{@current_timer.sec}".rjust(2,'0')%></span></div>
-	<div>Timezone: <%=current_user.timezone%></div>
+  <div id=current_timer><span id=hour><%= "#{@current_timer.hour}".rjust(2,'0')%></span>:<span id=min><%="#{@current_timer.min}".rjust(2,'0')%></span>:<span id=sec><%="#{@current_timer.sec}".rjust(2,'0')%></span></div>
+  	<div>Timezone: <%=current_user.timezone%></div>
+</div>

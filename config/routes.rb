@@ -28,5 +28,6 @@ Rails.application.routes.draw do
   post '/app_create' => 'phone_apps#create', as: :app_create
   patch '/approve_token/:id' => 'phone_apps#approve_token', as: :approve_token
   get '/get_token' => 'phone_apps#provide_token', as: :get_token
+  get '/validate_token' => 'phone_apps#check_token', as: :validate_token
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

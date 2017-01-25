@@ -1,6 +1,7 @@
+<div class="col-sm-8" style='border-style: solid; padding: 20px'>
 <h1>Mobile Phone Applications</h1>
 
-<%= select_tag 'Status', options_for_select(PhoneApp.statuses.keys) %>
+Fitler: <%= select_tag 'Status', options_for_select(PhoneApp.statuses.keys << "ALL")  %>
   <script type="text/javascript">
     $('#Status').on('change',function(){
       var selection = $(this).children('option:selected').text()
@@ -13,15 +14,16 @@
     })
   </script>
 
-  <table style = 'width: 100%'>
+  <table class = index style = 'width: 100%'>
     <thead>
       <th>Id</th>
       <th>User Name</th>
       <th>Status</th>
-    </head>
+    </thead>
     <tbody>
       <%= render @phone_apps%>
-    </body>
+    </tbody>
   </table>
   <%= flash[:notice]%>
   <%= flash[:warning]%>
+</div>

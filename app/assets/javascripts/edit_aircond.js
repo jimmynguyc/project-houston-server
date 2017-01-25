@@ -20,7 +20,7 @@ var filter_options =function(selector,condition){
 	if(condition.length === 0){
 		remove_element(selector)
 	}else{
-		if($('form#edit_aircond_1').children(selector).html() === '' ){
+		if($('form#edit_aircond_settings').children(selector).html() === '' ){
 			modify_element(selector,condition)
 		}else{
 			modify_element(selector,condition)
@@ -49,7 +49,7 @@ var modify_element = function(selector,options){
 }
 
 var selected_element = function(selector){
-	return $('form#edit_aircond_1').children(selector)
+	return $('form#edit_aircond_settings').children(selector)
 }
 
 var possible_options = function(options){

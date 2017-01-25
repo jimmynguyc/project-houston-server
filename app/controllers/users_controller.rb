@@ -2,7 +2,7 @@ class UsersController < Clearance::UsersController
 	def dashboard
 		Time.zone = current_user.timezone
 		@current_time = Time.zone.now
-		@airconds = Aircond.all
+		@airconds = Aircond.all.order(:id)
 	end
 
 	def timeset

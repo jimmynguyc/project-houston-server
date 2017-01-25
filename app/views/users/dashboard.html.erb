@@ -1,28 +1,24 @@
-<div class="container" style = 'width:100%'>
-  <div class="row">
-    <div class="col-sm-2" style = 'text-align : right'>
-    </div>
     <div class="col-sm-8" style='border-style: solid; padding: 20px' >
 			<h1>Air Conditioners</h1>
 				<%= flash[:warning]%>
 				<%= flash[:notice]%>
         <span style = 'float:right'><%= button_to 'Mobile Apps', phone_apps_path, method:'get'%></span>
-			<table style = 'width: 100%'>
+			<table class = index style = 'width: 100%'>
 				<thead>
 					<th>Id</th>
+          <th>Alias</th>
 					<th>Status</th>
 					<th>Mode</th>
 					<th>Fan Speed</th>
 					<th>Temperature</th>
 					<th >Options</th>
-					<th ></th>
+
 				</thead>
 				<tbody>
 					<%= render @airconds%>
 				</tbody>
 			</table>
 				<span style= 'float:left'><%= button_to "Add Aircond", new_aircond_path, method:'get'%></span>
-				<span style= 'float:right'><%= button_to "#UPDATE ALL", update_all_status_path, style: "width:110px"%></span>
 				<span style= 'float:right'><%= button_to "#ON ALL", set_all_status_path('ON'), style: "width:110px"%></span>
 				<span style= 'float:right'><%= button_to "#OFF ALL", set_all_status_path('OFF'), style: "width:110px"%></span>
 
@@ -35,5 +31,3 @@
 			<%= render 'timeform'%>,
 			<div>Timezone: <%=current_user.timezone%></div>
     </div>
-  </div>
-</div>

@@ -44,8 +44,14 @@ class AircondsController < ApplicationController
 				flash[:warning] = "Aircond is already #{aircond_params[:status]}"
 				redirect_to root_path
 			elsif aircond_params[:status]
-				if validate_AC_controls(cmd) && validate_AC_controls(aircond_params[:status])
-					@aircond.send_signal(aircond_params[:status] + ' ' + cmd)
+				ac_status_validity = validate_AC_controls(aircond_params[:status])
+				ac_settings_validity = validate_AC_controls(cmd)
+				if ac_status_validity || ac_settings_validity
+					ac_status_command = aircond_params[:status] if ac_status_validity
+					ac_settings_command = cmd if ac_settings_validity
+					final_command = ac_status_command || ac_settings_command
+ 					final_command = ac_status_command + ' ' + ac_settings_command if ac_status_validity && ac_settings_validity
+					@aircond.send_signal(final_command)
 						if same_status?
 							@aircond.update(aircond_params) 
 							update_firebase_from_website(@aircond)
@@ -77,7 +83,7 @@ class AircondsController < ApplicationController
 		#sets the job for timer to execute
 		Time.zone = current_user.timezone
 		trigger_time = Time.zone.parse(params.permit![:aircond][:timer])
-		job = Sidekiq::Cron::Job.new(name:"AcTimer worker - #{@aircond.alias}", cron: " #{trigger_time.min} #{trigger_time.hour} * * 1-5 #{Time.zone.name}", class:'AcTimerWorker', args:{aircond_id:@aircond.id,status:'ON'})
+		job = Sidekiq::Cron::Job.new(name:"AcTimer worker - #{@aircond.alias}", cron: " #{trigger_time.min} #{trigger_time.hour} * * 1-5 #{Time.zone.name}", class:'AcTimerWorker', args:{aircond_id:@aircond.id,status:params[:aircond][:status]})
 		if job.valid?
 			job.save
 			@aircond.update(timer:Time.zone.local_to_utc(trigger_time))
@@ -101,15 +107,15 @@ class AircondsController < ApplicationController
 		redirect_to root_path
 	end
 
-	def update_all_status
-		#updates the server database with the current status of all airconds
-		@airconds= Aircond.all
-		@airconds.each do |ac|
-			ac_state=ac.get_state
-			ac.update(status:ac_state[:status]) if ac_state[:status]
-		end
-		redirect_to root_path
-	end
+	# def update_all_status
+	# 	#updates the server database with the current status of all airconds
+	# 	@airconds= Aircond.all
+	# 	@airconds.each do |ac|
+	# 		ac_state=ac.get_state
+	# 		ac.update(status:ac_state[:status]) if ac_state[:status]
+	# 	end
+	# 	redirect_to root_path
+	# end
 
 	def limit_options
 		#ajax path to responsively limit the options on edit page on selection of aircond mode
@@ -119,7 +125,7 @@ class AircondsController < ApplicationController
 
 	def app_get_all
 		#will consider user_nameg firebase for real time changes
-
+		puts params
 		if validate_app_token(params[:user_name],params[:app_token])
 			all_airconds = {}
 			Aircond.all.each do |ac|
@@ -133,8 +139,7 @@ class AircondsController < ApplicationController
 		end
 	end
 
-	def app_set
-		# byebug
+	def app_set	
 		if validate_app_token(params[:user_name],params[:app_token])
 			cmd = decipher_command
 			#refactor for readability/ similar to update method
@@ -145,11 +150,18 @@ class AircondsController < ApplicationController
 				update_firebase_from_website(@aircond)
 				render json:{response: "Aircond is already #{aircond_params[:status]}"}
 			elsif aircond_params[:status]
-				if validate_AC_controls(cmd) && validate_AC_controls(aircond_params[:status])
-					@aircond.send_signal(aircond_params[:status] + ' ' + cmd)
+				ac_status_validity = validate_AC_controls(aircond_params[:status])
+				ac_settings_validity = validate_AC_controls(cmd)
+				if ac_status_validity || ac_settings_validity
+					ac_status_command = aircond_params[:status] if ac_status_validity
+					ac_settings_command = cmd if ac_settings_validity
+					final_command = ac_status_command || ac_settings_command
+ 					final_command = ac_status_command + ' ' + ac_settings_command if ac_status_validity && ac_settings_validity
+					@aircond.send_signal(final_command)
 						if same_status?
 							@aircond.update(aircond_params) 
 							update_firebase_from_website(@aircond)
+
 							render json:{response:'Aircond state was successfuly changed'}
 						else
 							render json:{response:"Aircond state was not change. Remains as #{@aircond.get_state[:status]}"}
@@ -167,8 +179,9 @@ class AircondsController < ApplicationController
 	def update_website_from_firebase
 		arguments = aircond_params
 		sanitize_params(arguments)
-
+		puts arguments
 		@aircond.update(arguments) 
+		render json:{response:'Updated'}
 	end
 
 	def update_firebase_from_website(aircond)
@@ -193,7 +206,7 @@ class AircondsController < ApplicationController
 
 	def sanitize_params(arguments)
 		arguments[:temperature] = arguments[:temperature].to_i
-		arguments[:fan_speed] = arguments[:fan_speed].to_i		
+		arguments[:fan_speed] = Aircond.fan_speeds[arguments[:fan_speed]]		
 	end
 
 	def same_status?
@@ -235,8 +248,8 @@ class AircondsController < ApplicationController
 
 	def validate_AC_controls(command)
 		#ENSURE no invalid commands sent
-		state = nil
-		state = {signal:InfraredSignal.find_by_command(command).ir_signal_in_conf} if InfraredSignal.pluck(:command).include? command	
+		state = false
+		state = true if InfraredSignal.pluck(:command).include? command	
 		return state
 	end
 

@@ -50,10 +50,10 @@
         realtime_view_updates(selector,filter,snapshot)    
       })
       
-
+      console.log(snapshot.val())
       // console.log('Triggered update')
       $.ajax({
-        type: 'POST',
+        type: 'POST', 
         beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
         url: '/firebase_update/' + $(selector).attr('id'),
         data: {aircond: snapshot.val()},
@@ -66,15 +66,8 @@
     $('.layout').hide() 
     $('.layout#' + filter).show()
   })
+  $('.layout_tile').draggable({containment:'parent'})
 
-  // $('#add_tile').on('click',function(event){
-  //   event.preventDefault()
-  //   console.log(this)
-  //   var filter = $('#location').val() 
-
-  //   $('.layout#' + filter).append('<div class = layout_tile></div>')
-  //   $('.layout_tile').draggable({containment:'parent'})
-  // })
 
 
 
@@ -83,16 +76,20 @@
 var realtime_view_updates = function(selector,class_filter,snapshot){
   $(selector).find(class_filter).each(function(index,value){
     // console.log('Triggered selector ' + class_filter)
-    $(value).text(
-      String(snapshot.val()[class_filter.split('.ac_')[1]])
-    )
+
+    var replace_value = String(snapshot.val()[class_filter.split('.ac_')[1]])
+    if(replace_value == 'undefined'){
+      $(value).text('NA')
+    }else{
+      $(value).text(replace_value)
+    }
     if(class_filter == '.ac_status'){
       if($(this).text() == 'ON'){
         $('#' + $(this).attr('id')+'.layout_tile').css('background','green')
       } else if ($(this).text() == 'OFF'){
         console.log('OFF')
         $('#' + $(this).attr('id')+'.layout_tile').css('background','red')
-      }
+      } 
     }
   })
 }
