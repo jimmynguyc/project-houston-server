@@ -1,16 +1,15 @@
-<table>
+
 		<div id = ac_status>
-			<tr>
-				<td><%= form.label :status %></td>
-				<td style='padding-left: 10px'><%= form.select :status, Aircond.statuses.keys%></td>
-			</tr>
+
+<%= form.label :status %>
+<%= form.select :status, Aircond.statuses.keys%>
 		</div>
 
 		<div id = ac_mode>	
-			<tr>
-				<td><%= form.label :mode %></td>
-				<td style='padding-left: 10px'><%= form.select :mode,Aircond.modes.keys %></td>
-			</tr>
+			
+				<%= form.label :mode %>
+				<%= form.select :mode,Aircond.modes.keys %>
+			
 			
 			
 		</div>
@@ -18,10 +17,10 @@
 
 		<div id = ac_fan_speed>
 			<% if !@fan_speed_selection.empty?%>
-				<tr>
-						<td><%= form.label :fan_speed %></td>
-						<td style='padding-left: 10px'><%= form.select :fan_speed, @fan_speed_selection %></td>
-				</tr>
+				
+						<%= form.label :fan_speed %>
+						<%= form.select :fan_speed, @fan_speed_selection %>
+				
 			<% end%>
 		</div>
 
@@ -29,12 +28,11 @@
 
 		<div id = ac_temperature>
 			<% if !@temperature_selection.empty?%>
-				<tr>
-					<td><%= form.label :temperature %></td>
-					<td style='padding-left: 10px'><%= form.select :temperature, @temperature_selection%></td>
-				</tr>
+				
+					<%= form.label :temperature %>
+					<%= form.select :temperature, @temperature_selection%>
+				
 			<% end%>
 		</div>	
-</table>	
 
 	<%= form.submit%>

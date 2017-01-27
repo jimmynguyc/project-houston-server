@@ -13,9 +13,11 @@ class AircondsController < ApplicationController
 			device.update(access_token:generate_security_token)
 			Unirest.post('http://' + device.url + 'give_token.py',parameters:{access_token:device.access_token})
 			ac = Aircond.create(device_id:device.id)
-			update_firebase_from_website(ac,true)
+			update_firebase_from_website(ac)
 			redirect_to root_path
 		else 
+			@aircond = Aircond.new
+			flash[:warning] = "#{device.errors.full_messages[0]}"
 			render :new
 		end
 	end
