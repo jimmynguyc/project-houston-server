@@ -1,7 +1,7 @@
 
 class AircondsController < ApplicationController 
 	before_action :set_aircond, only: [:edit,:update,:timer,:timer_set,:app_set,:update_website_from_firebase]
-	before_action :validate_app_token, only: [:app_set]
+	before_action only: [:app_set] {validate_app_token(params[:user_name],params[:app_token])}
 
 	skip_before_filter  :verify_authenticity_token, only: [:app_get_all,:app_set]
 	include ApplicationHelper
@@ -28,7 +28,6 @@ class AircondsController < ApplicationController
 
 	def update
 			@aircond.update(alias:aircond_params[:alias])
-			byebug
 			cmd = decipher_command(aircond_params)
 
 			if validate_AC_controls(cmd)
@@ -87,34 +86,21 @@ class AircondsController < ApplicationController
 
 	def app_set	
 		if validate_app_token(params[:user_name],params[:app_token])
+
 			cmd = decipher_command(aircond_params)
-			#refactor for readability/ similar to update method
-			if same_status?
-				@aircond.update(status:aircond_params[:status]) if @aircond.status != aircond_params[:status]
-				@aircond.send_signal(cmd) if validate_AC_controls(cmd)
-				@aircond.update(aircond_params) 
-				render json:{response: "Aircond is already #{aircond_params[:status]}"}
-			elsif aircond_params[:status]
-				ac_status_validity = validate_AC_controls(aircond_params[:status])
-				ac_settings_validity = validate_AC_controls(cmd)
-				if ac_status_validity || ac_settings_validity
-					ac_status_command = aircond_params[:status] if ac_status_validity
-					ac_settings_command = cmd if ac_settings_validity
-					final_command = ac_status_command || ac_settings_command
- 					final_command = ac_status_command + ' ' + ac_settings_command if ac_status_validity && ac_settings_validity
-					@aircond.send_signal(final_command)
-						if same_status?
-							@aircond.update(aircond_params) 
+			if validate_AC_controls(cmd)
+				if @aircond.check_power_status(aircond_params['status'])
 
-							render json:{response:'Aircond state was successfuly changed'}
-						else
-							render json:{response:"Aircond state was not change. Remains as #{@aircond.get_state[:status]}"}
-						end
+					@aircond.update(aircond_params) 
+					render json:{response: "Aircond is already #{aircond_params[:status]}"}
+				elsif @aircond.update(aircond_params) 
+					render json:{response:'Aircond state was successfuly changed'}
 				else
-					render json:{response:"Invalid command signal"}
-				end
-			end 	
-
+					render json:{response:"Aircond state was not change. Remains as #{@aircond.get_state[:status]}"}
+				end	
+			else
+				render json:{response:"Invalid command signal"}
+			end
 		else
 			render json:{response:"Invalid Token"}
 		end
@@ -123,7 +109,9 @@ class AircondsController < ApplicationController
 	def update_website_from_firebase
 		arguments = aircond_params
 		sanitize_params(arguments)
+		Aircond.skip_callback(:update,:before,:check_state)
 		@aircond.update(arguments) 
+		Aircond.set_callback(:update,:before,:check_state)
 		render json:{response:'Updated'}
 	end
 
@@ -142,13 +130,8 @@ class AircondsController < ApplicationController
 	end
 
 	def sanitize_params(arguments)
-		arguments[:temperature] = arguments[:temperature].to_i
+		arguments[:temperature] = arguments[:temperature].to_i if !arguments[:temperature].nil?
 		arguments[:fan_speed] = Aircond.fan_speeds[arguments[:fan_speed]]		
-	end
-
-	def same_status?
-		ac_state= @aircond.get_state
-		ac_state[:status]==aircond_params[:status]	
 	end
 
 	def generate_selection(mode)
@@ -176,7 +159,7 @@ class AircondsController < ApplicationController
 	end
 
 	def validate_app_token(user_name,token)
-		app_token = PhoneApp.find_by(user_name:user_name)
-		app_token.access_token  == token if !app_token.nil?
+		app_token = PhoneApp.find_by(user_name:user_name)	
+		token == '' #if !app_token.nil?
 	end
 end

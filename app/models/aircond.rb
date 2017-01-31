@@ -22,9 +22,9 @@ class Aircond < ApplicationRecord
 
 	  enum fan_speed:{
 	    'AUTO' =>0,
-	    'LOW' =>1,	
-	    'MEDIUM' =>2,
-	    'HIGH' =>3
+	    '1' =>1,	
+	    '2' =>2,
+	    '3' =>3
 	  }
 
 	def get_state
@@ -40,7 +40,7 @@ class Aircond < ApplicationRecord
 		path = raspi.url + "/state.py"
     params = {access_token:raspi.access_token, command:command}
 		response = Unirest.post(path,parameters:params)
-		check_power_status if self.changes.keys.include?(:status)
+		check_power_status(self.changes['status'][1]) if self.changes.keys.include?(:status) && !self.changes[key].nil?
 	end
 
 	def update_firebase
@@ -50,22 +50,20 @@ class Aircond < ApplicationRecord
 	end
 
 	def check_state
-		send_signal(get_command) if !(self.changes.keys & [:status,:temperature,:mode,:fan_speed]).empty?
-		byebug
-		check_power_status	
+		response = send_signal(get_command) if !(self.changes.keys & ["status","temperature","mode","fan_speed"]).empty?
+		throw :abort if response == false
 	end
 
-	def check_power_status
-		# get_state == self.changed_attributes[:status]
-		false
+	def check_power_status(arg)
+		get_state[:status] == arg
 	end
 
 	def get_command
 		data = self.slice(:status,:temperature, :mode, :fan_speed)
 		data.keys.each do |key|
-			data[key] = self.changed_attributes[key]
+			data[key] = self.changes[key][1] if self.changes.keys.include? key 
 		end
-		data = data.slice(:temperature,:mode, :fan_speed) if !self.changes.keys.include? :status 
+		data = data.slice(:temperature,:mode, :fan_speed) if !self.changes.keys.include? 'status' || check_power_status(self.changes['status'][1])
 		decipher_command(data)
 	end
 end
