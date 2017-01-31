@@ -17,10 +17,8 @@ Rails.application.routes.draw do
   get 'aircond/:id/timer' => 'airconds#timer', as: :set_timer
   patch 'aircond/:id/timer' => 'airconds#timer_set', as: :timer_set
   post 'set_all_status/:status' => 'airconds#set_all_status', as: :set_all_status
-  post 'update_all_status' => 'airconds#update_all_status', as: :update_all_status
   post 'limit_options' => 'airconds#limit_options', as: :limit_options
 
-  get '/app_state' => 'airconds#app_get_all', as: :app_get
   post '/app_state/:id' => 'airconds#app_set', as: :app_set
 
 

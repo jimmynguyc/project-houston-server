@@ -3,11 +3,7 @@
   	<%= render partial: 'form', object:form%>
   <%end%>
   	
-  <%= form_for@aircond, html:{ id:'alias_update'} do |form|%>
-  	<%= form.label :alias, 'Aircond Alias' %>
-  	<%= form.text_field :alias%>
-  	<%= form.submit 'Update Alias'%>
-  <%end%>
+
   <div>
   	<%= flash[:warning]%>
   	<%= flash[:notice]%>
