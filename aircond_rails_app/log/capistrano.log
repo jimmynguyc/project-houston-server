@@ -1,0 +1,374 @@
+# Logfile created on 2017-01-16 16:15:09 +0800 by logger.rb/54362
+  INFO ---------------------------------------------------------------------------
+  INFO START 2017-01-16 16:15:09 +0800 cap production deploy
+  INFO ---------------------------------------------------------------------------
+  INFO ---------------------------------------------------------------------------
+  INFO START 2017-01-16 16:15:23 +0800 cap staging update_file
+  INFO ---------------------------------------------------------------------------
+  INFO ---------------------------------------------------------------------------
+  INFO START 2017-01-19 12:34:15 +0800 cap production deploy
+  INFO ---------------------------------------------------------------------------
+  INFO ---------------------------------------------------------------------------
+  INFO START 2017-01-19 12:34:30 +0800 cap staging update_file
+  INFO ---------------------------------------------------------------------------
+  INFO [f885aac3] Running test /home/pi/update_files as pi@192.168.1.228
+ DEBUG [f885aac3] Command: test /home/pi/update_files
+  INFO [2dbc5b94] Running ./set_up.sh test test as pi@192.168.1.228
+ DEBUG [2dbc5b94] Command: ./set_up.sh test test
+  INFO ---------------------------------------------------------------------------
+  INFO START 2017-01-19 12:34:48 +0800 cap staging command
+  INFO ---------------------------------------------------------------------------
+  INFO ---------------------------------------------------------------------------
+  INFO START 2017-01-19 12:34:54 +0800 cap staging execute_command
+  INFO ---------------------------------------------------------------------------
+  INFO [3923aeb4] Running ./execute.sh Test as pi@192.168.1.228
+ DEBUG [3923aeb4] Command: ./execute.sh Test
+  INFO ---------------------------------------------------------------------------
+  INFO START 2017-01-19 12:35:26 +0800 cap staging execute_command
+  INFO ---------------------------------------------------------------------------
+  INFO ---------------------------------------------------------------------------
+  INFO START 2017-01-20 16:31:09 +0800 cap production deploy
+  INFO ---------------------------------------------------------------------------
+  INFO ---------------------------------------------------------------------------
+  INFO START 2017-01-20 16:32:28 +0800 cap staging execute_command
+  INFO ---------------------------------------------------------------------------
+  INFO [bae50de1] Running ./execute.sh echo 'test' as pi@192.168.1.228
+ DEBUG [bae50de1] Command: ./execute.sh echo 'test'
+  INFO ---------------------------------------------------------------------------
+  INFO START 2017-01-20 16:32:49 +0800 cap staging execute_command
+  INFO ---------------------------------------------------------------------------
+  INFO [966c43a0] Running ./execute.sh echo 'Test' >> new_test.txt as pi@192.168.1.228
+ DEBUG [966c43a0] Command: ./execute.sh echo 'Test' >> new_test.txt
+ DEBUG [966c43a0] 	bash: ./execute.sh: Permission denied
+  INFO ---------------------------------------------------------------------------
+  INFO START 2017-01-20 16:40:51 +0800 cap staging execute_command
+  INFO ---------------------------------------------------------------------------
+  INFO [15779ac2] Running ./execute.sh echo 'testing' > new_test1.txt as pi@192.168.1.228
+ DEBUG [15779ac2] Command: ./execute.sh echo 'testing' > new_test1.txt
+ DEBUG [15779ac2] 	bash: ./execute.sh: Permission denied
+  INFO ---------------------------------------------------------------------------
+  INFO START 2017-01-20 16:43:30 +0800 cap staging execute_command
+  INFO ---------------------------------------------------------------------------
+  INFO [f87c69fc] Running ./execute.sh echo 'testing' > new_test2.txt as pi@192.168.1.228
+ DEBUG [f87c69fc] Command: ./execute.sh echo 'testing' > new_test2.txt
+ DEBUG [f87c69fc] 	bash: ./execute.sh: Permission denied
+  INFO ---------------------------------------------------------------------------
+  INFO START 2017-01-20 16:47:26 +0800 cap staging execute_command
+  INFO ---------------------------------------------------------------------------
+  INFO [1f73e9b2] Running ./execute.sh echo 'testing somemore' > 'moar_testing.txt' as pi@192.168.1.228
+ DEBUG [1f73e9b2] Command: ./execute.sh echo 'testing somemore' > 'moar_testing.txt'
+  INFO [1f73e9b2] Finished in 6.392 seconds with exit status 0 (successful).
+  INFO ---------------------------------------------------------------------------
+  INFO START 2017-02-03 10:09:31 +0800 cap production deploy
+  INFO ---------------------------------------------------------------------------
+  INFO ---------------------------------------------------------------------------
+  INFO START 2017-02-03 10:10:14 +0800 cap staging update_file
+  INFO ---------------------------------------------------------------------------
+  INFO [1a7f6606] Running /usr/bin/env Test /home/pi/update_files as pi@192.168.1.212
+ DEBUG [1a7f6606] Command: /usr/bin/env Test /home/pi/update_files
+  INFO [5266836b] Running test /home/pi/update_files on 192.168.1.211,
+ DEBUG [5266836b] Command: test /home/pi/update_files
+  INFO [2fa3ec5a] Running ./set_up.sh test test on 192.168.1.211,
+ DEBUG [2fa3ec5a] Command: ./set_up.sh test test
+  INFO [6ffd4d6c] Running test /home/pi/update_files as pi@192.168.1.211
+ DEBUG [6ffd4d6c] Command: test /home/pi/update_files
+  INFO [19b10aed] Running ./set_up.sh test test as pi@192.168.1.211
+ DEBUG [19b10aed] Command: ./set_up.sh test test
+  INFO [fc163d37] Running ./set_up.sh Test test as pi@192.168.1.212
+ DEBUG [fc163d37] Command: ./set_up.sh Test test
+  INFO ---------------------------------------------------------------------------
+  INFO START 2017-02-03 10:10:40 +0800 cap staging update_file
+  INFO ---------------------------------------------------------------------------
+  INFO ---------------------------------------------------------------------------
+  INFO START 2017-02-03 10:10:58 +0800 cap staging update_file
+  INFO ---------------------------------------------------------------------------
+  INFO ---------------------------------------------------------------------------
+  INFO START 2017-02-03 10:11:07 +0800 cap staging update_file
+  INFO ---------------------------------------------------------------------------
+  INFO ---------------------------------------------------------------------------
+  INFO START 2017-02-03 10:14:16 +0800 cap staging update_file
+  INFO ---------------------------------------------------------------------------
+  INFO ---------------------------------------------------------------------------
+  INFO START 2017-02-03 10:16:57 +0800 cap staging update_file
+  INFO ---------------------------------------------------------------------------
+  INFO ---------------------------------------------------------------------------
+  INFO START 2017-02-03 10:17:05 +0800 cap staging update_file
+  INFO ---------------------------------------------------------------------------
+  INFO ---------------------------------------------------------------------------
+  INFO START 2017-02-03 10:51:23 +0800 cap staging update_file source=/home/chan/Desktop/NextWork/test.txt destination=/home/pi
+  INFO ---------------------------------------------------------------------------
+  INFO ---------------------------------------------------------------------------
+  INFO START 2017-02-03 10:52:13 +0800 cap staging update_file source=/home/chan/Desktop/NextWork/test.txt destination=/home/pi
+  INFO ---------------------------------------------------------------------------
+  INFO ---------------------------------------------------------------------------
+  INFO START 2017-02-03 10:52:46 +0800 cap staging update_file source=/home/chan/Desktop/NextWork/test.txt destination=/home/pi
+  INFO ---------------------------------------------------------------------------
+  INFO ---------------------------------------------------------------------------
+  INFO START 2017-02-03 10:55:10 +0800 cap staging update_file source=/home/chan/Desktop/NextWork/test.txt destination=/home/pi
+  INFO ---------------------------------------------------------------------------
+  INFO ---------------------------------------------------------------------------
+  INFO START 2017-02-03 10:55:31 +0800 cap staging update_file source=/home/chan/Desktop/NextWork/test.txt destination=/home/pi
+  INFO ---------------------------------------------------------------------------
+  INFO ---------------------------------------------------------------------------
+  INFO START 2017-02-03 10:55:33 +0800 cap staging update_file source=/home/chan/Desktop/NextWork/test.txt destination=/home/pi
+  INFO ---------------------------------------------------------------------------
+  INFO ---------------------------------------------------------------------------
+  INFO START 2017-02-03 10:58:12 +0800 cap production deploy
+  INFO ---------------------------------------------------------------------------
+  INFO ---------------------------------------------------------------------------
+  INFO START 2017-02-03 10:58:17 +0800 cap staging update_file source=/home/chan/Desktop/NextWork/test.txt destination=/home/pi
+  INFO ---------------------------------------------------------------------------
+  INFO ---------------------------------------------------------------------------
+  INFO START 2017-02-03 11:01:47 +0800 cap staging update_file source=/home/chan/Desktop/NextWork/test.txt destination=/home/pi
+  INFO ---------------------------------------------------------------------------
+  INFO ---------------------------------------------------------------------------
+  INFO START 2017-02-03 11:07:05 +0800 cap production deploy
+  INFO ---------------------------------------------------------------------------
+  INFO ---------------------------------------------------------------------------
+  INFO START 2017-02-03 11:09:47 +0800 cap production deploy
+  INFO ---------------------------------------------------------------------------
+  INFO ---------------------------------------------------------------------------
+  INFO START 2017-02-03 11:09:49 +0800 cap staging update_file
+  INFO ---------------------------------------------------------------------------
+  INFO ---------------------------------------------------------------------------
+  INFO START 2017-02-03 11:10:40 +0800 cap production deploy
+  INFO ---------------------------------------------------------------------------
+  INFO ---------------------------------------------------------------------------
+  INFO START 2017-02-03 11:10:42 +0800 cap staging update_file
+  INFO ---------------------------------------------------------------------------
+  INFO ---------------------------------------------------------------------------
+  INFO START 2017-02-03 11:15:40 +0800 cap production deploy
+  INFO ---------------------------------------------------------------------------
+  INFO ---------------------------------------------------------------------------
+  INFO START 2017-02-03 11:15:42 +0800 cap staging update_file
+  INFO ---------------------------------------------------------------------------
+  INFO ---------------------------------------------------------------------------
+  INFO START 2017-02-03 11:17:16 +0800 cap staging update_file
+  INFO ---------------------------------------------------------------------------
+  INFO ---------------------------------------------------------------------------
+  INFO START 2017-02-03 11:17:27 +0800 cap staging update_file
+  INFO ---------------------------------------------------------------------------
+  INFO ---------------------------------------------------------------------------
+  INFO START 2017-02-03 11:17:38 +0800 cap staging update_file
+  INFO ---------------------------------------------------------------------------
+ DEBUG Uploading /home/chan/Desktop/NextWork/test.txt 0.0%
+  INFO Uploading /home/chan/Desktop/NextWork/test.txt 100.0%
+  INFO [ba557fcc] Running ./set_up.sh test.txt /home/pi as pi@192.168.1.211
+ DEBUG [ba557fcc] Command: ./set_up.sh test.txt /home/pi
+ DEBUG [ba557fcc] 	test.txt
+  INFO [ba557fcc] Finished in 0.549 seconds with exit status 0 (successful).
+  INFO ---------------------------------------------------------------------------
+  INFO START 2017-02-03 11:26:26 +0800 cap staging update_file
+  INFO ---------------------------------------------------------------------------
+  INFO ---------------------------------------------------------------------------
+  INFO START 2017-02-03 11:35:34 +0800 cap production deploy
+  INFO ---------------------------------------------------------------------------
+  INFO [ea6187ed] Running /usr/bin/env mkdir -p /tmp as pi@192.168.1.211
+ DEBUG [ea6187ed] Command: /usr/bin/env mkdir -p /tmp
+  INFO [a0f449f8] Running /usr/bin/env mkdir -p /tmp as pi@192.168.1.212
+ DEBUG [a0f449f8] Command: /usr/bin/env mkdir -p /tmp
+  INFO [ea6187ed] Finished in 1.362 seconds with exit status 0 (successful).
+  INFO [a0f449f8] Finished in 1.363 seconds with exit status 0 (successful).
+  INFO ---------------------------------------------------------------------------
+  INFO START 2017-02-03 11:35:42 +0800 cap production deploy
+  INFO ---------------------------------------------------------------------------
+  INFO [cb6c7af3] Running /usr/bin/env mkdir -p /tmp as pi@192.168.1.211
+ DEBUG [cb6c7af3] Command: /usr/bin/env mkdir -p /tmp
+  INFO [1bf01646] Running /usr/bin/env mkdir -p /tmp as pi@192.168.1.212
+ DEBUG [1bf01646] Command: /usr/bin/env mkdir -p /tmp
+  INFO [cb6c7af3] Finished in 0.332 seconds with exit status 0 (successful).
+  INFO [1bf01646] Finished in 0.351 seconds with exit status 0 (successful).
+ DEBUG Uploading /tmp/git-ssh-my_app_name-production-chan.sh 0.0%
+  INFO Uploading /tmp/git-ssh-my_app_name-production-chan.sh 100.0%
+ DEBUG Uploading /tmp/git-ssh-my_app_name-production-chan.sh 0.0%
+  INFO Uploading /tmp/git-ssh-my_app_name-production-chan.sh 100.0%
+  INFO [45734cf5] Running /usr/bin/env chmod 700 /tmp/git-ssh-my_app_name-production-chan.sh as pi@192.168.1.211
+ DEBUG [45734cf5] Command: /usr/bin/env chmod 700 /tmp/git-ssh-my_app_name-production-chan.sh
+  INFO [fe3b4626] Running /usr/bin/env chmod 700 /tmp/git-ssh-my_app_name-production-chan.sh as pi@192.168.1.212
+ DEBUG [fe3b4626] Command: /usr/bin/env chmod 700 /tmp/git-ssh-my_app_name-production-chan.sh
+  INFO [45734cf5] Finished in 0.026 seconds with exit status 0 (successful).
+  INFO [fe3b4626] Finished in 0.023 seconds with exit status 0 (successful).
+  INFO [ddbcee2e] Running /usr/bin/env git ls-remote --heads git@example.com:me/my_repo.git as pi@192.168.1.212
+  INFO [500f564c] Running /usr/bin/env git ls-remote --heads git@example.com:me/my_repo.git as pi@192.168.1.211
+ DEBUG [ddbcee2e] Command: ( export GIT_ASKPASS="/bin/echo" GIT_SSH="/tmp/git-ssh-my_app_name-production-chan.sh" ; /usr/bin/env git ls-remote --heads git@example.com:me/my_repo.git )
+ DEBUG [500f564c] Command: ( export GIT_ASKPASS="/bin/echo" GIT_SSH="/tmp/git-ssh-my_app_name-production-chan.sh" ; /usr/bin/env git ls-remote --heads git@example.com:me/my_repo.git )
+ DEBUG [ddbcee2e] 	ssh: connect to host example.com port 22: Network is unreachable
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+ DEBUG [500f564c] 	ssh: connect to host example.com port 22: Network is unreachable
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+  INFO ---------------------------------------------------------------------------
+  INFO START 2017-02-03 11:49:25 +0800 cap production deploy
+  INFO ---------------------------------------------------------------------------
+  INFO ---------------------------------------------------------------------------
+  INFO START 2017-02-03 11:57:42 +0800 cap staging update file /home/chan/Desktop/NextWork/test.txt
+  INFO ---------------------------------------------------------------------------
+  INFO ---------------------------------------------------------------------------
+  INFO START 2017-02-03 11:58:04 +0800 cap staging update_file
+  INFO ---------------------------------------------------------------------------
+  INFO ---------------------------------------------------------------------------
+  INFO START 2017-02-03 11:58:18 +0800 cap staging update_file
+  INFO ---------------------------------------------------------------------------
+  INFO ---------------------------------------------------------------------------
+  INFO START 2017-02-03 11:58:33 +0800 cap staging update_file
+  INFO ---------------------------------------------------------------------------
+  INFO ---------------------------------------------------------------------------
+  INFO START 2017-02-03 11:59:02 +0800 cap staging update_file
+  INFO ---------------------------------------------------------------------------
+  INFO ---------------------------------------------------------------------------
+  INFO START 2017-02-03 12:01:11 +0800 cap staging update_file
+  INFO ---------------------------------------------------------------------------
+  INFO ---------------------------------------------------------------------------
+  INFO START 2017-02-03 12:02:04 +0800 cap staging update_file
+  INFO ---------------------------------------------------------------------------
+ DEBUG Uploading /home/chan/Desktop/NextWork/test.txt 0.0%
+  INFO Uploading /home/chan/Desktop/NextWork/test.txt 100.0%
+  INFO ---------------------------------------------------------------------------
+  INFO START 2017-02-03 12:03:26 +0800 cap staging update_file
+  INFO ---------------------------------------------------------------------------
+  INFO ---------------------------------------------------------------------------
+  INFO START 2017-02-03 12:04:40 +0800 cap staging update_file
+  INFO ---------------------------------------------------------------------------
+  INFO ---------------------------------------------------------------------------
+  INFO START 2017-02-03 12:05:49 +0800 cap staging update_file
+  INFO ---------------------------------------------------------------------------
+  INFO ---------------------------------------------------------------------------
+  INFO START 2017-02-03 12:06:33 +0800 cap staging update_file
+  INFO ---------------------------------------------------------------------------
+  INFO ---------------------------------------------------------------------------
+  INFO START 2017-02-03 12:07:03 +0800 cap staging update_file /home/chan/Desktop/NextWork/test.txt /home/pi
+  INFO ---------------------------------------------------------------------------
+  INFO ---------------------------------------------------------------------------
+  INFO START 2017-02-03 12:07:48 +0800 cap staging update_file /home/chan/Desktop/NextWork/test.txt /home/pi
+  INFO ---------------------------------------------------------------------------
+ DEBUG Uploading /home/chan/Desktop/NextWork/test.txt 0.0%
+  INFO Uploading /home/chan/Desktop/NextWork/test.txt 100.0%
+  INFO [73fad588] Running ./set_up.sh test.txt /home/pi as pi@192.168.1.211
+ DEBUG [73fad588] Command: ./set_up.sh test.txt /home/pi
+ DEBUG Uploading /home/chan/Desktop/NextWork/test.txt 0.0%
+  INFO Uploading /home/chan/Desktop/NextWork/test.txt 100.0%
+  INFO [aa335ffa] Running ./set_up.sh test.txt /home/pi as pi@192.168.1.212
+ DEBUG [aa335ffa] Command: ./set_up.sh test.txt /home/pi
+ DEBUG [73fad588] 	test.txt
+  INFO [73fad588] Finished in 0.299 seconds with exit status 0 (successful).
+ DEBUG [aa335ffa] 	test.txt
+  INFO [aa335ffa] Finished in 0.328 seconds with exit status 0 (successful).
+  INFO ---------------------------------------------------------------------------
+  INFO START 2017-02-03 12:09:18 +0800 cap staging update_file /home/chan/Desktop/NextWork/test.txt /home/pi
+  INFO ---------------------------------------------------------------------------
+ DEBUG Uploading /home/chan/Desktop/NextWork/test.txt 0.0%
+ DEBUG Uploading /home/chan/Desktop/NextWork/test.txt 0.0%
+  INFO Uploading /home/chan/Desktop/NextWork/test.txt 100.0%
+  INFO Uploading /home/chan/Desktop/NextWork/test.txt 100.0%
+  INFO [4b88de43] Running ./set_up.sh test.txt /home/pi as pi@192.168.1.211
+ DEBUG [4b88de43] Command: ./set_up.sh test.txt /home/pi
+  INFO [b68c234c] Running ./set_up.sh test.txt /home/pi as pi@192.168.1.212
+ DEBUG [b68c234c] Command: ./set_up.sh test.txt /home/pi
+ DEBUG [4b88de43] 	test.txt
+ DEBUG [b68c234c] 	test.txt
+  INFO [4b88de43] Finished in 0.556 seconds with exit status 0 (successful).
+  INFO [b68c234c] Finished in 0.566 seconds with exit status 0 (successful).
+  INFO ---------------------------------------------------------------------------
+  INFO START 2017-02-03 12:12:53 +0800 cap staging execute_command chmod 777 test.txt
+  INFO ---------------------------------------------------------------------------
+  INFO [1625963d] Running /usr/bin/env ./execute.sh as pi@192.168.1.212
+  INFO [29393118] Running /usr/bin/env ./execute.sh as pi@192.168.1.211
+  INFO [e2258e58] Running /usr/bin/env ./execute.sh on 192.168.1.211,192.168.1.212
+ DEBUG [1625963d] Command: /usr/bin/env ./execute.sh
+ DEBUG [29393118] Command: /usr/bin/env ./execute.sh
+ DEBUG [e2258e58] Command: /usr/bin/env ./execute.sh
+ DEBUG [29393118] 	usage: sudo -h | -K | -k | -V
+usage: sudo -v [-AknS] [-g group] [-h host] [-p prompt] [-u user]
+usage: sudo -l [-AknS] [-g group] [-h host] [-p prompt] [-U user] [-u user]
+            [command]
+usage: sudo [-AbEHknPS] [-r role] [-t type] [-C num] [-g group] [-h host] [-p
+      
+ DEBUG [29393118] 	      prompt] [-u user] [VAR=value] [-i|-s] [<command>]
+usage: sudo -e [-AknS] [-r role] [-t type] [-C num] [-g group] [-h host] [-p
+            prompt] [-u user] file ...
+ DEBUG [29393118] 	
+  INFO [29393118] Finished in 0.540 seconds with exit status 0 (successful).
+ DEBUG [1625963d] 	usage: sudo -h | -K | -k | -V
+usage: sudo -v [-AknS] [-g group] [-h host] [-p prompt] [-u user]
+usage: sudo -l [-AknS] [-g group] [-h host] [-p prompt] [-U user] [-u user]
+            [command]
+ DEBUG [1625963d] 	usage: sudo [-AbEHknPS] [-r role] [-t type] [-C num] [-g group] [-h host] [-p
+            prompt] [-u user] [VAR=value] [-i|-s] [<command>]
+usage: sudo -e [-AknS] [-r role] [-t type] [-C num] [-g group] [-h host] [-p
+            prompt] [-u user] file ...
+ DEBUG [1625963d] 	
+  INFO [1625963d] Finished in 0.670 seconds with exit status 0 (successful).
+  INFO ---------------------------------------------------------------------------
+  INFO START 2017-02-03 12:13:43 +0800 cap staging update_file /home/chan/Desktop/NextWork/test.txt /home/pi
+  INFO ---------------------------------------------------------------------------
+ DEBUG Uploading /home/chan/Desktop/NextWork/test.txt 0.0%
+  INFO Uploading /home/chan/Desktop/NextWork/test.txt 100.0%
+ DEBUG Uploading /home/chan/Desktop/NextWork/test.txt 0.0%
+  INFO Uploading /home/chan/Desktop/NextWork/test.txt 100.0%
+  INFO [7335e0d8] Running ./set_up.sh test.txt /home/pi as pi@192.168.1.211
+ DEBUG [7335e0d8] Command: ./set_up.sh test.txt /home/pi
+  INFO [94d26781] Running ./set_up.sh test.txt /home/pi as pi@192.168.1.212
+ DEBUG [94d26781] Command: ./set_up.sh test.txt /home/pi
+ DEBUG [7335e0d8] 	test.txt
+  INFO [7335e0d8] Finished in 0.291 seconds with exit status 0 (successful).
+ DEBUG [94d26781] 	test.txt
+  INFO [94d26781] Finished in 0.315 seconds with exit status 0 (successful).
+  INFO ---------------------------------------------------------------------------
+  INFO START 2017-02-03 12:13:57 +0800 cap staging get_command chmod 777 test.txt
+  INFO ---------------------------------------------------------------------------
+  INFO ---------------------------------------------------------------------------
+  INFO START 2017-02-03 12:14:12 +0800 cap staging execute_command chmod 777 test.txt
+  INFO ---------------------------------------------------------------------------
+  INFO [391e95db] Running /usr/bin/env ./execute.sh as pi@192.168.1.211
+  INFO [700b215c] Running /usr/bin/env ./execute.sh as pi@192.168.1.212
+  INFO [253ff592] Running /usr/bin/env ./execute.sh on 192.168.1.211,192.168.1.212
+ DEBUG [391e95db] Command: /usr/bin/env ./execute.sh
+ DEBUG [700b215c] Command: /usr/bin/env ./execute.sh
+ DEBUG [253ff592] Command: /usr/bin/env ./execute.sh
+ DEBUG [391e95db] 	usage: sudo -h | -K | -k | -V
+usage: sudo -v [-AknS] [-g group] [-h host] [-p prompt] [-u user]
+usage: sudo -l [-AknS] [-g group] [-h host] [-p prompt] [-U user] [-u user]
+            [command]
+ DEBUG [391e95db] 	usage: sudo [-AbEHknPS] [-r role] [-t type] [-C num] [-g group] [-h host] [-p
+            prompt] [-u user] [VAR=value] [-i|-s] [<command>]
+usage: sudo -e [-AknS] [-r role] [-t type] [-C num] [-g group] [-h host] [-p
+            prompt] [-u user] file ...
+ DEBUG [391e95db] 	
+  INFO [391e95db] Finished in 0.344 seconds with exit status 0 (successful).
+ DEBUG [700b215c] 	usage: sudo -h | -K | -k | -V
+usage: sudo -v [-AknS] [-g group] [-h host] [-p prompt] [-u user]
+usage: sudo -l [-AknS] [-g group] [-h host] [-p prompt] [-U user] [-u user]
+            [command]
+usage: sudo [-AbEHknPS] [-r role] [-t type] [-C num] [-g group] [-h host] [-p
+        
+ DEBUG [700b215c] 	    prompt] [-u user] [VAR=value] [-i|-s] [<command>]
+usage: sudo -e [-AknS] [-r role] [-t type] [-C num] [-g group] [-h host] [-p
+            prompt] [-u user] file ...
+ DEBUG [700b215c] 	
+  INFO [700b215c] Finished in 0.367 seconds with exit status 0 (successful).
+  INFO ---------------------------------------------------------------------------
+  INFO START 2017-02-03 12:14:41 +0800 cap staging execute_command chmod 777 test.txt
+  INFO ---------------------------------------------------------------------------
+  INFO [09041a77] Running ./execute.sh chmod 777 test.txt on 192.168.1.211,192.168.1.212
+  INFO [a7a317df] Running ./execute.sh chmod 777 test.txt as pi@192.168.1.212
+  INFO [1227f28d] Running ./execute.sh chmod 777 test.txt as pi@192.168.1.211
+ DEBUG [09041a77] Command: ./execute.sh chmod 777 test.txt
+ DEBUG [a7a317df] Command: ./execute.sh chmod 777 test.txt
+ DEBUG [1227f28d] Command: ./execute.sh chmod 777 test.txt
+ DEBUG [1227f28d] 	chmod
+  INFO [1227f28d] Finished in 0.409 seconds with exit status 0 (successful).
+ DEBUG [a7a317df] 	chmod
+  INFO [a7a317df] Finished in 0.425 seconds with exit status 0 (successful).
+  INFO ---------------------------------------------------------------------------
+  INFO START 2017-02-07 11:15:34 +0800 cap production deploy
+  INFO ---------------------------------------------------------------------------
+  INFO ---------------------------------------------------------------------------
+  INFO START 2017-02-07 11:31:40 +0800 cap staging execute_command
+  INFO ---------------------------------------------------------------------------
+  INFO [43e70506] Running /usr/bin/env ./execute.sh on 192.168.1.211,192.168.1.212
+ DEBUG [43e70506] Command: /usr/bin/env ./execute.sh
