@@ -1,11 +1,21 @@
 <div class="col-sm-8" style='border-style: solid; padding: 20px'>
+  <%formatted_timer_value = nil%>
+  <% formatted_timer_value = @current_timer.strftime('%H:%M') if !@current_timer.nil?%>
   <%=form_for @aircond, url:timer_set_path(@aircond) do |f|%>
-  	<%=f.time_field :timer, value:@current_timer.strftime('%H:%M')
-  %>
+  	<%=f.time_field :timer, value: formatted_timer_value%>
   	<%=f.select :status, Aircond.statuses.keys%>
   	<%=f.submit "Set Timer"%>
   <%end%>
 
-  <div id=current_timer><span id=hour><%= "#{@current_timer.hour}".rjust(2,'0')%></span>:<span id=min><%="#{@current_timer.min}".rjust(2,'0')%></span>:<span id=sec><%="#{@current_timer.sec}".rjust(2,'0')%></span></div>
-  	<div>Timezone: <%=current_user.timezone%></div>
+  <div style = 'float:right'><span >Current Timer : </span>
+    <% if !@current_timer.nil?%>
+      <div id=current_timer style = 'float:right'>
+        <span id=hour><%= "#{@current_timer.hour}".rjust(2,'0')%></span>:<span id=min><%="#{@current_timer.min}".rjust(2,'0')%></span>:<span id=sec><%="#{@current_timer.sec}".rjust(2,'0')%></span>
+      </div>
+    <%else%>
+      <div> No Timer Set</div>
+    <%end%>
+    <div style = 'clear:right'></div>
+  	<div style = 'float:right'>Timezone: <%=current_user.timezone%></div>
+  </div>
 </div>

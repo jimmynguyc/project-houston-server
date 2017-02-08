@@ -78,16 +78,3 @@ class PhoneAppsController < ApplicationController
 end
 
 
-
-	# def app_approve_token
-	# 	if is_admin
-	# 		@phone_app = PhoneApp.find_or_initialize_by(user_name:params[:email])
-	# 		@phone_app.status = params[:status]
-	# 		@phone_app.access_token = generate_security_token if @phone_app.status == "ACCEPTED"
-	# 		@phone_app.access_token.save
-	# 		#how to send to specifc app
-	# 		render json:{app_token:@phone_app.access_token}
-	# 	else
-	# 		render json:{response:'Failed to approve. You are not an admin'}
-	# 	end
-	# end

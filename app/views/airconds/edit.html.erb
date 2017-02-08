@@ -1,13 +1,12 @@
 <div class="col-sm-8" style='border-style: solid; padding: 20px'>
-  <%= form_for @aircond, html:{id:'edit_aircond_settings'} do |form|%>
-  	<%= render partial: 'form', object:form%>
-  <%end%>
-  	
-  <%= form_for@aircond, html:{ id:'alias_update'} do |form|%>
-  	<%= form.label :alias, 'Aircond Alias' %>
-  	<%= form.text_field :alias%>
-  	<%= form.submit 'Update Alias'%>
-  <%end%>
+  <div class = 'col-sm-7' >
+    <%= form_for @aircond, html:{id:'edit_aircond_settings'} do |form|%>
+      <%= render partial: 'form', object:form%>
+    <%end%>
+  </div>
+
+    <div class = 'col-sm-5'></div>	
+
   <div>
   	<%= flash[:warning]%>
   	<%= flash[:notice]%>
