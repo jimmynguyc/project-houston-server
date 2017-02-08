@@ -1,0 +1,32 @@
+# /var/www/test/state.py
+
+#!/usr/bin/python
+
+# Turn on debug mode.
+import cgitb
+import os
+import cgi
+import sys
+import RPi.GPIO as GPIO
+import subprocess
+cgitb.enable()
+# Print necessary headers.
+print("Content-Type: text/html")
+print()
+#test=cgi.test()
+request_method=os.environ['REQUEST_METHOD']
+if request_method == 'GET':
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(4,GPIO.IN)
+#run the get state command
+        print(GPIO.input(4))
+        GPIO.cleanup()
+elif request_method == 'POST':
+#run the send_signal command
+    args=sys.stdin.read()
+    arg_list=args.split('&')
+    for arg in arg_list:
+        key, value=arg.split('=')
+        os.system("irsend SEND_ONCE Daikin "+value.split('\n')[0])
+    print("I'm a post request")
+

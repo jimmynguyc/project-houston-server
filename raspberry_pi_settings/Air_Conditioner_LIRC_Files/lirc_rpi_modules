@@ -1,0 +1,11 @@
+#/etc/modules-load.d/lirc_rpi.conf
+
+
+
+lirc_dev
+
+lirc_rpi gpio_out_pin=23
+
+
+
+i2c-dev
