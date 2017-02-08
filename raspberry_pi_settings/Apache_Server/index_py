@@ -1,0 +1,16 @@
+# /var/www/test/index.py
+
+#!/usr/bin/python
+
+#!/usr/bin/python
+
+# Turn on debug mode.
+import cgitb
+import os
+cgitb.enable()
+#os.system("irsend SEND_ONCE Daikin OFF")
+
+# Print necessary headers.
+print("Content-Type: text/html")
+print()
+print('Command Sent')
