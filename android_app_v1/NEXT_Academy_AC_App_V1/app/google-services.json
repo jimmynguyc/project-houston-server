@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "234693173302",
+    "firebase_url": "https://project-houston.firebaseio.com",
+    "project_id": "project-houston",
+    "storage_bucket": "project-houston.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:234693173302:android:e68109186de9f314",
+        "android_client_info": {
+          "package_name": "com.example.dara.next_academy_ac_app_v1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "234693173302-v15movdmt6qmennqb6v5kab5s1huvgo7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDWqS0_3NjEGSnqFr9Zhp1g7Rzc1Ba9W1Q"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
