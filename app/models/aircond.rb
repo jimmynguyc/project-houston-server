@@ -45,7 +45,7 @@ class Aircond < ApplicationRecord
 
 	def update_firebase
 		firebase = Firebase::Client.new("https://project-houston.firebaseio.com")
-		data = self.slice(:status,:temperature,:mode,:fan_speed)
+		data = self.slice(:alias,:status,:temperature,:mode,:fan_speed)
 		firebase.update('/airconds/'+self.id.to_s, data)		
 	end
 
@@ -54,8 +54,18 @@ class Aircond < ApplicationRecord
 		throw :abort if response == false
 	end
 
-	def check_power_status(arg)
+	def check_power_status(arg)	
 		get_state[:status] == arg
+	end
+
+	def check_device_status
+		begin
+			Unirest.get(self.device.url)
+		rescue Errno::EHOSTUNREACH
+			false
+		else
+			true
+		end
 	end
 
 	def get_command

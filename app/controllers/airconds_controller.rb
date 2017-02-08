@@ -13,7 +13,7 @@ class AircondsController < ApplicationController
 	def create
 		device= Device.new(device_params)
 		if device.save
-			ac = Aircond.create(device_id:device.id)
+			ac = Aircond.create(device_id:device.id,alias:aircond_params[:alias])
 			redirect_to root_path
 		else 
 			@aircond = Aircond.new
@@ -29,13 +29,18 @@ class AircondsController < ApplicationController
 	def update
 			@aircond.update(alias:aircond_params[:alias])
 			cmd = decipher_command(aircond_params)
-
+			generate_selection(@aircond.mode)
 			if validate_AC_controls(cmd)
-				if @aircond.update(aircond_params) 
-					flash[:notice] = 'Aircond state was successfuly changed'
-					redirect_to root_path
+				if @aircond.check_device_status
+					if @aircond.update(aircond_params) 
+						flash[:notice] = 'Aircond state was successfuly changed'
+						redirect_to root_path
+					else
+						flash[:warning] = "Aircond state was not change. Remains as #{@aircond.get_state[:status]}"
+						render :edit
+					end
 				else
-					flash[:warning] = "Aircond state was not change. Remains as #{@aircond.get_state[:status]}"
+					flash[:warning] = 'Raspberry Pi might not be on.'
 					render :edit
 				end
 			else
@@ -86,18 +91,20 @@ class AircondsController < ApplicationController
 
 	def app_set	
 		if validate_app_token(params[:user_name],params[:app_token])
-
 			cmd = decipher_command(aircond_params)
 			if validate_AC_controls(cmd)
-				if @aircond.check_power_status(aircond_params['status'])
-
-					@aircond.update(aircond_params) 
-					render json:{response: "Aircond is already #{aircond_params[:status]}"}
-				elsif @aircond.update(aircond_params) 
-					render json:{response:'Aircond state was successfuly changed'}
+				if @aircond.check_device_status
+					if @aircond.check_power_status(aircond_params['status'])
+						@aircond.update(aircond_params) 
+						render json:{response: "Aircond is already #{aircond_params[:status]}"}
+					elsif @aircond.update(aircond_params) 
+						render json:{response:'Aircond state was successfuly changed'}
+					else
+						render json:{response:"Aircond state was not change. Remains as #{@aircond.get_state[:status]}"}
+					end	
 				else
-					render json:{response:"Aircond state was not change. Remains as #{@aircond.get_state[:status]}"}
-				end	
+					render json:{response:'Raspberry Pi might not be on.'}
+				end
 			else
 				render json:{response:"Invalid command signal"}
 			end
@@ -143,6 +150,9 @@ class AircondsController < ApplicationController
 			@temperature_selection = []
 		elsif mode == 'WET'
 			@fan_speed_selection = []
+		elsif mode == nil
+			@fan_speed_selection = []
+			@temperature_selection = []
 		end
 	end
 
@@ -160,6 +170,6 @@ class AircondsController < ApplicationController
 
 	def validate_app_token(user_name,token)
 		app_token = PhoneApp.find_by(user_name:user_name)	
-		token == '' #if !app_token.nil?
+		token == app_token.access_token if !app_token.nil?
 	end
 end

@@ -1,45 +1,32 @@
+	<div id = ac_status>
+		<%= form.label :status %>
+		<%= form.select :status, Aircond.statuses.keys, {}, {class:'right_align'}%>
+	</div>
 
-		<div id = ac_status>
-
-<%= form.label :status %>
-<%= form.select :status, Aircond.statuses.keys%>
-		</div>
-
-		<div id = ac_mode>	
-			
-				<%= form.label :mode %>
-				<%= form.select :mode,Aircond.modes.keys %>
-			
-			
-			
-		</div>
+	<div id = ac_mode>	
+		<%= form.label :mode %>
+		<%= form.select :mode,Aircond.modes.keys, {}, {class:'right_align'} %>
+	</div>
 
 
-		<div id = ac_fan_speed>
-			<% if !@fan_speed_selection.empty?%>
-				
-						<%= form.label :fan_speed %>
-						<%= form.select :fan_speed, @fan_speed_selection %>
-				
-			<% end%>
-		</div>
+	<div id = ac_fan_speed>
+		<% if !@fan_speed_selection.empty?%>
+			<%= form.label :fan_speed %>
+			<%= form.select :fan_speed, @fan_speed_selection, {}, {class:'right_align'} %>
+		<%end%>
+	</div>
 
 
 
-		<div id = ac_temperature>
-			<% if !@temperature_selection.empty?%>
-				
-					<%= form.label :temperature %>
-					<%= form.select :temperature, @temperature_selection%>
-				
-			<% end%>
-		</div>	
+	<div id = ac_temperature>
+		<% if !@temperature_selection.empty?%>
+			<%= form.label :temperature %>
+			<%= form.select :temperature, @temperature_selection, {}, {class:'right_align'}%>
+		<% end%>
+	</div>	
 
-		<div>
-	  	<%= form.label :alias, 'Aircond Alias' %>
-	  	<%= form.text_field :alias%>	
-		</div>
-
-
-
+	<div>
+  	<%= form.label :alias, 'Aircond Alias' %>
+  	<%= form.text_field :alias, {class:'right_align'}%>	
+	</div>
 	<%= form.submit%>

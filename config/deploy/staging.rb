@@ -8,7 +8,7 @@ set :stage, :staging
 # server "example.com", user: "deploy", roles: %w{app db web}, my_property: :my_value
 # server "example.com", user: "deploy", roles: %w{app web}, other_property: :other_value
 # server "db.example.com", user: "deploy", roles: %w{db}
-role :web, %w{192.168.1.228}
+
 
 # using extended syntax (which is equivalent)
 
@@ -68,19 +68,33 @@ role :web, %w{192.168.1.228}
   # ask(:source) if fetch(:source) == nil
  	# ask(:destination) if fetch(:destination) == nil
 
-server "192.168.1.228",
+server "192.168.1.211",
+  user: "pi",
+  roles: %w{web},
+  ssh_options: {  
+    keys: %w(/home/user_name/.ssh/id_rsa),
+  }
+
+server "192.168.1.212",
   user: "pi",
   roles: %w{web},
   ssh_options: {
     keys: %w(/home/user_name/.ssh/id_rsa),
-    # password: "please use keys"
   }
 
-ask(:source)
-ask(:destination)
+role :web, %w{192.168.1.211,192.168.1.212}
+
+desc 'Get locations'
+task :get_location do
+  set :source , ARGV[2]
+  set :destination , ARGV[3]
+end
+
+
 
 desc "Update text file with another text file"
 task :update_file do
+  invoke :get_location
   on roles(:web) do |host|
     upload!("#{fetch(:source)}", "/home/pi/update_files")
     execute "./set_up.sh #{fetch(:source).split('/').last} #{fetch(:destination)} "
@@ -88,9 +102,14 @@ task :update_file do
   end
 end
 
-ask(:command)
+desc 'get command'
+task :get_command do
+  set :command, ARGV[2]
+end
+
 desc "Execute a command that accepts up to 8 words  "
 task :execute_command do
+  invoke :get_command
   on roles(:web) do |host|
     execute "./execute.sh #{fetch(:command)} "
   end
@@ -98,4 +117,11 @@ end
 
     # execute "cp #{fetch(:source)} #{fetch(:destination)}"
     # info "#{fetch(:source)} #{fetch(:destination)}"
+
+    #/home/chan/Desktop/NextWork/test.txt /home/pi
+
     # info "Host #{host} (#{host.roles.to_a.join(', ')}):\t#{capture(:update_file)}"
+
+    #cap staging execute_command "chmod 777 test.txt"
+
+    #cap staging update_file /home/chan/Desktop/NextWork/test.txt /home/pi

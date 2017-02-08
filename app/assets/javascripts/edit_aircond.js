@@ -34,7 +34,7 @@ var remove_element = function(selector){
 	name = selector.replace('#ac_','')
 	if(selected_element(selector).html() === '' ){
 	}else{
-		selected_element(selector).html("<input type='hidden' name = aircond[" + name + "] value = nil ></input>")	
+		selected_element(selector).html("<input type='hidden' name = aircond[" + name + "] value ='' ></input>")	
 	}
 }
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170120024524) do
+ActiveRecord::Schema.define(version: 20170208032527) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,10 +32,10 @@ ActiveRecord::Schema.define(version: 20170120024524) do
     t.integer  "mode"
     t.integer  "fan_speed"
     t.integer  "temperature"
-    t.time     "timer",            default: '2000-01-01 17:13:14'
+    t.time     "timer"
     t.string   "alias"
-    t.datetime "created_at",                                       null: false
-    t.datetime "updated_at",                                       null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
     t.index ["aircond_state_id"], name: "index_airconds_on_aircond_state_id", using: :btree
     t.index ["device_id"], name: "index_airconds_on_device_id", using: :btree
   end

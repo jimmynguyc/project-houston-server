@@ -18,7 +18,8 @@ module ApplicationHelper
 		status,mode,temperature,fan_speed = '','','',''
 
 		parameters.each do |key,value|
-			if value == nil
+
+			if value == nil 
 			elsif key == 'mode' && value != ''
 				mode = value.to_s
 			elsif key == 'fan_speed'  && value != ''
