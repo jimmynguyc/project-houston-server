@@ -45060,3 +45060,173 @@ Processing by AircondsController#update_website_from_firebase as */*
 Completed 200 OK in 914ms (Views: 0.2ms | ActiveRecord: 1.9ms)
 
 
+Started GET "/" for 127.0.0.1 at 2017-02-08 15:54:13 +0800
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mUser Load (1.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."remember_token" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["remember_token", "e5da20d7c7f24f9392a8b995e1dfffe63334185e"], ["LIMIT", 1]]
+Processing by UsersController#dashboard as HTML
+  Rendering users/dashboard.html.erb within layouts/application
+  [1m[36mAircond Load (0.7ms)[0m  [1m[34mSELECT "airconds".* FROM "airconds" ORDER BY "airconds"."id" ASC[0m
+DEPRECATION WARNING: Time columns will become time zone aware in Rails 5.1. This
+still causes `String`s to be parsed as if they were in `Time.zone`,
+and `Time`s to be converted to `Time.zone`.
+
+To keep the old behavior, you must add the following to your initializer:
+
+    config.active_record.time_zone_aware_types = [:datetime]
+
+To silence this deprecation warning, add the following:
+
+    config.active_record.time_zone_aware_types = [:datetime, :time]
+ (called from _app_views_users_dashboard_html_erb___2476385865997251643_69999956558160 at /home/chan/Desktop/NextWork/project-houston-server/aircond_rails_app/app/views/users/dashboard.html.erb:18)
+  Rendered collection of airconds/_aircond.html.erb [4 times] (1.7ms)
+  Rendered users/_timeform.html.erb (199.9ms)
+  Rendered users/dashboard.html.erb within layouts/application (237.5ms)
+  Rendered layouts/_navbar.html.erb (0.7ms)
+Completed 200 OK in 606ms (Views: 590.6ms | ActiveRecord: 3.2ms)
+
+
+Started POST "/firebase_update/1" for 127.0.0.1 at 2017-02-08 15:54:16 +0800
+Started POST "/firebase_update/2" for 127.0.0.1 at 2017-02-08 15:54:16 +0800
+Started POST "/firebase_update/3" for 127.0.0.1 at 2017-02-08 15:54:16 +0800
+DEPRECATION WARNING: skip_before_filter is deprecated and will be removed in Rails 5.1. Use skip_before_action instead. (called from <class:AircondsController> at /home/chan/Desktop/NextWork/project-houston-server/aircond_rails_app/app/controllers/airconds_controller.rb:6)
+Processing by AircondsController#update_website_from_firebase as */*
+Processing by AircondsController#update_website_from_firebase as */*
+  Parameters: {"aircond"=>{"alias"=>"AG8_top_2", "mode"=>"WET", "status"=>"ON", "temperature"=>"25"}, "id"=>"2"}
+Processing by AircondsController#update_website_from_firebase as */*
+  Parameters: {"aircond"=>{"alias"=>"AG8_top_1", "mode"=>"WET", "status"=>"OFF", "temperature"=>"16"}, "id"=>"1"}
+  Parameters: {"aircond"=>{"alias"=>"AG8_top_3", "mode"=>"WET", "status"=>"ON", "temperature"=>"16"}, "id"=>"3"}
+  [1m[36mAircond Load (1.4ms)[0m  [1m[34mSELECT  "airconds".* FROM "airconds" WHERE "airconds"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mAircond Load (2.5ms)[0m  [1m[34mSELECT  "airconds".* FROM "airconds" WHERE "airconds"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+Completed 500 Internal Server Error in 12ms (ActiveRecord: 2.5ms)
+
+
+  [1m[36mAircond Load (15.0ms)[0m  [1m[34mSELECT  "airconds".* FROM "airconds" WHERE "airconds"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  
+Completed 500 Internal Server Error in 22ms (ActiveRecord: 15.0ms)
+
+
+ArgumentError (Before update callback :check_state has not been defined):
+  
+Started POST "/firebase_update/4" for 127.0.0.1 at 2017-02-08 15:54:16 +0800
+  
+ArgumentError (Before update callback :check_state has not been defined):
+Processing by AircondsController#update_website_from_firebase as */*
+app/controllers/airconds_controller.rb:119:in `update_website_from_firebase'
+  
+  Parameters: {"aircond"=>{"alias"=>"AG8_top_4", "mode"=>"WET", "status"=>"ON", "temperature"=>"16"}, "id"=>"4"}
+app/controllers/airconds_controller.rb:119:in `update_website_from_firebase'
+  [1m[36mAircond Load (56.8ms)[0m  [1m[34mSELECT  "airconds".* FROM "airconds" WHERE "airconds"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+Completed 500 Internal Server Error in 61ms (ActiveRecord: 56.8ms)
+
+
+  
+ArgumentError (Before update callback :check_state has not been defined):
+  
+app/controllers/airconds_controller.rb:119:in `update_website_from_firebase'
+  Rendering /home/chan/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.text.erb
+  Rendering /home/chan/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_source.text.erb
+  Rendered /home/chan/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_source.text.erb (0.5ms)
+  Rendering /home/chan/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.text.erb
+  Rendered /home/chan/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.text.erb (0.7ms)
+  Rendering /home/chan/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.text.erb
+  Rendered /home/chan/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.text.erb (0.8ms)
+  Rendered /home/chan/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.text.erb (26.9ms)
+  Rendering /home/chan/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.text.erb
+  Rendering /home/chan/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_source.text.erb
+  Rendered /home/chan/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_source.text.erb (0.5ms)
+  Rendering /home/chan/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.text.erb
+  Rendered /home/chan/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.text.erb (0.5ms)
+  Rendering /home/chan/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.text.erb
+  Rendered /home/chan/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.text.erb (1.4ms)
+  Rendered /home/chan/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.text.erb (25.6ms)
+  Rendering /home/chan/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.text.erb
+  Rendering /home/chan/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_source.text.erb
+  Rendered /home/chan/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_source.text.erb (0.5ms)
+  Rendering /home/chan/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.text.erb
+  Rendered /home/chan/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.text.erb (0.5ms)
+  Rendering /home/chan/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.text.erb
+  Rendered /home/chan/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.text.erb (2.1ms)
+  Rendered /home/chan/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.text.erb (23.6ms)
+  [1m[36mDevice Load (0.4ms)[0m  [1m[34mSELECT  "devices".* FROM "devices" WHERE "devices"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+Completed 200 OK in 1484ms (Views: 0.4ms | ActiveRecord: 9.6ms)
+
+
+Started GET "/phone_apps" for 127.0.0.1 at 2017-02-08 15:54:33 +0800
+Processing by PhoneAppsController#index as HTML
+  [1m[36mUser Load (2.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."remember_token" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["remember_token", "e5da20d7c7f24f9392a8b995e1dfffe63334185e"], ["LIMIT", 1]]
+  Rendering phone_apps/index.html.erb within layouts/application
+  [1m[36mPhoneApp Load (1.3ms)[0m  [1m[34mSELECT "phone_apps".* FROM "phone_apps" ORDER BY "phone_apps"."id" ASC[0m
+  Rendered collection of phone_apps/_phone_app.html.erb [15 times] (11.5ms)
+  Rendered phone_apps/index.html.erb within layouts/application (30.4ms)
+  Rendered layouts/_navbar.html.erb (0.6ms)
+Completed 200 OK in 69ms (Views: 50.5ms | ActiveRecord: 11.3ms)
+
+
+Started GET "/phone_apps.js?filter=ACCEPTED" for 127.0.0.1 at 2017-02-08 15:54:40 +0800
+Processing by PhoneAppsController#index as JS
+  Parameters: {"filter"=>"ACCEPTED"}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."remember_token" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["remember_token", "e5da20d7c7f24f9392a8b995e1dfffe63334185e"], ["LIMIT", 1]]
+  Rendering phone_apps/index.js.erb
+  [1m[36mPhoneApp Load (0.9ms)[0m  [1m[34mSELECT "phone_apps".* FROM "phone_apps" WHERE "phone_apps"."status" = $1 ORDER BY "phone_apps"."id" ASC[0m  [["status", 1]]
+  Rendered collection of phone_apps/_phone_app.html.erb [14 times] (12.6ms)
+  Rendered phone_apps/index.js.erb (18.1ms)
+Completed 200 OK in 27ms (Views: 23.0ms | ActiveRecord: 1.3ms)
+
+
+Started GET "/phone_apps.js?filter=REJECTED" for 127.0.0.1 at 2017-02-08 15:54:41 +0800
+Processing by PhoneAppsController#index as JS
+  Parameters: {"filter"=>"REJECTED"}
+  [1m[36mUser Load (1.6ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."remember_token" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["remember_token", "e5da20d7c7f24f9392a8b995e1dfffe63334185e"], ["LIMIT", 1]]
+  Rendering phone_apps/index.js.erb
+  [1m[36mPhoneApp Load (0.6ms)[0m  [1m[34mSELECT "phone_apps".* FROM "phone_apps" WHERE "phone_apps"."status" = $1 ORDER BY "phone_apps"."id" ASC[0m  [["status", 2]]
+  Rendered collection of templates [0 times] (0.0ms)
+  Rendered phone_apps/index.js.erb (5.5ms)
+Completed 200 OK in 14ms (Views: 9.5ms | ActiveRecord: 2.2ms)
+
+
+Started GET "/phone_apps.js?filter=ALL" for 127.0.0.1 at 2017-02-08 15:54:43 +0800
+Processing by PhoneAppsController#index as JS
+  Parameters: {"filter"=>"ALL"}
+  [1m[36mUser Load (2.9ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."remember_token" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["remember_token", "e5da20d7c7f24f9392a8b995e1dfffe63334185e"], ["LIMIT", 1]]
+  Rendering phone_apps/index.js.erb
+  [1m[36mPhoneApp Load (0.9ms)[0m  [1m[34mSELECT "phone_apps".* FROM "phone_apps" ORDER BY "phone_apps"."id" ASC[0m
+  Rendered collection of phone_apps/_phone_app.html.erb [15 times] (20.0ms)
+  Rendered phone_apps/index.js.erb (27.9ms)
+Completed 200 OK in 47ms (Views: 39.9ms | ActiveRecord: 3.8ms)
+
+
+Started GET "/phone_apps.js?filter=REJECTED" for 127.0.0.1 at 2017-02-08 15:54:47 +0800
+Processing by PhoneAppsController#index as JS
+  Parameters: {"filter"=>"REJECTED"}
+  [1m[36mUser Load (1.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."remember_token" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["remember_token", "e5da20d7c7f24f9392a8b995e1dfffe63334185e"], ["LIMIT", 1]]
+  Rendering phone_apps/index.js.erb
+  [1m[36mPhoneApp Load (0.4ms)[0m  [1m[34mSELECT "phone_apps".* FROM "phone_apps" WHERE "phone_apps"."status" = $1 ORDER BY "phone_apps"."id" ASC[0m  [["status", 2]]
+  Rendered collection of templates [0 times] (0.1ms)
+  Rendered phone_apps/index.js.erb (3.4ms)
+Completed 200 OK in 12ms (Views: 7.5ms | ActiveRecord: 1.6ms)
+
+
+Started GET "/phone_apps.js?filter=ACCEPTED" for 127.0.0.1 at 2017-02-08 15:54:48 +0800
+Processing by PhoneAppsController#index as JS
+  Parameters: {"filter"=>"ACCEPTED"}
+  [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."remember_token" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["remember_token", "e5da20d7c7f24f9392a8b995e1dfffe63334185e"], ["LIMIT", 1]]
+  Rendering phone_apps/index.js.erb
+  [1m[36mPhoneApp Load (1.1ms)[0m  [1m[34mSELECT "phone_apps".* FROM "phone_apps" WHERE "phone_apps"."status" = $1 ORDER BY "phone_apps"."id" ASC[0m  [["status", 1]]
+  Rendered collection of phone_apps/_phone_app.html.erb [14 times] (18.0ms)
+  Rendered phone_apps/index.js.erb (25.4ms)
+Completed 200 OK in 38ms (Views: 32.1ms | ActiveRecord: 1.9ms)
+
+
+Started GET "/phone_apps.js?filter=PENDING" for 127.0.0.1 at 2017-02-08 15:54:50 +0800
+Processing by PhoneAppsController#index as JS
+  Parameters: {"filter"=>"PENDING"}
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."remember_token" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["remember_token", "e5da20d7c7f24f9392a8b995e1dfffe63334185e"], ["LIMIT", 1]]
+  Rendering phone_apps/index.js.erb
+  [1m[36mPhoneApp Load (0.6ms)[0m  [1m[34mSELECT "phone_apps".* FROM "phone_apps" WHERE "phone_apps"."status" = $1 ORDER BY "phone_apps"."id" ASC[0m  [["status", 0]]
+  Rendered collection of phone_apps/_phone_app.html.erb [1 times] (2.1ms)
+  Rendered phone_apps/index.js.erb (5.6ms)
+Completed 200 OK in 13ms (Views: 9.7ms | ActiveRecord: 1.1ms)
+
+
