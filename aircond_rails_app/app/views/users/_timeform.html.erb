@@ -1,4 +1,4 @@
 <%=form_for current_user, url:set_time_zone_path(current_user), html:{id:'timezone_form'} do |f|%>
-	<%= f.select :timezone, all_timezones  %>
-	<%= f.submit 'Set Time Zone'%>
+	<%= f.select :timezone, all_timezones,{},class:"form-control",style:'float:right'  %>
+	<%= f.submit 'Set Time Zone',class:'btn btn-primary submit-btn'%>
 <%end%>

@@ -1,0 +1,22 @@
+nav.next-navbar {
+  background-color: #073642;
+  color:white;
+  margin-bottom: 0px;
+  
+}
+.container-fluid {
+}
+
+.navbar img {
+    height: 40px;
+}
+
+a.navbar-brand{
+  padding:5px;
+}
+
+ul.navbar-nav li a{
+  color:white;
+  font-size: 15px;
+  font-weight: bold;
+}

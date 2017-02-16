@@ -13,6 +13,7 @@ class PhoneAppsController < ApplicationController
 
 	def index
 		if is_admin?
+			@current_time = Time.zone.now
 			if params[:filter] == nil || params[:filter] == "ALL"
 				@phone_apps = PhoneApp.all.order(:id)
 			else

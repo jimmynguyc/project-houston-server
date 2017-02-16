@@ -1,15 +1,46 @@
-<div class="col-sm-8" style='border-style: solid; padding: 20px'>
-  <div class = 'col-sm-7' >
+<div class="col-sm-9" >
+    <h1>Aircond Status</h1>
     <%= form_for @aircond, html:{id:'edit_aircond_settings'} do |form|%>
       <%= render partial: 'form', object:form%>
     <%end%>
-  </div>
 
-    <div class = 'col-sm-5'></div>	
 
-  <div>
-  	<%= flash[:warning]%>
-  	<%= flash[:notice]%>
-  	<p  id = notification></p>
+
+
+</div>
+
+<div class="col-sm-3" style = 'border-left-style: solid;border-bottom-style: solid; padding: 20px;text-align : right'>
+  <div id=current_time style='font-size: 50px'><span id=current_hour><%= "#{@current_time.hour}".rjust(2,'0')%></span>:<span id=current_min><%="#{@current_time.min}".rjust(2,'0')%></span>:<span id=current_sec><%="#{@current_time.sec}".rjust(2,'0')%></span></div>
+  <%= button_tag 'Set Time Zone', id:'timezone_button', class:"btn btn-primary get-btn"%>
+  <%= render '/users/timeform'%>
+  <div>Timezone: <%=current_user.timezone%></div>
+
+  <div style = 'border-top-style:solid'>
+    <h1>Timer</h1>
+        <%formatted_timer_value = nil%>
+        <% formatted_timer_value = @current_timer.strftime('%H:%M') if !@current_timer.nil?%>
+        <%=form_for @aircond, url:timer_set_path(@aircond) do |f|%>
+          <%=f.time_field :timer, value: formatted_timer_value,class:'form-control',style:'width:120px; float:left'%>
+          <%=f.select :status, Aircond.statuses.keys,{},class:'form-control right_align',style:'width:120px'%>
+          <%=f.submit "Set Timer",class:"btn btn-primary submit-btn"%>
+      <%end%>
+
+      <div style = 'float:right'><span >Current Timer : </span>
+        <% if !@current_timer.nil?%>
+          <div id=current_timer style = 'float:right'>
+            <span id=hour><%= "#{@current_timer.hour}".rjust(2,'0')%></span>:<span id=min><%="#{@current_timer.min}".rjust(2,'0')%></span>:<span id=sec><%="#{@current_timer.sec}".rjust(2,'0')%></span>
+          </div>
+        <%else%>
+          <div> No Timer Set</div>
+        <%end%>
+        <div style = 'clear:right'></div>
+        <div style = 'float:right'>Timezone: <%=current_user.timezone%></div>
+      </div>  
+      <div>
+        <%= flash[:warning]%>
+        <%= flash[:notice]%>
+        <p  id = notification></p>
+      </div> 
   </div>
+  
 </div>

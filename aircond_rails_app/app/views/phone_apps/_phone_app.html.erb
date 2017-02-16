@@ -4,8 +4,8 @@
   <td>
 
     <%= form_for phone_app, url:approve_token_path(phone_app.id) do |f|%>
-      <%= f.select :status, PhoneApp.statuses.keys%>
-      <%= f.submit 'Set'%>
+      <%= f.select :status, PhoneApp.statuses.keys,{},class:"form-control", style:'float:left'%>
+      <%= f.submit 'Set status', class:"btn btn-primary submit-btn", style:'float:right'%>
     <% end %>
   </td>
 </tr>

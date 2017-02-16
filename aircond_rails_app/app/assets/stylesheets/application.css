@@ -13,10 +13,55 @@
  *= require_tree .
  *= require_self
  */
-table.index, .index th {
+ .index th {
    border-bottom: 2px solid black;
 }
-
+.table_container {
+  padding-bottom:15px;
+}
 .index td, .index th {
   padding:2px;
+}
+form input.submit-btn{
+  background-color: #2aa198;
+  color:white;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+a.get-btn{
+  background-color: #EDB83D;
+  color:black;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+button.get-btn{
+  background-color: #EDB83D;
+  color:black;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+div.footer{
+  clear:both;
+  width:auto;
+  height: 60px;
+  background-color: #073642;
+}
+
+div.row{
+  background-color: #073642;
+}
+
+html,body{
+  background-color: #073642;
+}
+div.central-page{
+  min-height:800px;
+  background-color: white;
+}
+
+select.form-control{
+  width:200px;
 }
