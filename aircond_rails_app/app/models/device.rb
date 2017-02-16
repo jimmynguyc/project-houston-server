@@ -12,4 +12,6 @@ class Device < ApplicationRecord
   def set_token
     response = Unirest.post(self.url + '/give_token.py',parameters:{access_token:self.access_token})
   end
+
+
 end

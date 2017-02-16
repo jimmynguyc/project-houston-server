@@ -46,7 +46,7 @@ var modify_element = function(selector,options){
 	}
 	name = selector.replace('#ac_','')
 	
-	html_input = '<label for="aircond_' + name + '">'+label_text +'</label>' + '<select name="aircond['+name+']" id="aircond_'+ name +'">' + 	possible_options(options)+'</select>'
+	html_input = '<label for="aircond_' + name + '">'+label_text +'</label>' + '<select class =right_align name="aircond['+name+']" id="aircond_'+ name +'">' + 	possible_options(options)+'</select>'
 	selected_element(selector).html(html_input)
 }
 

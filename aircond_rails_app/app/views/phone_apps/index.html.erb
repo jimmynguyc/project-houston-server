@@ -1,7 +1,7 @@
-<div class="col-sm-8" style='border-style: solid; padding: 20px'>
+    <div class="col-sm-9" >
 <h1>Mobile Phone Applications</h1>
 
-Fitler: <%= select_tag 'Status', options_for_select(PhoneApp.statuses.keys << "ALL")  %>
+Fitler: <%= select_tag 'Status', options_for_select(PhoneApp.statuses.keys << "ALL"),class:"form-control"  %>
   <script type="text/javascript">
     $('#Status').on('change',function(){
       var selection = $(this).children('option:selected').text()
@@ -27,3 +27,10 @@ Fitler: <%= select_tag 'Status', options_for_select(PhoneApp.statuses.keys << "A
   <%= flash[:notice]%>
   <%= flash[:warning]%>
 </div>
+
+    <div class="col-sm-3" style = 'border-left-style: solid;border-bottom-style: solid; padding: 20px;text-align : right'>
+      <div id=current_time style='font-size: 50px'><span id=current_hour><%= "#{@current_time.hour}".rjust(2,'0')%></span>:<span id=current_min><%="#{@current_time.min}".rjust(2,'0')%></span>:<span id=current_sec><%="#{@current_time.sec}".rjust(2,'0')%></span></div>
+      <%= button_tag 'Set Time Zone', id:'timezone_button', class:"btn btn-primary get-btn"%>
+      <%= render '/users/timeform'%>
+      <div>Timezone: <%=current_user.timezone%></div>
+    </div>

@@ -1,17 +1,27 @@
-<div class="col-sm-8" style='border-style: solid; padding: 20px'>
+    <div class="col-sm-9"  >
   <%= form_for @aircond do |f|%>
   	<%= f.fields_for :device do |device_field|%>
   	
   		<%= device_field.label :url%>
-  		<%= device_field.text_field :url %>
+  		<%= device_field.text_field :url,class:'form-control right_align',style:'width:300px' %>
 
   	<%end%>
 
+    <br>
+    <div style='clear:both'></div>
   	<%= f.label :alias, 'Aircond Alias' %>
-  	<%= f.text_field :alias%>
-
-  	<%= f.submit%>
+  	<%= f.text_field :alias,class:'form-control right_align',style:'width:300px'%>
+    <br>
+  	<%= f.submit 'Create Aircond' ,class:"btn btn-primary submit-btn"%>
   <%end%>
 
   <div ><%=flash[:warning]%></div>
+
 </div>
+
+    <div class="col-sm-3" style = 'border-left-style: solid;border-bottom-style: solid; padding: 20px;text-align : right'>
+      <div id=current_time style='font-size: 50px'><span id=current_hour><%= "#{@current_time.hour}".rjust(2,'0')%></span>:<span id=current_min><%="#{@current_time.min}".rjust(2,'0')%></span>:<span id=current_sec><%="#{@current_time.sec}".rjust(2,'0')%></span></div>
+      <%= button_tag 'Set Time Zone', id:'timezone_button', class:"btn btn-primary get-btn"%>
+      <%= render '/users/timeform'%>
+      <div>Timezone: <%=current_user.timezone%></div>
+    </div>

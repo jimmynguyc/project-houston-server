@@ -44,7 +44,7 @@ class Aircond < ApplicationRecord
 	end
 
 	def update_firebase
-		firebase = Firebase::Client.new("https://project-houston.firebaseio.com")
+		firebase = Firebase::Client.new("https://nextaircon-6d849.firebaseio.com")
 		data = self.slice(:alias,:status,:temperature,:mode,:fan_speed)
 		firebase.update('/airconds/'+self.id.to_s, data)		
 	end
@@ -76,5 +76,9 @@ class Aircond < ApplicationRecord
 		data = data.slice(:temperature,:mode, :fan_speed) if !self.changes.keys.include? 'status' || check_power_status(self.changes['status'][1])
 		decipher_command(data)
 	end
+
+  def set_id
+    response = Unirest.post(self.device.url + '/set_id.py',parameters:{id:self.id})
+  end
 end
 

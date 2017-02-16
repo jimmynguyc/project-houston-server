@@ -1,5 +1,16 @@
  $(document).ready(function() {
   timer();
+  $('td').hover(function(){
+      $(this).parent().addClass('shadow')
+    },function(){
+      $(this).parent().removeClass('shadow')
+  })
+
+  $('td').click(function(){
+      if($(this).closest('table').attr('id')=='ac_table'){
+        window.location.replace('http://'+ window.location.hostname + ':' + window.location.port + '/airconds/'+$(this).parent().attr('id') + '/edit' )
+      }
+    })
  });
 
  var timer = function(){

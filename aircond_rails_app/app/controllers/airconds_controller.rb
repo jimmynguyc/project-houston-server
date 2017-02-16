@@ -8,12 +8,15 @@ class AircondsController < ApplicationController
 
 	def new
 		@aircond = Aircond.new
+		@current_time= Time.zone.now
 	end
 
 	def create
 		device= Device.new(device_params)
 		if device.save
 			ac = Aircond.create(device_id:device.id,alias:aircond_params[:alias])
+			ac.set_id
+			ac.update(status:'OFF',mode:'COLD',fan_speed:'AUTO',temperature:20)
 			redirect_to root_path
 		else 
 			@aircond = Aircond.new
@@ -24,6 +27,9 @@ class AircondsController < ApplicationController
 
 	def edit
 		generate_selection(@aircond.mode)
+		Time.zone = current_user.timezone
+		@current_timer = Time.zone.parse(@aircond.timer.to_s)
+		@current_time= Time.zone.now
 	end
 
 	def update
@@ -45,16 +51,15 @@ class AircondsController < ApplicationController
 				end
 			else
 				flash[:warning] = "Invalid command signal"
-				render :edit
+				render :edit 
 			end
 	end
 
-	def timer
-		#renders the form for setting aircond timer
-		Time.zone = current_user.timezone
-		@current_timer = Time.zone.parse(@aircond.timer.to_s)
-		render 'airconds/timer_form'
-	end
+	# def timer
+	# 	#renders the form for setting aircond timer
+
+	# 	render 'airconds/timer_form'
+	# end
 
 	def timer_set
 		#sets the job for timer to execute
