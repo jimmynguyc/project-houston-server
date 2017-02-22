@@ -1,0 +1,7 @@
+<div style = 'border-top-style:solid'>
+<br>
+  <%= form_for AircondGroup.new() do |f| %>
+    <%= f.text_field :title , {class:'form-control'}%>
+    <%= f.submit 'Create Aircond Group',class:"btn btn-primary submit-btn"%>
+  <% end %>
+</div>

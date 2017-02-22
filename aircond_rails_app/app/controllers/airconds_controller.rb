@@ -14,7 +14,8 @@ class AircondsController < ApplicationController
 	def create
 		device= Device.new(device_params)
 		if device.save
-			ac = Aircond.create(device_id:device.id,alias:aircond_params[:alias])
+			ac = Aircond.new(device_id:device.id,alias:aircond_params[:alias])
+			ac.save
 			ac.set_id
 			ac.update(status:'OFF',mode:'COLD',fan_speed:'AUTO',temperature:20)
 			redirect_to root_path
@@ -30,9 +31,18 @@ class AircondsController < ApplicationController
 		Time.zone = current_user.timezone
 		@current_timer = Time.zone.parse(@aircond.timer.to_s)
 		@current_time= Time.zone.now
+
+		respond_to do |format|
+			format.html {}
+			format.js {
+				generate_selection(params[:mode])
+				render json:{fan_speed:@fan_speed_selection,temperature:@temperature_selection}
+			}
+		end
 	end
 
 	def update
+		byebug
 			@aircond.update(alias:aircond_params[:alias])
 			cmd = decipher_command(aircond_params)
 			generate_selection(@aircond.mode)
