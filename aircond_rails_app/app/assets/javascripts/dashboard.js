@@ -6,10 +6,15 @@
       $(this).parent().removeClass('shadow')
   })
 
-  $('td').click(function(){
-      if($(this).closest('table').attr('id')=='ac_table'){
-        window.location.replace('http://'+ window.location.hostname + ':' + window.location.port + '/airconds/'+$(this).parent().attr('id') + '/edit' )
-      }
+  $('.ac_row').hover(function(){
+      $(this).addClass('shadow')
+    },function(){
+      $(this).removeClass('shadow')
+  })
+
+
+  $('.ac_row').click(function(){
+        window.location.replace('http://'+ window.location.hostname + ':' + window.location.port + '/airconds/'+$(this).attr('id') + '/edit' )
     })
  });
 
@@ -87,12 +92,23 @@
 var realtime_view_updates = function(selector,class_filter,snapshot){
   $(selector).find(class_filter).each(function(index,value){
     // console.log('Triggered selector ' + class_filter)
-
     var replace_value = String(snapshot.val()[class_filter.split('.ac_')[1]])
+    var element_attr = class_filter.split('.ac_')[1]
+    var image_class = ''
+    if(element_attr=='status'){
+      image_class = 'power-' + replace_value.toLowerCase()+ '-01'
+    }else if(element_attr=='mode'){
+      image_class = 'mode-'+ replace_value.toLowerCase() + '-on'
+    }else if(element_attr=='fan_speed'){
+      image_class = 'speed-'+replace_value.toLowerCase() + '-on'
+    }else if(element_attr=='temperature'){
+      image_class = 'temp-' + replace_value.toLowerCase()
+    }
+
     if(replace_value == 'undefined'){
-      $(value).text('NA')
+      $(value).html('NA')
     }else{
-      $(value).text(replace_value)
+      $(value).html("<img class='fit-img-size' align='middle' src='/NEXT-AC-assets/"+ image_class+".png' alt='Power on 01'>")
     }
     if(class_filter == '.ac_status'){
       if($(this).text() == 'ON'){
@@ -104,3 +120,4 @@ var realtime_view_updates = function(selector,class_filter,snapshot){
     }
   })
 }
+

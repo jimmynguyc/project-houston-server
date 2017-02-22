@@ -1,46 +1,76 @@
-<div class="col-sm-9" >
+<div class="col-sm-10" >
     <h1>Aircond Status</h1>
     <%= form_for @aircond, html:{id:'edit_aircond_settings'} do |form|%>
       <%= render partial: 'form', object:form%>
     <%end%>
 
+    <br>
+    <%= form_for @aircond, html:{id:'edit_aircond_settings'} do |form|%>
 
+      <div class = 'col-sm-8'>
+        <div class = 'col-sm-12' style='height:100px'>
+          <%= form.text_field :alias, {class:'form-control',style:'width:auto;height:auto;font-size:30px'}%>    
+        </div>
+        <div class = 'col-sm-12' id = ac_mode style='height:100px'>  
+          <%= form.select :mode,Aircond.modes.keys, {}, {class:'form-control',style:'display:none'} %>
+        <div class = 'col-sm-2'><span>Mode</span></div>
+        <% Aircond.modes.keys.each do |key|%>
+          <% state = 'off'%>
+          <% state = 'on' if key == @aircond.mode%>
+            <div class = 'col-sm-2'><%= image_tag("/NEXT-AC-assets/mode-#{key.downcase}-#{state}.png",class:'fit-img-size ', align:'middle' )%></div>
+        <% end %>
+        </div>
+        <div class = 'col-sm-12 ' id = ac_fan_speed style='height:100px'>
+            <%= form.select :fan_speed, @fan_speed_selection, {}, {class:'right_align form-control',style:'display:none'} %>
+            <div class = 'col-sm-2'><span>Fan Speed</span></div>
+            <% @fan_speed_selection.each do |key|%>
+              <% state = 'off'%>
+              <% state = 'on' if key == @aircond.fan_speed%>
+              <div class = 'col-sm-2'>
+                  <%= image_tag("/NEXT-AC-assets/speed-#{key.to_s.downcase}-#{state}.png",class:'fit-img-size ', align:'middle' )%> 
+              </div>
 
+            <% end %>
+        </div>
+      </div>
 
-</div>
-
-<div class="col-sm-3" style = 'border-left-style: solid;border-bottom-style: solid; padding: 20px;text-align : right'>
-  <div id=current_time style='font-size: 50px'><span id=current_hour><%= "#{@current_time.hour}".rjust(2,'0')%></span>:<span id=current_min><%="#{@current_time.min}".rjust(2,'0')%></span>:<span id=current_sec><%="#{@current_time.sec}".rjust(2,'0')%></span></div>
-  <%= button_tag 'Set Time Zone', id:'timezone_button', class:"btn btn-primary get-btn"%>
-  <%= render '/users/timeform'%>
-  <div>Timezone: <%=current_user.timezone%></div>
-
-  <div style = 'border-top-style:solid'>
-    <h1>Timer</h1>
-        <%formatted_timer_value = nil%>
-        <% formatted_timer_value = @current_timer.strftime('%H:%M') if !@current_timer.nil?%>
-        <%=form_for @aircond, url:timer_set_path(@aircond) do |f|%>
-          <%=f.time_field :timer, value: formatted_timer_value,class:'form-control',style:'width:120px; float:left'%>
-          <%=f.select :status, Aircond.statuses.keys,{},class:'form-control right_align',style:'width:120px'%>
-          <%=f.submit "Set Timer",class:"btn btn-primary submit-btn"%>
-      <%end%>
-
-      <div style = 'float:right'><span >Current Timer : </span>
-        <% if !@current_timer.nil?%>
-          <div id=current_timer style = 'float:right'>
-            <span id=hour><%= "#{@current_timer.hour}".rjust(2,'0')%></span>:<span id=min><%="#{@current_timer.min}".rjust(2,'0')%></span>:<span id=sec><%="#{@current_timer.sec}".rjust(2,'0')%></span>
+      <div class = 'col-sm-4' >
+        <div class = 'col-sm-12' id = ac_status>
+          <%= form.select :status, Aircond.statuses.keys, {}, {class:'right_align form-control',style:'display:none'}%>
+          <div >
+            <% status = @aircond.image_new(:status)%>
+              <%= image_tag(status[:img_url],class:'' ,style:'height:300px', align:'middle')%>
           </div>
-        <%else%>
-          <div> No Timer Set</div>
-        <%end%>
-        <div style = 'clear:right'></div>
-        <div style = 'float:right'>Timezone: <%=current_user.timezone%></div>
-      </div>  
-      <div>
-        <%= flash[:warning]%>
-        <%= flash[:notice]%>
-        <p  id = notification></p>
+
+        </div>
+
+      </div>
+      <div class = 'col-sm-12'>
+      <div class = 'col-sm-12' id = ac_temperature style='height:100px'>
+
+        <div class = 'col-sm-2'><span>Temperature</span></div>
+        <div class = 'col-sm-8'><%= form.range_field :temperature, in: 16..30%></div>
+        <div class = 'col-sm-2'>
+          <% temperature = @aircond.image_new(:temperature)%>
+            <% if temperature[:value] == 'NA'%>
+              <%= temperature[:value]%> 
+            <% else %>
+              <%= image_tag(temperature[:img_url],class:'fit-img-size ', align:'middle' )%>
+            <% end %>
+        </div>
       </div> 
-  </div>
-  
+      </div>
+ 
+
+      <div class = 'col-sm-12'>
+      <%= form.submit 'Set Aircond State',class:"btn btn-primary submit-btn"%>
+      </div>  
+
+    <%end%>
+
 </div>
+
+    <div class="col-sm-2" style = 'border-left-style: solid;border-bottom-style: solid; padding: 20px;text-align : right'>
+      <%= render partial:'/users/currenttime'%>
+      <%= render partial:'aircond_timer_form.html.erb'%>
+    </div>

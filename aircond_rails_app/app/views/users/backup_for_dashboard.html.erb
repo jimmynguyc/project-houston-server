@@ -1,0 +1,215 @@
+    <% ac = Aircond.first%>
+    <div class='col-sm-4' >
+ <div class='ac_row' style= 'background-color: #E8E8EE;height:auto;width:auto;min-height: 100px; margin-bottom: 5px'>
+        <div class = 'ac_status_test' style = 'clear:both;float:right;height:100px;width:40%'>
+          <% status = ac.image_new(:status)%>
+
+              <%= image_tag(status[:img_url],class:'fit-img-size ' , align:'middle')%>
+
+
+        </div>
+        <div style = 'float:left;height:50px;font-size:30px;width:60%;text-align: center;vertical-align: middle;font-style:italic;'><%= ac.alias%> 
+        </div>
+        <div style = 'float:left;clear:left;height:50px;width:20%'>
+        <!-- <span style = 'font-size:15px;float:left;font-style:italic; '>Mode</span> -->
+        <% mode = ac.image_new(:mode)%> 
+            <%= image_tag(mode[:img_url],class:'fit-img-size ', align:'middle' )%>
+        </div>
+        <div style = 'float:left;height:50px;width:20%;text-align: center;font-size:30px'>
+        <% fan_speed = ac.image_new(:fan_speed)%> 
+          <% if fan_speed[:value] == 'NA'%>
+            <%= fan_speed[:value]%> 
+          <% else %>
+            <%= image_tag(fan_speed[:img_url],class:'fit-img-size ', align:'middle' )%>
+          <%end%>
+        </div>
+        <div style = 'float:left;height:50px;width:20%;text-align: center;font-size:30px'>
+        <% temperature = ac.image_new(:temperature)%>
+            <%= image_tag(temperature[:img_url],class:'fit-img-size ', align:'middle' )%>
+        </div>
+      </div>
+      <!-- Next -->
+      <div class='ac_row' style= 'background-color:   #fdf6e3;height:auto;width:auto;min-height: 100px; margin-bottom: 5px'>
+        <div class = 'ac_status_test' style = 'clear:both;float:right;height:100px;width:40%'>
+          <% status = ac.image_new(:status)%>
+
+              <%= image_tag(status[:img_url],class:'fit-img-size ' , align:'middle')%>
+
+
+        </div>
+        <div style = 'float:left;height:50px;font-size:30px;width:60%;text-align: center;vertical-align: middle;font-style:italic;'><%= ac.alias%> 
+        </div>
+        <div style = 'float:left;clear:left;height:50px;width:20%'>
+<!--         <span style = 'font-size:15px;float:left;font-style:italic; '>Mode</span> -->
+        <% mode = ac.image_new(:mode)%> 
+            <%= image_tag(mode[:img_url],class:'fit-img-size ', align:'middle' )%>
+        </div>
+        <div style = 'float:left;height:50px;width:20%;text-align: center;font-size:30px'>
+        <% fan_speed = ac.image_new(:fan_speed)%> 
+          <% if fan_speed[:value] == 'NA'%>
+            <%= fan_speed[:value]%> 
+          <% else %>
+            <%= image_tag(fan_speed[:img_url],class:'fit-img-size ', align:'middle' )%>
+          <%end%>
+        </div>
+        <div style = 'float:left;height:50px;width:20%;text-align: center;font-size:30px'>
+        <% temperature = ac.image_new(:temperature)%>
+            <%= image_tag(temperature[:img_url],class:'fit-img-size ', align:'middle' )%>
+        </div>
+      </div>
+    </div>
+
+<!--     <div class='col-sm-1' >Column Split</div> -->
+    <div class='col-sm-4' >
+      <div class='ac_row' style= 'background-color: #E8E8EE;height:auto;width:auto;min-height: 100px; margin-bottom: 5px'>
+        <div class = 'ac_status_test' style = 'clear:both;float:right;height:100px;width:40%'>
+          <% status = ac.image_new(:status)%>
+
+              <%= image_tag(status[:img_url],class:'fit-img-size ' , align:'middle')%>
+
+
+        </div>
+        <div style = 'float:left;height:50px;font-size:30px;width:60%;text-align: center;vertical-align: middle;font-style:italic;'><%= ac.alias%> 
+        </div>
+        <div style = 'float:left;clear:left;height:50px;width:20%'>
+        <!-- <span style = 'font-size:15px;float:left;font-style:italic; '>Mode</span> -->
+        <% mode = ac.image_new(:mode)%> 
+            <%= image_tag(mode[:img_url],class:'fit-img-size ', align:'middle' )%>
+        </div>
+        <div style = 'float:left;height:50px;width:20%;text-align: center;font-size:30px'>
+        <% fan_speed = ac.image_new(:fan_speed)%> 
+          <% if fan_speed[:value] == 'NA'%>
+            <%= fan_speed[:value]%> 
+          <% else %>
+            <%= image_tag(fan_speed[:img_url],class:'fit-img-size ', align:'middle' )%>
+          <%end%>
+        </div>
+        <div style = 'float:left;height:50px;width:20%;text-align: center;font-size:30px'>
+        <% temperature = ac.image_new(:temperature)%>
+            <%= image_tag(temperature[:img_url],class:'fit-img-size ', align:'middle' )%>
+        </div>
+      </div>
+      <!-- Next -->
+      <div class='ac_row' style= 'background-color:   #fdf6e3;height:auto;width:auto;min-height: 100px; margin-bottom: 5px'>
+        <div class = 'ac_status_test' style = 'clear:both;float:right;height:100px;width:40%'>
+          <% status = ac.image_new(:status)%>
+
+              <%= image_tag(status[:img_url],class:'fit-img-size ' , align:'middle')%>
+
+
+        </div>
+        <div style = 'float:left;height:50px;font-size:30px;width:60%;text-align: center;vertical-align: middle;font-style:italic;'><%= ac.alias%> 
+        </div>
+        <div style = 'float:left;clear:left;height:50px;width:20%'>
+<!--         <span style = 'font-size:15px;float:left;font-style:italic; '>Mode</span> -->
+        <% mode = ac.image_new(:mode)%> 
+            <%= image_tag(mode[:img_url],class:'fit-img-size ', align:'middle' )%>
+        </div>
+        <div style = 'float:left;height:50px;width:20%;text-align: center;font-size:30px'>
+        <% fan_speed = ac.image_new(:fan_speed)%> 
+          <% if fan_speed[:value] == 'NA'%>
+            <%= fan_speed[:value]%> 
+          <% else %>
+            <%= image_tag(fan_speed[:img_url],class:'fit-img-size ', align:'middle' )%>
+          <%end%>
+        </div>
+        <div style = 'float:left;height:50px;width:20%;text-align: center;font-size:30px'>
+        <% temperature = ac.image_new(:temperature)%>
+            <%= image_tag(temperature[:img_url],class:'fit-img-size ', align:'middle' )%>
+        </div>
+      </div>
+    </div>
+    
+        <div class='col-sm-4' >
+      <div class='ac_row' style= 'background-color: #E8E8EE;height:auto;width:auto;min-height: 100px; margin-bottom: 5px'>
+        <div class = 'ac_status_test' style = 'clear:both;float:right;height:100px;width:40%'>
+          <% status = ac.image_new(:status)%>
+
+              <%= image_tag(status[:img_url],class:'fit-img-size ' , align:'middle')%>
+
+
+        </div>
+        <div style = 'float:left;height:50px;font-size:30px;width:60%;text-align: center;vertical-align: middle;font-style:italic;'><%= ac.alias%> 
+        </div>
+        <div style = 'float:left;clear:left;height:50px;width:20%'>
+        <!-- <span style = 'font-size:15px;float:left;font-style:italic; '>Mode</span> -->
+        <% mode = ac.image_new(:mode)%> 
+            <%= image_tag(mode[:img_url],class:'fit-img-size ', align:'middle' )%>
+        </div>
+        <div style = 'float:left;height:50px;width:20%;text-align: center;font-size:30px'>
+        <% fan_speed = ac.image_new(:fan_speed)%> 
+          <% if fan_speed[:value] == 'NA'%>
+            <%= fan_speed[:value]%> 
+          <% else %>
+            <%= image_tag(fan_speed[:img_url],class:'fit-img-size ', align:'middle' )%>
+          <%end%>
+        </div>
+        <div style = 'float:left;height:50px;width:20%;text-align: center;font-size:30px'>
+        <% temperature = ac.image_new(:temperature)%>
+            <%= image_tag(temperature[:img_url],class:'fit-img-size ', align:'middle' )%>
+        </div>
+      </div>
+      <!-- Next -->
+      <div class='ac_row' style= 'background-color:   #fdf6e3;height:auto;width:auto;min-height: 100px; margin-bottom: 5px'>
+        <div class = 'ac_status_test' style = 'clear:both;float:right;height:100px;width:40%'>
+          <% status = ac.image_new(:status)%>
+
+              <%= image_tag(status[:img_url],class:'fit-img-size ' , align:'middle')%>
+
+
+        </div>
+        <div style = 'float:left;height:50px;font-size:30px;width:60%;text-align: center;vertical-align: middle;font-style:italic;'><%= ac.alias%> 
+        </div>
+        <div style = 'float:left;clear:left;height:50px;width:20%'>
+<!--         <span style = 'font-size:15px;float:left;font-style:italic; '>Mode</span> -->
+        <% mode = ac.image_new(:mode)%> 
+            <%= image_tag(mode[:img_url],class:'fit-img-size ', align:'middle' )%>
+        </div>
+        <div style = 'float:left;height:50px;width:20%;text-align: center;font-size:30px'>
+        <% fan_speed = ac.image_new(:fan_speed)%> 
+          <% if fan_speed[:value] == 'NA'%>
+            <%= fan_speed[:value]%> 
+          <% else %>
+            <%= image_tag(fan_speed[:img_url],class:'fit-img-size ', align:'middle' )%>
+          <%end%>
+        </div>
+        <div style = 'float:left;height:50px;width:20%;text-align: center;font-size:30px'>
+        <% temperature = ac.image_new(:temperature)%>
+            <%= image_tag(temperature[:img_url],class:'fit-img-size ', align:'middle' )%>
+        </div>
+      </div>
+    </div>
+    
+
+      <div class='col-sm-4' >
+      <div id = <%= "#{ac.id}"%> class = 'aircond ac_row'  style= 'background-color: #E8E8EE;height:auto;width:auto;min-height: 100px; margin-bottom: 5px'>
+        <div class = 'ac_status_test ac_status' id = <%="#{ac.alias}"%> style = 'clear:both;float:right;height:100px;width:40%'>
+          <% status = ac.image_new(:status)%>
+              <%= image_tag(status[:img_url],class:'fit-img-size ' , align:'middle')%>
+        </div>
+        <div style = 'float:left;height:50px;font-size:30px;width:60%;text-align: center;vertical-align: middle;font-style:italic;'><%= ac.alias%> 
+        </div>
+        <div class = "ac_mode" style = 'float:left;clear:left;height:50px;width:20%'>
+        <!-- <span style = 'font-size:15px;float:left;font-style:italic; '>Mode</span> -->
+        <% mode = ac.image_new(:mode)%> 
+            <%= image_tag(mode[:img_url],class:'fit-img-size ', align:'middle' )%>
+        </div>
+        <div  class = "ac_fan_speed" style = 'float:left;height:50px;width:20%;text-align: center;font-size:30px'>
+        <% fan_speed = ac.image_new(:fan_speed)%> 
+          <% if fan_speed[:value] == 'NA'%>
+            <%= fan_speed[:value]%> 
+          <% else %>
+            <%= image_tag(fan_speed[:img_url],class:'fit-img-size ', align:'middle' )%>
+          <%end%>
+        </div>
+        <div class = "ac_temperature" style = 'float:left;height:50px;width:20%;text-align: center;font-size:30px'>
+        <% temperature = ac.image_new(:temperature)%>
+          <% if temperature[:value] == 'NA'%>
+            <%= temperature[:value]%> 
+          <% else %>
+            <%= image_tag(temperature[:img_url],class:'fit-img-size ', align:'middle' )%>
+          <% end %>
+        </div>
+      </div>
+    </div>
+

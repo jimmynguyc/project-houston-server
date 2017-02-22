@@ -12,8 +12,9 @@
 /db/*.sqlite3-journal
 
 # Ignore all logfiles and tempfiles.
-aircond_rails_app/log/*
-aircond_rails_app/tmp/*
+/aircond_rails_app/log/*
+/aircond_rails_app/tmp/*
+
 !/log/.keep
 !/tmp/.keep
 

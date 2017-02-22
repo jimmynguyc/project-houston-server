@@ -1,0 +1,22 @@
+<div class="col-sm-<%=@column_grid_length%>">
+  <div class="ac_group_row">
+
+    <div class="ac_group_header col-sm-12"><h3><%= @group_title %></h3></div>
+    <% @aircond_list.each do |aircond|%>
+      <% @aircond = aircond%>
+      <div class="ac_group_header col-sm-12"><%= render partial:'/airconds/aircond'%></div>
+    <% end %>
+  </div>
+</div>
+
+<!--   .row
+  .col-sm-4
+    .row
+      .col-sm-12
+        h3 A-G-8
+      .col-sm-12
+        // AC1
+      .col-sm-12
+        // AC2
+      .col-sm-12
+        // AC3 -->

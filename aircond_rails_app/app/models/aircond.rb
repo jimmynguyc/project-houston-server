@@ -2,17 +2,21 @@ require 'unirest'
 
 class Aircond < ApplicationRecord
 	belongs_to :device
+  belongs_to :aircond_group,  optional: true
 	belongs_to :aircond_state,  optional: true
 
 	before_update :check_state
 	after_save :update_firebase
 
+  scope :by_aircond_group,  -> (ac_grp_id){where('aircond_group_id =  ?', ac_grp_id)}
+  scope :by_unassigned_aircond_group,  -> {where('aircond_group_id IS NULL')}
+  
 	include ApplicationHelper
 	  enum status:{
 	    'OFF' =>0,
 	    'ON' =>1,
 	    'PENDING' =>2
-	  }
+	  }  
 
 	  enum mode:{
 	    'DRY' =>0,
@@ -79,6 +83,36 @@ class Aircond < ApplicationRecord
 
   def set_id
     response = Unirest.post(self.device.url + '/set_id.py',parameters:{id:self.id})
+  end
+
+  def image(attribute)
+  	value = self.send(attribute)
+  	value = 'NA' if value == nil
+  	case attribute
+  		when :status
+  			{img_url:'/images/button_on.png',value:value}
+  		when :mode
+				{img_url:"/images/mode_#{value.downcase}.png",value:value}
+  		when :fan_speed
+  			{img_url:"/images/button_fan.png",value:value}
+  		when :temperature
+				{img_url:"/images/button_temperature.png",value:value}  	
+			end
+  end
+
+  def image_new(attribute)
+  	value = self.send(attribute)
+  	value = 'NA' if value == nil
+  	case attribute
+  		when :status
+  			{img_url:"/NEXT-AC-assets/power-#{value.downcase}-01.png",value:value}
+  		when :mode
+				{img_url:"/NEXT-AC-assets/mode-#{value.downcase}-on.png",value:value}
+  		when :fan_speed
+  			{img_url:"/NEXT-AC-assets/speed-#{value.to_s.downcase}-on.png",value:value}
+  		when :temperature
+				{img_url:"/NEXT-AC-assets/temp-#{value.to_s}.png",value:value}  	
+			end
   end
 end
 

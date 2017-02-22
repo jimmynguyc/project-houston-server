@@ -10,7 +10,9 @@ Rails.application.routes.draw do
 
 
   post '/firebase_update/:id' => 'airconds#update_website_from_firebase', as: :firebase_update
+  resources :aircond_groups, only: [:create,:update,:destroy]
 
+  get '/aircond_group_dashboard' => 'aircond_groups#ac_grp_dashboard', as: :aircond_group_dashboard
 
   resources :devices
   resources :airconds
