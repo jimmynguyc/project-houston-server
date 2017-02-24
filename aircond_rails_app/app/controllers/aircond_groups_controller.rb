@@ -5,7 +5,7 @@ class AircondGroupsController < ApplicationController
     @airconds = Aircond.all
     @current_time= Time.zone.now
     @aircond_groups = AircondGroup.all
-    @column_grid_length =AircondGroup.column_grid_length
+    @column_grid_length =AircondGroup.column_grid_length(AircondGroup.populated_group_count)
     render :dashboard
   end
 
@@ -26,7 +26,7 @@ class AircondGroupsController < ApplicationController
     @airconds = Aircond.all
     @current_time= Time.zone.now
     @aircond_groups = AircondGroup.all
-    @column_grid_length =AircondGroup.column_grid_length
+    @column_grid_length =AircondGroup.column_grid_length(AircondGroup.populated_group_count)
     render :dashboard
   end
 
