@@ -27,11 +27,11 @@ class AircondsController < ApplicationController
 	end
 
 	def edit
+
 		generate_selection(@aircond.mode)
 		Time.zone = current_user.timezone
 		@current_timer = Time.zone.parse(@aircond.timer.to_s)
 		@current_time= Time.zone.now
-
 		respond_to do |format|
 			format.html {}
 			format.js {

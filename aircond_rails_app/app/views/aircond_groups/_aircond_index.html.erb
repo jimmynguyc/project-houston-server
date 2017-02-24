@@ -1,16 +1,21 @@
   <div class='ac_group_index'>
-    <% @aircond_groups.pluck(:id).each do |id|%>
-      <% ac_grp = AircondGroup.find(id)%>
-      <% @group_title = ac_grp.title %>
-      <% @aircond_list = Aircond.by_aircond_group(id)%>
-      <%= render partial:'/aircond_groups/aircond_grouping_list' if !@aircond_list.empty?%>
-    <% end %>
 
-    <% @aircond_list = Aircond.by_unassigned_aircond_group%>
+      <% @aircond_groups.pluck(:id).each do |id|%>
+          <% ac_grp = AircondGroup.find(id)%>
+          <% @aircond_list = Aircond.by_aircond_group(id)%>
+          <% @group_title = ac_grp.title %>
+          <% @ac_grp_id = id%>
+          <%= render partial:'/aircond_groups/aircond_grouping_list' if !@aircond_list.empty?%>
+        <% end %>
 
-    <% if !@aircond_list.empty? %>
-      <% @group_title = 'Unassigned' %>
-      <%= render partial:'/aircond_groups/aircond_grouping_list'%>
-    <% end %>
+
+      <% @aircond_list = Aircond.by_unassigned_aircond_group%>
+
+      <% if !@aircond_list.empty? %>
+          <% @group_title = 'Unassigned' %>
+          <% @ac_grp_id = "0"%>
+          <%= render partial:'/aircond_groups/aircond_grouping_list'%>
+
+      <% end %>
 
   </div>

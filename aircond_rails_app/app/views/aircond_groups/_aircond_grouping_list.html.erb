@@ -1,6 +1,5 @@
-<div class="col-sm-<%=@column_grid_length%>">
+<div class="col-sm-<%=@column_grid_length%>" id = <%= "aircond_group_#{@ac_grp_id}"%>>
   <div class="ac_group_row">
-
     <div class="ac_group_header col-sm-12"><h3><%= @group_title %></h3></div>
     <% @aircond_list.each do |aircond|%>
       <% @aircond = aircond%>

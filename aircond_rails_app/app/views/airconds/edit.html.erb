@@ -1,8 +1,8 @@
 <div class="col-sm-10" >
     <h1>Aircond Status</h1>
-    <%= form_for @aircond, html:{id:'edit_aircond_settings'} do |form|%>
+<!--     <%= form_for @aircond, html:{id:'edit_aircond_settings'} do |form|%>
       <%= render partial: 'form', object:form%>
-    <%end%>
+    <%end%> -->
 
     <br>
     <%= form_for @aircond, html:{id:'edit_aircond_settings'} do |form|%>
@@ -26,7 +26,7 @@
             <% @fan_speed_selection.each do |key|%>
               <% state = 'off'%>
               <% state = 'on' if key == @aircond.fan_speed%>
-              <div class = 'col-sm-2'>
+              <div class = 'col-sm-2' id = <%="speed_#{key.to_s.downcase}"%>>
                   <%= image_tag("/NEXT-AC-assets/speed-#{key.to_s.downcase}-#{state}.png",class:'fit-img-size ', align:'middle' )%> 
               </div>
 
@@ -49,11 +49,10 @@
       <div class = 'col-sm-12' id = ac_temperature style='height:100px'>
 
         <div class = 'col-sm-2'><span>Temperature</span></div>
-        <div class = 'col-sm-8'><%= form.range_field :temperature, in: 16..30%></div>
-        <div class = 'col-sm-2'>
+        <div class = 'col-sm-8' id = 'temp_input'><%= form.range_field :temperature, in: 16..30%></div>
+        <div class = 'col-sm-2' id = 'temp_img'>
           <% temperature = @aircond.image_new(:temperature)%>
             <% if temperature[:value] == 'NA'%>
-              <%= temperature[:value]%> 
             <% else %>
               <%= image_tag(temperature[:img_url],class:'fit-img-size ', align:'middle' )%>
             <% end %>
