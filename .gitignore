@@ -22,4 +22,4 @@
 .byebug_history
 
 # Ignore application configuration
-/config/application.yml
+/aircond_rails_app/config/application.yml
