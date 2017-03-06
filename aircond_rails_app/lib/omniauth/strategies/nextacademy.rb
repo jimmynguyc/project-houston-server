@@ -9,7 +9,7 @@ module OmniAuth
       option :name, :nextacademy
       option :client_options, {
         site: "https://admission.nextacademy.com",
-        authorize_url: "https://admission.nextacademy.com/oauth/authorize"
+        authorize_url: "/oauth/authorize"
       }
 
       # request.env['omniauth.auth']['info']
