@@ -4,14 +4,10 @@ class AircondGroupsController < ApplicationController
     ac_grp.save
     @airconds = Aircond.all
     @current_time= Time.zone.now
-    @aircond_groups = AircondGroup.all
-    @column_grid_length =AircondGroup.column_grid_length(AircondGroup.populated_group_count)
-    render :dashboard
+    @aircond_groups = AircondGroup.filter_group_view(params[:group_id])
+    redirect_to aircond_groups_path
   end
 
-  def update
-    
-  end
 
   def destroy
     ac_grp = AircondGroup.find(params[:id])
@@ -22,12 +18,14 @@ class AircondGroupsController < ApplicationController
     end
   end
 
-  def ac_grp_dashboard
+  def index
     @airconds = Aircond.all
     @current_time= Time.zone.now
-    @aircond_groups = AircondGroup.all
-    @column_grid_length =AircondGroup.column_grid_length(AircondGroup.populated_group_count)
-    render :dashboard
+    @aircond_groups = AircondGroup.filter_group_view(params[:group_id])
+    respond_to do |format|
+      format.html {}
+      format.js {}
+    end
   end
 
 

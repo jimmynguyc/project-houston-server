@@ -1,10 +1,16 @@
-<div class="col-sm-<%=@column_grid_length%>" id = <%= "aircond_group_#{@ac_grp_id}"%>>
+<div class=" aircond_group" id = <%= "aircond_group_#{ac_grp_id}"%>>
   <div class="ac_group_row">
-    <div class="ac_group_header col-sm-12"><h3><%= @group_title %></h3></div>
-    <% @aircond_list.each do |aircond|%>
-      <% @aircond = aircond%>
-      <div class="ac_group_header col-sm-12"><%= render partial:'/airconds/aircond'%></div>
-    <% end %>
+    <div class="ac_group_header col-sm-12"><h3><%= group_title %></h3>
+    </div>
+    <div class ='ac_group_body' style="min-height:200px">
+      <% aircond_list.each do |aircond|%>
+        <div class="ac_group_header col-sm-12">
+          <%= form_for aircond, url:assign_group_path(aircond),method: :patch do |f|%>
+            <%= f.hidden_field :aircond_group_id %><%= render partial:'/airconds/aircond',locals:{aircond:aircond}%>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
   </div>
 </div>
 

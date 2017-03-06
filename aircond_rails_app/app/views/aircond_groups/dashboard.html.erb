@@ -1,6 +1,6 @@
 
-<div class="col-sm-10" >
-  <%= render partial:'/aircond_groups/aircond_index'%>
+<div class="col-sm-10">
+  <%= render partial:'/aircond_groups/aircond_index',locals:{aircond_groups:@aircond_groups}%>
 </div>
 
 <div class="col-sm-2" style = 'border-left-style: solid;border-bottom-style: solid; padding: 20px;text-align : right'>
@@ -8,10 +8,10 @@
   <%= render partial:'/aircond_groups/form'%>
 
   <div style = 'border-top-style:solid'>
-    <%= render @aircond_groups%>
+    <%= render AircondGroup.all%>
     <br>
     <div >
-      <%= button_tag 'ALL', class:'form-control' %>
+      <%= button_tag 'ALL', class:'form-control ac_group_selector', id:'group_all' %>
     </div>
   </div>
 </div>

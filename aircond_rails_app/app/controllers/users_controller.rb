@@ -3,8 +3,7 @@ class UsersController < Clearance::UsersController
 		Time.zone = current_user.timezone
 		@current_time = Time.zone.now
 		@airconds = Aircond.all.order(:id)
-    @aircond_groups = AircondGroup.all
-    @column_grid_length =4
+    @aircond_groups = AircondGroup.not_empty
 	end
 
 	def timeset

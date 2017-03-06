@@ -1,21 +1,45 @@
  $(document).ready(function() {
   timer();
-  $('td').hover(function(){
-      $(this).parent().addClass('shadow')
-    },function(){
-      $(this).parent().removeClass('shadow')
+
+  $(document).on('change','#group_selector',function(){
+    $('#user_dashboard .foot form #aircond_group_title').each(function(index,value){
+      $(value).val($('#group_selector').val())
+    })
   })
 
-  $('.ac_row').hover(function(){
+  $(document).on('mouseenter','.ac_row',function(){
       $(this).addClass('shadow')
-    },function(){
+  })
+  $(document).on('mouseleave','.ac_row',function(){
       $(this).removeClass('shadow')
   })
 
 
-  $('.ac_row').click(function(){
-        window.location.replace('http://'+ window.location.hostname + ':' + window.location.port + '/airconds/'+$(this).attr('id') + '/edit' )
+  $('#user_dashboard .ac_row').click(function(e){
+      if($(e.target).parent().attr('class')== " ac_status col-sm-4"){
+        return;
+      } 
+      window.location.replace('http://'+ window.location.hostname + ':' + window.location.port + '/airconds/'+$(this).attr('id') + '/edit' )
     })
+
+  $(document).on('click','#user_dashboard .ac_row .ac_status img',function(event){
+    var element = $(this)
+    var ac_id = $(this).closest('.ac_row').attr('id')
+    if($(this).attr('alt').split(' ')[1].toUpperCase() == "OFF"){
+      var ac_power_status = "ON"
+    }else{
+      var ac_power_status = "OFF"
+    }
+    $.ajax({
+        type: 'PATCH', 
+        beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+        url: '/airconds/' + ac_id,
+        data: {aircond:{status:ac_power_status}}
+      })
+    }
+  )
+
+
  });
 
  var timer = function(){

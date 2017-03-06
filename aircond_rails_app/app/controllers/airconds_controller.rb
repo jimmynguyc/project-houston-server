@@ -1,6 +1,6 @@
 
 class AircondsController < ApplicationController 
-	before_action :set_aircond, only: [:edit,:update,:timer,:timer_set,:app_set,:update_website_from_firebase]
+	before_action :set_aircond, only: [:edit,:update,:timer,:timer_set,:app_set,:update_website_from_firebase,:assign_group]
 	before_action only: [:app_set] {validate_app_token(params[:user_name],params[:app_token])}
 
 	skip_before_filter  :verify_authenticity_token, only: [:app_get_all,:app_set]
@@ -42,14 +42,16 @@ class AircondsController < ApplicationController
 	end
 
 	def update
-		byebug
-			@aircond.update(alias:aircond_params[:alias])
+			@current_timer = Time.zone.parse(@aircond.timer.to_s)
+			@current_time= Time.zone.now
+			@aircond.update(alias:aircond_params[:alias]) if aircond_params.keys.include? "alias"
 			cmd = decipher_command(aircond_params)
 			generate_selection(@aircond.mode)
+
 			if validate_AC_controls(cmd)
 				if @aircond.check_device_status
 					if @aircond.update(aircond_params) 
-						flash[:notice] = 'Aircond state was successfuly changed'
+						flash[:notice] = "Aircond state was successfuly changed. Mode: #{@aircond[:mode]},Temperature: #{@aircond[:temperature]}, Fan Speed : #{@aircond[:fan_speed]}"
 						redirect_to root_path
 					else
 						flash[:warning] = "Aircond state was not change. Remains as #{@aircond.get_state[:status]}"
@@ -65,6 +67,10 @@ class AircondsController < ApplicationController
 			end
 	end
 
+	def assign_group
+		@aircond.aircond_group_id = params[:aircond][:aircond_group_id]
+		@aircond.save
+	end
 	# def timer
 	# 	#renders the form for setting aircond timer
 
@@ -89,11 +95,14 @@ class AircondsController < ApplicationController
 
 	def set_all_status
 		#sets all the aircond statuses..
-		@airconds= Aircond.all
+		ac_grp = AircondGroup.find_by_title(params[:aircond][:group_title])
+		ac_grp.nil? ? @airconds = Aircond.all : @airconds = ac_grp.airconds
+
 		@airconds.each do |ac|
 			ac.send_signal(params[:status]) if ac.get_state[:status] != params[:status] 
 			ac.update(status:ac.get_state[:status])
 		end	
+
 		flash[:warning] = "Airconds with aliases  #{Aircond.where('status != ?', Aircond.statuses[params[:status]]).pluck(:alias)} were not successfully #{params[:status]}"
 		redirect_to root_path
 	end
@@ -111,9 +120,9 @@ class AircondsController < ApplicationController
 				if @aircond.check_device_status
 					if @aircond.check_power_status(aircond_params['status'])
 						@aircond.update(aircond_params) 
-						render json:{response: "Aircond is already #{aircond_params[:status]}"}
+						render json:{response: "Aircond is already #{aircond_params[:status]}. Mode: #{aircond_params[:mode]},Temperature: #{aircond_params[:temperature]}, Fan Speed : #{aircond_params[:fan_speed]}"}
 					elsif @aircond.update(aircond_params) 
-						render json:{response:'Aircond state was successfuly changed'}
+						render json:{response:'Aircond state was successfuly changed. Mode: #{aircond_params[:mode]},Temperature: #{aircond_params[:temperature]}, Fan Speed : #{aircond_params[:fan_speed]}'}
 					else
 						render json:{response:"Aircond state was not change. Remains as #{@aircond.get_state[:status]}"}
 					end	

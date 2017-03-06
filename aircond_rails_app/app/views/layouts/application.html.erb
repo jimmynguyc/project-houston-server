@@ -12,6 +12,8 @@
     firebase.initializeApp(config);
   </script>
     <%= csrf_meta_tags %>
+      <%= stylesheet_link_tag 'https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.css' %>
+  <%= javascript_include_tag 'https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.js'%>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>	
@@ -24,7 +26,7 @@
   </head>
 
   <body >
-    <%= javascript_include_tag '/node_modules/dragula/dist/dragula.js' %>  
+
   	<%= render '/layouts/navbar'%>
     <div class=body_border>
       <div class = true_body>
