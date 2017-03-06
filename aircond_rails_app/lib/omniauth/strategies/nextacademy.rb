@@ -8,8 +8,8 @@ module OmniAuth
       # provider name
       option :name, :nextacademy
       option :client_options, {
-        site: "http://127.0.01:3000",
-        authorize_url: "http://127.0.01:3000/oauth/authorize"
+        site: "https://admission.nextacademy.com",
+        authorize_url: "https://admission.nextacademy.com/oauth/authorize"
       }
 
       # request.env['omniauth.auth']['info']
