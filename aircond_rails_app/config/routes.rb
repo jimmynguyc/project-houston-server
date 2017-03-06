@@ -1,10 +1,23 @@
 Rails.application.routes.draw do
+  resources :passwords, controller: "clearance/passwords", only: [:create, :new]
+  resource :session, controller: "sessions", only: [:create]
+
+  resources :users, controller: "users", only: [:create] do
+    resource :password,
+      controller: "clearance/passwords",
+      only: [:create, :edit, :update]
+  end
+
+  get "/sign_in" => "sessions#new", as: "sign_in"
+  delete "/sign_out" => "sessions#destroy", as: "sign_out"
+  get "/sign_up" => "users#new", as: "sign_up"
+  
   constraints Clearance::Constraints::SignedIn.new do
     root to: 'users#dashboard', as: :admin_root
   end
 
   constraints Clearance::Constraints::SignedOut.new do
-    root to: 'clearance/sessions#new'
+    root to: 'sessions#new'
   end
   patch 'user/:id/timezone_set' => 'users#timeset', as: :set_time_zone
 
@@ -22,6 +35,7 @@ Rails.application.routes.draw do
 
   post '/app_state/:id' => 'airconds#app_set', as: :app_set
   
+  get '/auth/nextacademy/callback' => 'sessions#create'
 
   resources :phone_apps, only: [:index]
   post '/app_create' => 'phone_apps#create', as: :app_create
