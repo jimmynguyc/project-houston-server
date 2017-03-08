@@ -25,7 +25,7 @@ class PhoneAppsController < ApplicationController
 			end
 		else
 			flash[:warning] = "You are not authorized."
-			rediect_to root_path
+			redirect_to root_path
 		end
 	end
 

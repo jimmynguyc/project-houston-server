@@ -47,23 +47,28 @@ class AircondsController < ApplicationController
 			@aircond.update(alias:aircond_params[:alias]) if aircond_params.keys.include? "alias"
 			cmd = decipher_command(aircond_params)
 			generate_selection(@aircond.mode)
+			@path = :edit
 
 			if validate_AC_controls(cmd)
 				if @aircond.check_device_status
 					if @aircond.update(aircond_params) 
 						flash[:notice] = "Aircond state was successfuly changed. Mode: #{@aircond[:mode]},Temperature: #{@aircond[:temperature]}, Fan Speed : #{@aircond[:fan_speed]}"
-						redirect_to root_path
+						@path = root_path
 					else
 						flash[:warning] = "Aircond state was not change. Remains as #{@aircond.get_state[:status]}"
-						render :edit
 					end
 				else
 					flash[:warning] = 'Raspberry Pi might not be on.'
-					render :edit
 				end
 			else
 				flash[:warning] = "Invalid command signal"
-				render :edit 
+			end
+			respond_to do |format|
+				format.html {
+					redirect_to @path if @path == root_path
+					render @path if @path == :edit
+				}
+				format.js {}
 			end
 	end
 
@@ -71,6 +76,7 @@ class AircondsController < ApplicationController
 		@aircond.aircond_group_id = params[:aircond][:aircond_group_id]
 		@aircond.save
 	end
+
 	# def timer
 	# 	#renders the form for setting aircond timer
 
