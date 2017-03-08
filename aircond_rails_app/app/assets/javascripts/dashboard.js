@@ -37,8 +37,9 @@
         url: '/airconds/' + ac_id,
         data: {aircond:{status:ac_power_status}}
       })
+     console.log('After update sent')
     }
-    console.log('After update sent')
+
   )
 
 
