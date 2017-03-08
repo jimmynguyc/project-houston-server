@@ -4,7 +4,7 @@ class User < ApplicationRecord
 	    'admin' =>0,
 	    'common' =>1
 	  }
-
+  has_many :authentications, :dependent => :destroy
   def self.create_with_auth_and_hash(authentication, auth_hash)
       user = User.create!(email: auth_hash["info"]["email"])
       user.authentications << (authentication)      
