@@ -30,14 +30,13 @@
     }else{
       var ac_power_status = "OFF"
     }
-    console.log('Sending Update Request')
+    debugger
     $.ajax({
         type: 'PATCH', 
         beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
         url: '/airconds/' + ac_id,
         data: {aircond:{status:ac_power_status}}
       })
-     console.log('After update sent')
     }
 
   )
