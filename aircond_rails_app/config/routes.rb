@@ -35,7 +35,7 @@ Rails.application.routes.draw do
 
   post '/app_state/:id' => 'airconds#app_set', as: :app_set
   
-  get '/auth/nextacademy/callback' => 'sessions#create'
+  get '/auth/nextacademy/callback' => 'sessions#create_from_omniauth'
 
   resources :phone_apps, only: [:index]
   post '/app_create' => 'phone_apps#create', as: :app_create
