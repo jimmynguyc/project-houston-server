@@ -12,7 +12,7 @@ $(document).ready(function(){
 	    	var original_value = 'off'
 	    	replace_value = 'on'
 	    }
-		set_hidden_select_form_val(container,replace_value)
+		set_hidden_form_val(container,replace_value)
 
 	  $(this).parent().html("<img style='height:300px' align='middle' src='"+ $(this).attr('src').replace(original_value,replace_value)+ "'>")
 	})
@@ -42,12 +42,12 @@ $(document).ready(function(){
 				var all_fan_selection = ['AUTO','1','2','3']
 
 				if(condition1.length === 0){
-					$('form ' + selector1 + '.col-sm-12 select' ).val('')
+					$('form ' + selector1 + '.col-sm-12 input' ).val('')
 					$(all_fan_selection).each(function(ind,val){
 						$('form ' + selector1 + '.col-sm-12 #speed_' + val.toLowerCase() ).html('')
 					})
 				}else{
-					$('form ' + selector1 + '.col-sm-12 select' ).val(condition1[0])
+					$('form ' + selector1 + '.col-sm-12 input' ).val(condition1[0])
 					$(all_fan_selection).each(function(ind,val){
 						$('form ' + selector1 + '.col-sm-12 #speed_' + val.toLowerCase() ).html('')
 					})
@@ -70,7 +70,7 @@ $(document).ready(function(){
 			}
 		})
 
-		set_hidden_select_form_val(container,replace_value)
+		set_hidden_form_val(container,replace_value)
 
 		container.children('div').children('img').each(function(ind,el){
 			$(el).parent().html("<img " + img_class + style + " align='middle' src='" + $(el).attr('src').replace('on','off') + " ' alt='" + alt.replace('on','off') + "'>")
@@ -90,7 +90,7 @@ $(document).ready(function(){
 	    var style = ''
  	    var alt='Speed ' + replace_value + ' on'
 
-		set_hidden_select_form_val(container,replace_value)
+		set_hidden_form_val(container,replace_value)
 
 		container.children('div').children('img').each(function(ind,el){
 			$(el).parent().html("<img " + img_class + style + " align='middle' src='" + $(el).attr('src').replace('on','off') + " ' alt='" + alt.replace('on','off') + "'>")
@@ -162,6 +162,6 @@ var possible_options = function(options){
 	return output
 }
 
-var set_hidden_select_form_val = function(container,value){
-	container.children('select').val(value.toUpperCase())
+var set_hidden_form_val = function(container,value){
+	container.children('input').val(value.toUpperCase())
 }

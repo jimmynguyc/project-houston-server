@@ -13,7 +13,7 @@
           <%= form.text_field :alias, {class:'form-control',style:'width:auto;height:auto;font-size:30px'}%>    
         </div>
         <div class = 'col-sm-12' id = ac_mode style='height:100px'>  
-          <%= form.select :mode,Aircond.modes.keys, {}, {class:'form-control',style:'display:none'} %>
+          <%= form.hidden_field :mode%>
         <div class = 'col-sm-2'><span>Mode</span></div>
         <% Aircond.modes.keys.each do |key|%>
           <% state = 'off'%>
@@ -22,7 +22,7 @@
         <% end %>
         </div>
         <div class = 'col-sm-12 ' id = ac_fan_speed style='height:100px'>
-            <%= form.select :fan_speed, @fan_speed_selection, {}, {class:'right_align form-control',style:'display:none'} %>
+            <%= form.hidden_field :fan_speed %>
             <div class = 'col-sm-2'><span>Fan Speed</span></div>
             <% Aircond.fan_speeds.keys.each do |key| %>
               <div class = 'col-sm-2' id = <%="speed_#{key.to_s.downcase}"%>>
@@ -38,7 +38,7 @@
 
       <div class = 'col-sm-4' >
         <div class = 'col-sm-12' id = ac_status>
-          <%= form.select :status, Aircond.statuses.keys, {}, {class:'right_align form-control',style:'display:none'}%>
+          <%= form.hidden_field :status%>
           <div >
             <% status = @aircond.image_new(:status)%>
               <%= image_tag(status[:img_url],class:'' ,style:'height:300px', align:'middle')%>

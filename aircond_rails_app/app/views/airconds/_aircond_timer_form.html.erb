@@ -8,7 +8,7 @@
           <%=f.submit "Set Timer",class:"btn btn-primary submit-btn"%>
       <%end%>
 
-      <div style = 'float:right'><span >Current Timer  </span>
+      <div style = 'float:right'><span >Current Timer  :</span>
         <% if !@current_timer.nil?%>
           <div id=current_timer style = 'float:right'>
             <span id=hour><%= "#{@current_timer.hour}".rjust(2,'0')%></span>:<span id=min><%="#{@current_timer.min}".rjust(2,'0')%></span>:<span id=sec><%="#{@current_timer.sec}".rjust(2,'0')%></span>
