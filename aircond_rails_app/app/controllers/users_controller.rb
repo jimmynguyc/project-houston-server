@@ -9,6 +9,7 @@ class UsersController < Clearance::UsersController
 	def timeset
 		current_user.timezone = params.permit![:user][:timezone]
 		current_user.save
+		p current_user.errors
 		redirect_to root_path
 	end
 end
