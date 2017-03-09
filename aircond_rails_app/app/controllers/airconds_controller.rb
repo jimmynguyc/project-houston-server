@@ -29,7 +29,6 @@ class AircondsController < ApplicationController
 	def edit
 
 		generate_selection(@aircond.mode)
-		Time.zone = current_user.timezone
 		@current_timer = Time.zone.parse(@aircond.timer.to_s)
 		@current_time= Time.zone.now
 		respond_to do |format|
@@ -85,7 +84,6 @@ class AircondsController < ApplicationController
 
 	def timer_set
 		#sets the job for timer to execute
-		Time.zone = current_user.timezone
 		trigger_time = Time.zone.parse(params.permit![:aircond][:timer])
 		job = Sidekiq::Cron::Job.new(name:"AcTimer worker - #{@aircond.alias}", cron: " #{trigger_time.min} #{trigger_time.hour} * * 1-5 #{Time.zone.name}", class:'AcTimerWorker', args:{aircond_id:@aircond.id,status:params[:aircond][:status]})
 		if job.valid?

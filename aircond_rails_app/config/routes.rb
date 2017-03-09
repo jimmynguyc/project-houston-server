@@ -19,8 +19,6 @@ Rails.application.routes.draw do
   constraints Clearance::Constraints::SignedOut.new do
     root to: 'sessions#new'
   end
-  patch 'user/:id/timezone_set' => 'users#timeset', as: :set_time_zone
-
 
   post '/firebase_update/:id' => 'airconds#update_website_from_firebase', as: :firebase_update
   resources :aircond_groups, only: [:create,:destroy,:index]
