@@ -5,15 +5,14 @@
   <script src="https://www.gstatic.com/firebasejs/3.6.5/firebase.js"></script>
 
   <script>
-    // Initialize Firebase
     var config = {
       databaseURL: "https://nextaircon-6d849.firebaseio.com",
     };
     firebase.initializeApp(config);
   </script>
     <%= csrf_meta_tags %>
-      <%= stylesheet_link_tag 'https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.css' %>
-  <%= javascript_include_tag 'https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.js'%>
+    <%= stylesheet_link_tag 'https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.css' %>
+    <%= javascript_include_tag 'https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.js'%>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>	

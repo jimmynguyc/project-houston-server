@@ -66,7 +66,7 @@ class AircondsController < ApplicationController
 			respond_to do |format|
 				format.html {
 					redirect_to @path if @path == root_path
-					render @path if @path == :edit
+					redirect_to edit_aircond_path(@aircond) if @path == :edit
 				}
 				format.js {}
 			end
@@ -146,6 +146,7 @@ class AircondsController < ApplicationController
 	def update_website_from_firebase
 		arguments = aircond_params
 		sanitize_params(arguments)
+		Aircond.set_callback(:update,:before,:check_state)
 		Aircond.skip_callback(:update,:before,:check_state)
 		@aircond.update(arguments) 
 		Aircond.set_callback(:update,:before,:check_state)

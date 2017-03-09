@@ -3,7 +3,8 @@
 <!--     <%= form_for @aircond, html:{id:'edit_aircond_settings'} do |form|%>
       <%= render partial: 'form', object:form%>
     <%end%> -->
-
+        <%= flash[:warning]%>
+        <%= flash[:notice]%>
     <br>
     <%= form_for @aircond, html:{id:'edit_aircond_settings'} do |form|%>
 
@@ -23,13 +24,14 @@
         <div class = 'col-sm-12 ' id = ac_fan_speed style='height:100px'>
             <%= form.select :fan_speed, @fan_speed_selection, {}, {class:'right_align form-control',style:'display:none'} %>
             <div class = 'col-sm-2'><span>Fan Speed</span></div>
-            <% @fan_speed_selection.each do |key|%>
-              <% state = 'off'%>
-              <% state = 'on' if key == @aircond.fan_speed%>
+            <% Aircond.fan_speeds.keys.each do |key| %>
               <div class = 'col-sm-2' id = <%="speed_#{key.to_s.downcase}"%>>
-                  <%= image_tag("/NEXT-AC-assets/speed-#{key.to_s.downcase}-#{state}.png",class:'fit-img-size ', align:'middle' )%> 
+              <% if @fan_speed_selection.include?(key)%>
+                <% state = 'off'%>
+                <% state = 'on' if key == @aircond.fan_speed%>
+                <%= image_tag("/NEXT-AC-assets/speed-#{key.to_s.downcase}-#{state}.png",class:'fit-img-size ', align:'middle' )%> 
+              <% end %>
               </div>
-
             <% end %>
         </div>
       </div>

@@ -66,3 +66,6 @@ gem 'figaro'
 gem 'bcrypt'
 
 gem 'omniauth-oauth2'
+
+gem 'foreman'
+gem 'rails_12factor'

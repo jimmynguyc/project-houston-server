@@ -30,7 +30,6 @@
     }else{
       var ac_power_status = "OFF"
     }
-    debugger
     $.ajax({
         type: 'PATCH', 
         beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
