@@ -1,3 +1,15 @@
+GIT
+  remote: git://github.com/sinatra/sinatra.git
+  revision: 379e360f5db78352acbf1263ab290b219f2d1df2
+  specs:
+    rack-protection (2.0.0.rc1)
+      rack
+    sinatra (2.0.0.rc1)
+      mustermann (= 1.0.0)
+      rack (~> 2.0)
+      rack-protection (= 2.0.0.rc1)
+      tilt (~> 2.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -138,6 +150,7 @@ GEM
     multi_json (1.12.1)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
+    mustermann (1.0.0)
     nenv (0.3.0)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
@@ -310,6 +323,7 @@ DEPENDENCIES
   sass-rails (~> 5.0)
   sidekiq
   sidekiq-cron (~> 0.4.0)
+  sinatra!
   spring
   spring-watcher-listen (~> 2.0.0)
   tzinfo-data
