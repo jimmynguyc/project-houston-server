@@ -2,17 +2,15 @@
 class AircondsController < ApplicationController 
 	before_action :set_aircond, only: [:edit,:update,:timer,:timer_set,:app_set,:update_website_from_firebase,:assign_group]
 	before_action only: [:app_set] {validate_app_token(params[:user_name],params[:app_token])}
-
 	skip_before_filter  :verify_authenticity_token, only: [:app_get_all,:app_set]
-	include ApplicationHelper
-
+	before_action :set_paper_trail_whodunnit, only: [:create,:update,:set_all_status]
 	def new
 		@aircond = Aircond.new
 		@current_time= Time.zone.now
 	end
 
 	def create
-		device= Device.new(device_params)
+		device= Device.new(device_params)	
 		if device.save
 			ac = Aircond.new(device_id:device.id,alias:aircond_params[:alias])
 			ac.save
@@ -76,23 +74,17 @@ class AircondsController < ApplicationController
 		@aircond.save
 	end
 
-	# def timer
-	# 	#renders the form for setting aircond timer
 
-	# 	render 'airconds/timer_form'
-	# end
 
 	def timer_set
 		#sets the job for timer to execute
 		trigger_time = Time.zone.parse(params.permit![:aircond][:timer])
 		job = Sidekiq::Cron::Job.new(name:"AcTimer worker - #{@aircond.alias}", cron: " #{trigger_time.min} #{trigger_time.hour} * * 1-5 #{Time.zone.name}", class:'AcTimerWorker', args:{aircond_id:@aircond.id,status:params[:aircond][:status]})
-		if job.valid?
-			job.save
+		if job.save
 			@aircond.update(timer:Time.zone.local_to_utc(trigger_time))
 			redirect_to root_path
 		else
 			flash[:warning] = 'Invalid Job'
-			puts job.errors
 			redirect_to set_timer_path
 		end
 	end
@@ -103,8 +95,9 @@ class AircondsController < ApplicationController
 		ac_grp.nil? ? @airconds = Aircond.all : @airconds = ac_grp.airconds
 
 		@airconds.each do |ac|
-			ac.send_signal(params[:status]) if ac.get_state[:status] != params[:status] 
-			ac.update(status:ac.get_state[:status])
+			# ac.send_signal(params[:status]) if ac.get_state[:status] != params[:status] 
+			# ac.update(status:ac.get_state[:status])
+			ac.update(params[:status])
 		end	
 
 		flash[:warning] = "Airconds with aliases  #{Aircond.where('status != ?', Aircond.statuses[params[:status]]).pluck(:alias)} were not successfully #{params[:status]}"
@@ -118,32 +111,36 @@ class AircondsController < ApplicationController
 	end
 
 	def app_set	
+		PaperTrail.whodunnit = params[:user_name]
 		if validate_app_token(params[:user_name],params[:app_token])
 			cmd = decipher_command(aircond_params)
 			if validate_AC_controls(cmd)
 				if @aircond.check_device_status
 					if @aircond.check_power_status(aircond_params['status'])
 						@aircond.update(aircond_params) 
-						render json:{response: "Aircond is already #{aircond_params[:status]}. Mode: #{aircond_params[:mode]},Temperature: #{aircond_params[:temperature]}, Fan Speed : #{aircond_params[:fan_speed]}"}
+						msg = "Aircond is already #{aircond_params[:status]}. Mode: #{aircond_params[:mode]},Temperature: #{aircond_params[:temperature]}, Fan Speed : #{aircond_params[:fan_speed]}"
 					elsif @aircond.update(aircond_params) 
-						render json:{response:'Aircond state was successfuly changed. Mode: #{aircond_params[:mode]},Temperature: #{aircond_params[:temperature]}, Fan Speed : #{aircond_params[:fan_speed]}'}
+						msg = "Aircond state was successfuly changed. Mode: #{aircond_params[:mode]},Temperature: #{aircond_params[:temperature]}, Fan Speed : #{aircond_params[:fan_speed]}"
 					else
-						render json:{response:"Aircond state was not change. Remains as #{@aircond.get_state[:status]}"}
+						msg = "Aircond state was not change. Remains as #{@aircond.get_state[:status]}"
 					end	
 				else
-					render json:{response:'Raspberry Pi might not be on.'}
+					msg = 'Raspberry Pi might not be on.'
 				end
 			else
-				render json:{response:"Invalid command signal"}
+				msg = "Invalid command signal"
 			end
 		else
-			render json:{response:"Invalid Token"}
+			msg = "Invalid Token"
 		end
+		render json:{response:msg}
 	end
 
 	def update_website_from_firebase
+		PaperTrail.whodunnit = 'firebase'
 		arguments = aircond_params
 		sanitize_params(arguments)
+
 		Aircond.set_callback(:update,:before,:check_state)
 		Aircond.skip_callback(:update,:before,:check_state)
 		@aircond.update(arguments) 

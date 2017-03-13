@@ -4,14 +4,13 @@ class Aircond < ApplicationRecord
 	belongs_to :device
   belongs_to :aircond_group,  optional: true
 	belongs_to :aircond_state,  optional: true
-
+  has_paper_trail
 	before_update :check_state
 	after_save :update_firebase
-
   scope :by_aircond_group,  -> (ac_grp_id){where('aircond_group_id =  ?', ac_grp_id)}
   scope :by_unassigned_aircond_group,  -> {where('aircond_group_id IS NULL')}
   
-	include ApplicationHelper
+
 	  enum status:{
 	    'OFF' =>0,
 	    'ON' =>1,
@@ -55,7 +54,8 @@ class Aircond < ApplicationRecord
 
 	def check_state
 		response = send_signal(get_command) if !(self.changes.keys & ["status","temperature","mode","fan_speed"]).empty?
-		throw :abort if response == false
+
+    throw :abort if response == false
 	end
 
 	def check_power_status(arg)	
@@ -85,20 +85,7 @@ class Aircond < ApplicationRecord
     response = Unirest.post(self.device.url + '/set_id.py',parameters:{id:self.id})
   end
 
-  def image(attribute)
-  	value = self.send(attribute)
-  	value = 'NA' if value == nil
-  	case attribute
-  		when :status
-  			{img_url:'/images/button_on.png',value:value}
-  		when :mode
-				{img_url:"/images/mode_#{value.downcase}.png",value:value}
-  		when :fan_speed
-  			{img_url:"/images/button_fan.png",value:value}
-  		when :temperature
-				{img_url:"/images/button_temperature.png",value:value}  	
-			end
-  end
+
 
   def image_new(attribute)
   	value = self.send(attribute)

@@ -1,14 +1,16 @@
 class PhoneAppsController < ApplicationController
 	skip_before_filter  :verify_authenticity_token
-	include ApplicationHelper
+	before_action :set_paper_trail_whodunnit, only: [:approve_token]
 
 	def create
+		PaperTrail.whodunnit = "#{phone_app_params[:user_name]}"
 		phone_app=PhoneApp.new(phone_app_params)
 		if phone_app.save
-			render json:{response:'PhoneApp record created, awaiting approval'}
+			msg = 'PhoneApp record created, awaiting approval'
 		else
-			render json:{response:'PhoneApp record not created, check your code.'}
+			msg = 'PhoneApp record not created, check your code.'
 		end
+		render json:{response:msg}
 	end
 
 	def index

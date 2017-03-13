@@ -70,3 +70,5 @@ gem 'omniauth-oauth2'
 gem 'foreman'
 gem 'rails_12factor'
 gem 'redis'
+
+gem 'paper_trail'

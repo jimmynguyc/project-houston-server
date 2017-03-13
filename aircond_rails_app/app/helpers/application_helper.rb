@@ -35,4 +35,6 @@ module ApplicationHelper
 
 		status + mode+fan_speed+temperature
 	end
+
+
 end
