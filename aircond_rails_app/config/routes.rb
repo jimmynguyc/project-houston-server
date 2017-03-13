@@ -31,7 +31,7 @@ mount Sidekiq::Web => '/sidekiq'
 
   resources :devices
   resources :airconds do
-    resources :versions, only: [:index,:show]
+    resources :versions, only: [:index]
   end
   get 'aircond/:id/timer' => 'airconds#timer', as: :set_timer
   patch 'aircond/:id/timer' => 'airconds#timer_set', as: :timer_set

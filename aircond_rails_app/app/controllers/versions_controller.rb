@@ -1,11 +1,12 @@
 class VersionsController < ApplicationController
+  before_action :require_login
   def index
-    @aircond = Aircond.find(params[:aircond_id])
-    @versions = @aircond.versions
-  end
-
-  def show
-    @aircond = Aircond.find(params[:aircond_id])
-    @versions = @aircond.versions[params[:id]-1]
+    if is_admin?
+      @aircond = Aircond.find(params[:aircond_id])
+      @versions = @aircond.versions
+    else
+      flash[:warning] = "You are not authorized."
+      redirect_to root_path
+    end
   end
 end
