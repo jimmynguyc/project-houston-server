@@ -1,0 +1,20 @@
+<div class = 'col-sm-12 log_row'>
+  <div class = 'col-sm-2 log_cell'>
+    <% if version.whodunnit.to_i != 0  %>
+      <%= User.find(version.whodunnit).email %>
+    <% else%>
+      <%= version.whodunnit%>
+    <% end %>
+  </div>
+  <div class = 'col-sm-1 log_cell'>
+    <%= version.event%>
+  </div>
+  <div class = 'col-sm-6 log_cell'>
+    <% original_val = version.object%>
+    <%= "#{original_val['alias']} was originally Status: #{original_val['status']} Mode: #{original_val['mode']} Fan Speed: #{original_val['fan_speed']} Temperature: #{original_val['temperature']}  "%>
+
+  </div>
+  <div class = 'col-sm-2 log_cell'>
+    <%= version.created_at.strftime("%F %T") %>
+  </div>
+</div>

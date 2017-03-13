@@ -24,11 +24,15 @@ mount Sidekiq::Web => '/sidekiq'
     root to: 'sessions#new'
   end
 
+
+
   post '/firebase_update/:id' => 'airconds#update_website_from_firebase', as: :firebase_update
   resources :aircond_groups, only: [:create,:destroy,:index]
 
   resources :devices
-  resources :airconds
+  resources :airconds do
+    resources :versions, only: [:index,:show]
+  end
   get 'aircond/:id/timer' => 'airconds#timer', as: :set_timer
   patch 'aircond/:id/timer' => 'airconds#timer_set', as: :timer_set
   post 'set_all_status/:status' => 'airconds#set_all_status', as: :set_all_status

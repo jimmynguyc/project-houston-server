@@ -1,0 +1,22 @@
+<h1>Logs for <%="Aircond at #{@aircond.alias}" %></h1>
+<br>
+<div class = 'col-sm-10 log_table'>
+  <div class = 'col-sm-12 log_header'>
+    <div class = 'col-sm-2 log_cell'>
+      By
+    </div>
+    <div class = 'col-sm-1 log_cell'>
+      Event
+    </div>
+    <div class = 'col-sm-6 log_cell'>
+      Aircond's original status
+    </div>
+    <div class = 'col-sm-2 log_cell'>
+      Timestamp
+    </div>
+  </div>
+
+  <% @versions.each do |v|%>
+    <%= render partial: 'version',locals:{version:v}%>
+  <% end %>
+</div>

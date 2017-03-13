@@ -86,3 +86,26 @@ select.form-control{
 .status_off{
   background-color:  #dc322f
 }
+
+.log_table [class*="col-"] {
+  text-align: center;
+  font-size: 15px;
+}
+
+.log_header [class*="col-"] {
+  padding-top:15px;
+  padding-bottom:15px;
+}
+
+div.log_header .log_cell{
+  background-color: black;
+  color:white;
+  font-size: 18px;
+  font-weight:bold;
+  margin:1px;
+}
+
+.log_row .log_cell{
+  background-color:lightgrey;
+  margin:1px;
+}
