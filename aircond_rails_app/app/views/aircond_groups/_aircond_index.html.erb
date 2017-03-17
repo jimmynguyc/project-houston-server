@@ -1,7 +1,7 @@
   <div class='ac_group_index'>
 
       <% aircond_groups.pluck(:id).each_slice(3) do |row| %>
-        <div class = 'col-sm-12' style = 'min-height:200px'>
+        <div class = 'col-sm-12' >
           <%row.each do |id|%>
             <% ac_grp = AircondGroup.find(id)%>
             <%= render partial:'/aircond_groups/aircond_grouping_list',locals:{group_title:ac_grp.title,ac_grp_id:id,aircond_list:Aircond.by_aircond_group(id)}%>
@@ -12,7 +12,7 @@
       <% aircond_list = Aircond.by_unassigned_aircond_group%>
 
       <% if !aircond_list.empty? %>
-          <div class = 'col-sm-12' style = 'min-height:200px'>
+          <div class = 'col-sm-12'>
             <%= render partial:'/aircond_groups/aircond_grouping_list',locals:{group_title:'Unassigned',ac_grp_id:'0',aircond_list:aircond_list}%>
           </div>
       <% end %>

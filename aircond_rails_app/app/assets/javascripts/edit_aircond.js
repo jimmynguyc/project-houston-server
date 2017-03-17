@@ -1,7 +1,4 @@
 $(document).ready(function(){
-
-
-
 	$(document).on('click','form #ac_status img', function(){
 		var container = $(this).closest('.col-sm-12')
 		var replace_value = $(this).attr('src').replace('/NEXT-AC-assets/','').split('-')[1]

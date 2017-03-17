@@ -43,6 +43,7 @@ class Aircond < ApplicationRecord
 		path = raspi.url + "/state.py"
     params = {access_token:raspi.access_token, command:command}
 		response = Unirest.post(path,parameters:params)
+    
 		check_power_status(self.changes['status'][1]) if self.changes.keys.include?(:status) && !self.changes[key].nil?
 	end
 
@@ -55,7 +56,7 @@ class Aircond < ApplicationRecord
 	def check_state
 		response = send_signal(get_command) if !(self.changes.keys & ["status","temperature","mode","fan_speed"]).empty?
 
-    throw :abort if response == false
+    throw :abort if response == false 
 	end
 
 	def check_power_status(arg)	

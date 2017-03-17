@@ -109,3 +109,8 @@ div.log_header .log_cell{
   background-color:lightgrey;
   margin:1px;
 }
+
+.ac_group_body{
+  min-height:200px
+}
+

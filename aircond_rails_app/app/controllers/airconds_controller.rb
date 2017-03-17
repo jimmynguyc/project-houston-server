@@ -97,7 +97,7 @@ class AircondsController < ApplicationController
 		@airconds.each do |ac|
 			# ac.send_signal(params[:status]) if ac.get_state[:status] != params[:status] 
 			# ac.update(status:ac.get_state[:status])
-			ac.update(params[:status])
+			ac.update(status:params[:status])
 		end	
 
 		flash[:warning] = "Airconds with aliases  #{Aircond.where('status != ?', Aircond.statuses[params[:status]]).pluck(:alias)} were not successfully #{params[:status]}"

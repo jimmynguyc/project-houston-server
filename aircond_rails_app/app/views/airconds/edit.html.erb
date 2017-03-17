@@ -1,8 +1,5 @@
 <div class="col-sm-10" >
     <h1>Aircond Status</h1>
-<!--     <%= form_for @aircond, html:{id:'edit_aircond_settings'} do |form|%>
-      <%= render partial: 'form', object:form%>
-    <%end%> -->
         <%= flash[:warning]%>
         <%= flash[:notice]%>
     <br>
@@ -71,7 +68,8 @@
 
 </div>
 
-    <div class="col-sm-2" style = 'border-left-style: solid;border-bottom-style: solid; padding: 20px;text-align : right'>
-      <%= render partial:'/users/currenttime'%>
-      <%= render partial:'aircond_timer_form.html.erb'%>
-    </div>
+<div class="col-sm-2" style = 'border-left-style: solid;border-bottom-style: solid; padding: 20px;text-align : right'>
+  <%= render partial:'/users/currenttime'%>
+  <%= render partial:'aircond_timer_form.html.erb'%>
+</div>
+<div class = 'col-sm-10'><span style = 'float:right'><%= link_to('Logs', aircond_versions_path(@aircond), method:'get',class:"btn btn-primary get-btn") if is_admin? %></span></div>
