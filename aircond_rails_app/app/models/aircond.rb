@@ -49,7 +49,7 @@ class Aircond < ApplicationRecord
 
 	def update_firebase
 		firebase = Firebase::Client.new("https://nextaircon-6d849.firebaseio.com")
-		data = self.slice(:alias,:status,:temperature,:mode,:fan_speed,:aircond_group_id)
+		data = self.slice(:alias,:temperature,:mode,:fan_speed,:aircond_group_id)
 		firebase.update('/airconds/'+self.id.to_s, data)		
 	end
 
