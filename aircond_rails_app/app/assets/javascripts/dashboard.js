@@ -1,3 +1,4 @@
+PENDING_RESPONSE = false
  $(document).ready(function() {
   timer();
 
@@ -30,12 +31,16 @@
     }else{
       var ac_power_status = "OFF"
     }
-    $.ajax({
+    if(PENDING_RESPONSE == false){
+        PENDING_RESPONSE = true
+        $.ajax({
         type: 'PATCH', 
         beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
         url: '/airconds/' + ac_id + '.js',
         data: {aircond:{status:ac_power_status}}
       })
+    }
+
     }
 
   )

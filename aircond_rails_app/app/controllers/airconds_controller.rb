@@ -65,7 +65,7 @@ class AircondsController < ApplicationController
 					redirect_to @path if @path == root_path
 					redirect_to edit_aircond_path(@aircond) if @path == :edit
 				}
-				format.js {}
+				format.js {render 'signal.js.erb'}
 			end
 	end
 
