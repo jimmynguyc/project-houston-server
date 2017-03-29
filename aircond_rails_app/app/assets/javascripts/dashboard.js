@@ -25,7 +25,7 @@
   $(document).on('click','#user_dashboard .ac_row .ac_status img',function(event){
     var element = $(this)
     var ac_id = $(this).closest('.ac_row').attr('id')
-    if($(this).attr('alt').split(' ')[1].toUpperCase() == "OFF"){
+    if($(this).attr('src').split('/NEXT-AC-assets/power-')[1].split('-')[0].toUpperCase() == "OFF"){
       var ac_power_status = "ON"
     }else{
       var ac_power_status = "OFF"
