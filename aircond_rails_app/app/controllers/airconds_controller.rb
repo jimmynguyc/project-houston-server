@@ -142,9 +142,12 @@ class AircondsController < ApplicationController
 		sanitize_params(arguments)
 
 		Aircond.set_callback(:update,:before,:check_state)
+		Aircond.set_callback(:save,:after, :update_firebase)
 		Aircond.skip_callback(:update,:before,:check_state)
+		Aircond.skip_callback(:save,:after, :update_firebase)
 		@aircond.update(arguments) 
 		Aircond.set_callback(:update,:before,:check_state)
+		Aircond.set_callback(:save,:after, :update_firebase)
 		render json:{response:'Updated'}
 	end
 
