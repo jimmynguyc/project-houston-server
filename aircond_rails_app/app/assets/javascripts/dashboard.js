@@ -33,12 +33,12 @@ PENDING_RESPONSE = false
     }
     if(PENDING_RESPONSE == false){
         PENDING_RESPONSE = true
-        $.ajax({
-        type: 'PATCH', 
-        beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
-        url: '/airconds/' + ac_id + '.js',
-        data: {aircond:{status:ac_power_status}}
-      })
+      //   $.ajax({
+      //   type: 'PATCH', 
+      //   beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+      //   url: '/airconds/' + ac_id + '.js',
+      //   data: {aircond:{status:ac_power_status}}
+      // })
     }
 
     }
@@ -86,26 +86,26 @@ PENDING_RESPONSE = false
   },1000)
 
 
-  var houston_db= firebase.database();
+ //  var houston_db= firebase.database();
 
 
-  $('.aircond').each(function(index,selector){
-    // console.log('At the beginning')
-    houston_db.ref('airconds/'+ $(selector).attr('id')).on('value', function(snapshot) { 
-      ['.ac_status','.ac_mode','.ac_temperature','.ac_fan_speed'].forEach(function(filter){
-        realtime_view_updates(selector,filter,snapshot)    
-      })
+ //  $('.aircond').each(function(index,selector){
+ //    // console.log('At the beginning')
+ //    houston_db.ref('airconds/'+ $(selector).attr('id')).on('value', function(snapshot) { 
+ //      ['.ac_status','.ac_mode','.ac_temperature','.ac_fan_speed'].forEach(function(filter){
+ //        realtime_view_updates(selector,filter,snapshot)    
+ //      })
       
-      console.log(snapshot.val())
-      // console.log('Triggered update')
-      $.ajax({
-        type: 'POST', 
-        beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
-        url: '/firebase_update/' + $(selector).attr('id'),
-        data: {aircond: snapshot.val()},
-      })
-    })
- })
+ //      console.log(snapshot.val())
+ //      // console.log('Triggered update')
+ //      $.ajax({
+ //        type: 'POST', 
+ //        beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+ //        url: '/firebase_update/' + $(selector).attr('id'),
+ //        data: {aircond: snapshot.val()},
+ //      })
+ //    })
+ // })
 
   $('#location').on('change',function(event){
     var filter = $('#location').val()

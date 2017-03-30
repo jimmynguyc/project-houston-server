@@ -2,7 +2,7 @@ class AircondGroup < ApplicationRecord
   has_many :airconds
   validates :title, uniqueness: true
   accepts_nested_attributes_for :airconds
-  after_save :update_firebase
+  # after_save :update_firebase
 
   def self.column_grid_length(divisor)
     if Aircond.by_unassigned_aircond_group.empty?
@@ -34,11 +34,11 @@ class AircondGroup < ApplicationRecord
     joins(:airconds).select('aircond_groups.*,count(airconds.id)').group('aircond_groups.id')
   end
 
-  def update_firebase
-    firebase = Firebase::Client.new("https://nextaircon-6d849.firebaseio.com")
-    data = self.slice(:title)
-    firebase.update('/aircond_group/'+self.id.to_s, data)    
-  end
+  # def update_firebase
+  #   firebase = Firebase::Client.new("https://nextaircon-6d849.firebaseio.com")
+  #   data = self.slice(:title)
+  #   firebase.update('/aircond_group/'+self.id.to_s, data)    
+  # end
 end
 
 

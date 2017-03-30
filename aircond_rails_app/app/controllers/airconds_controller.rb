@@ -137,15 +137,15 @@ class AircondsController < ApplicationController
 		render json:{response:msg}
 	end
 
-	def update_website_from_firebase
-		PaperTrail.whodunnit = 'firebase'
-		arguments = aircond_params
-		sanitize_params(arguments)
-		@aircond.from_firebase = true
-		@aircond.update(arguments) 
+	# def update_website_from_firebase
+	# 	PaperTrail.whodunnit = 'firebase'
+	# 	arguments = aircond_params
+	# 	sanitize_params(arguments)
+	# 	@aircond.from_firebase = true
+	# 	@aircond.update(arguments) 
 
-		render json:{response:'Updated'}
-	end
+	# 	render json:{response:'Updated'}
+	# end
 
 	private
 
