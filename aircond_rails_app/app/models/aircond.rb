@@ -48,7 +48,7 @@ class Aircond < ApplicationRecord
 	end
 
 	def update_firebase
-    puts caller[0][/`.*'/][1..-2]
+    puts caller
     return true if caller[0][/`.*'/][1..-2] == "update_website_from_firebase"
 		firebase = Firebase::Client.new("https://nextaircon-6d849.firebaseio.com")
 		data = self.slice(:alias,:temperature,:mode,:fan_speed,:aircond_group_id)
@@ -56,7 +56,7 @@ class Aircond < ApplicationRecord
 	end
 
 	def check_state
-    puts caller[0][/`.*'/][1..-2]
+    puts caller
     return true if caller[0][/`.*'/][1..-2] == "update_website_from_firebase"
 		response = send_signal(get_command) if !(self.changes.keys & ["status","temperature","mode","fan_speed"]).empty?
 
