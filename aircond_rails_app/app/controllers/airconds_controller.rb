@@ -95,6 +95,7 @@ class AircondsController < ApplicationController
 		ac_grp.nil? ? @airconds = Aircond.all : @airconds = ac_grp.airconds
 
 		@airconds.each do |ac|
+			ac.from_firebase = false
 			# ac.send_signal(params[:status]) if ac.get_state[:status] != params[:status] 
 			# ac.update(status:ac.get_state[:status])
 			ac.update(status:params[:status])
@@ -140,8 +141,8 @@ class AircondsController < ApplicationController
 		PaperTrail.whodunnit = 'firebase'
 		arguments = aircond_params
 		sanitize_params(arguments)
-
-
+		byebug
+		@aircond.from_firebase = true
 		@aircond.update(arguments) 
 
 		render json:{response:'Updated'}
@@ -159,6 +160,7 @@ class AircondsController < ApplicationController
 
 	def set_aircond
 		@aircond = Aircond.find(params[:id])
+		@aircond.from_firebase = false
 	end
 
 	def sanitize_params(arguments)

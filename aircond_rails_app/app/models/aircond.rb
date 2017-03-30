@@ -10,7 +10,7 @@ class Aircond < ApplicationRecord
   scope :by_aircond_group,  -> (ac_grp_id){where('aircond_group_id =  ?', ac_grp_id)}
   scope :by_unassigned_aircond_group,  -> {where('aircond_group_id IS NULL')}
   
-
+  attr_accessor :from_firebase
 	  enum status:{
 	    'OFF' =>0,
 	    'ON' =>1,
@@ -48,19 +48,20 @@ class Aircond < ApplicationRecord
 	end
 
 	def update_firebase
-    puts caller
-    return true if caller[0][/`.*'/][1..-2] == "update_website_from_firebase"
-		firebase = Firebase::Client.new("https://nextaircon-6d849.firebaseio.com")
-		data = self.slice(:alias,:temperature,:mode,:fan_speed,:aircond_group_id)
-		firebase.update('/airconds/'+self.id.to_s, data)		
+    byebug
+    if from_firebase == false
+  		firebase = Firebase::Client.new("https://nextaircon-6d849.firebaseio.com")
+  		data = self.slice(:alias,:temperature,:mode,:fan_speed,:aircond_group_id)
+  		firebase.update('/airconds/'+self.id.to_s, data)		
+    end
 	end
 
 	def check_state
-    puts caller
-    return true if caller[0][/`.*'/][1..-2] == "update_website_from_firebase"
-		response = send_signal(get_command) if !(self.changes.keys & ["status","temperature","mode","fan_speed"]).empty?
-
-    throw :abort if response == false 
+    byebug
+    if from_firebase == false
+  		response = send_signal(get_command) if !(self.changes.keys & ["status","temperature","mode","fan_speed"]).empty?
+      throw :abort if response == false 
+    end
 	end
 
 	def check_power_status(arg)	
