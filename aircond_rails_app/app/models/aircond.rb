@@ -48,7 +48,6 @@ class Aircond < ApplicationRecord
 	end
 
 	def update_firebase
-    byebug
     if from_firebase == false
   		firebase = Firebase::Client.new("https://nextaircon-6d849.firebaseio.com")
   		data = self.slice(:alias,:temperature,:mode,:fan_speed,:aircond_group_id)
@@ -57,7 +56,6 @@ class Aircond < ApplicationRecord
 	end
 
 	def check_state
-    byebug
     if from_firebase == false
   		response = send_signal(get_command) if !(self.changes.keys & ["status","temperature","mode","fan_speed"]).empty?
       throw :abort if response == false 

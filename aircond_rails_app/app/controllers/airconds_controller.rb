@@ -141,7 +141,6 @@ class AircondsController < ApplicationController
 		PaperTrail.whodunnit = 'firebase'
 		arguments = aircond_params
 		sanitize_params(arguments)
-		byebug
 		@aircond.from_firebase = true
 		@aircond.update(arguments) 
 
