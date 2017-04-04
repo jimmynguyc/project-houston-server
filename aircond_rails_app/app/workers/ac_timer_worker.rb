@@ -7,7 +7,7 @@ class AcTimerWorker
   	arguments = args[0]
   	puts "Ac Timer Worker Running!"
   	aircond = Aircond.find(arguments["aircond_id"])
-
+    aircond.from_firebase = false
   	# aircond.send_signal(status:arguments["status"]) if aircond.get_state[:status] != arguments["status"]
     aircond.update(status:arguments["status"])
   end
