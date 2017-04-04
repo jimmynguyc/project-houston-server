@@ -4,7 +4,7 @@ class VersionsController < ApplicationController
 
     if is_admin?
       @aircond = Aircond.find(params[:aircond_id])
-      @versions = @aircond.versions.paginate(:page => params[:page],:pera_page => 30).order('created_at DESC')
+      @versions = @aircond.versions.paginate(:page => params[:page],:per_page => 30).order('created_at DESC')
     else
       flash[:warning] = "You are not authorized."
       redirect_to root_path
