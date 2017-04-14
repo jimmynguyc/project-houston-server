@@ -17,6 +17,9 @@
   </div>
 
   <% @versions.each do |v|%>
-    <%= render partial: 'version',locals:{version:v}%>
+    <% if !v.object.nil?%>
+      <%= render partial: 'version',locals:{version:v} %>
+    <% end%>
   <% end %>
+  <%= will_paginate @versions %>
 </div>
