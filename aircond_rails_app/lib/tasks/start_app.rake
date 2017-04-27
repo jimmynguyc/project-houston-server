@@ -5,3 +5,9 @@ namespace :start_app do
   end
 end
 
+namespace :status_checker do
+  desc "sets workers to monitor and disable aircond status"
+  task  :set_worker do
+    p "Hello"
+  end
+end

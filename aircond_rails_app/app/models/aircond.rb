@@ -51,6 +51,7 @@ class Aircond < ApplicationRecord
     if from_firebase == false
   		firebase = Firebase::Client.new("https://nextaircon-6d849.firebaseio.com")
   		data = self.slice(:alias,:temperature,:mode,:fan_speed,:aircond_group_id)
+      data[:pi_status] = "ENABLED"
   		firebase.update('/airconds/'+self.id.to_s, data)		
     end
 	end
