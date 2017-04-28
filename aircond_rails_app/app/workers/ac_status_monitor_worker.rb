@@ -2,7 +2,6 @@ class AcStatusMonitorWorker
   include Sidekiq::Worker
 
   def perform(*args)
-    # send specific state to specifc aircond
     firebase = Firebase::Client.new("https://nextaircon-6d849.firebaseio.com")
         
     Aircond.all.each do |aircond|

@@ -6,20 +6,24 @@ class User < ApplicationRecord
 	  }
   has_many :authentications, :dependent => :destroy
 
-  @@facebook = false
+  @@oauth = false
 
   def self.create_with_auth_and_hash(authentication, auth_hash)
-      user = User.create!(email: auth_hash["info"]["email"])
-      user.authentications << (authentication)      
-      return user
+      if auth_hash["info"]["email"].match(/[^@]+@nextacademy.com\z/)
+        user = User.create!(email: auth_hash["info"]["email"])
+        user.authentications << (authentication)      
+        return user
+      else
+        return nil
+      end
   end
 
-  def self.facebook_sign_up?(bool)
-    @@facebook = bool
+  def self.oauth_sign_up?(bool)
+    @@oauth = bool
   end
 
   def password_optional?
-      true if @@facebook == true
+      true if @@oauth == true
   end
 end
 
