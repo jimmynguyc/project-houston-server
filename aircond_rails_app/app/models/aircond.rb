@@ -89,7 +89,16 @@ class Aircond < ApplicationRecord
     response = Unirest.post(self.device.url + '/set_id.py',parameters:{id:self.id})
   end
 
-
+  def formatted_timer(status,t_format=nil)
+    case status
+    when "ON"
+      output = Time.zone.parse(self.timer_on.to_s)
+    when "OFF"
+      output = Time.zone.parse(self.timer_off.to_s)
+    end
+    output = output.strftime('%H:%M') if t_format == 'strf' && !output.nil?
+    return output
+  end
 
   def image_new(attribute)
   	value = self.send(attribute)

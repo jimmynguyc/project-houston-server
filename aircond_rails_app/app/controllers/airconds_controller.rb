@@ -25,9 +25,7 @@ class AircondsController < ApplicationController
 	end
 
 	def edit
-
 		generate_selection(@aircond.mode)
-		@current_timer = Time.zone.parse(@aircond.timer.to_s)
 		@current_time= Time.zone.now
 		respond_to do |format|
 			format.html {}
@@ -39,7 +37,6 @@ class AircondsController < ApplicationController
 	end
 
 	def update
-			@current_timer = Time.zone.parse(@aircond.timer.to_s)
 			@current_time= Time.zone.now
 			@aircond.update(alias:aircond_params[:alias]) if aircond_params.keys.include? "alias"
 			cmd = decipher_command(aircond_params)
@@ -60,6 +57,7 @@ class AircondsController < ApplicationController
 			else
 				flash[:warning] = "Invalid command signal"
 			end
+
 			respond_to do |format|
 				format.html {
 					redirect_to @path if @path == root_path
@@ -78,10 +76,11 @@ class AircondsController < ApplicationController
 
 	def timer_set
 		#sets the job for timer to execute
-		trigger_time = Time.zone.parse(params.permit![:aircond][:timer])
-		job = Sidekiq::Cron::Job.new(name:"AcTimer worker - #{@aircond.alias}", cron: " #{trigger_time.min} #{trigger_time.hour} * * 1-5 #{Time.zone.name}", class:'AcTimerWorker', args:{aircond_id:@aircond.id,status:params[:aircond][:status]})
+		timer_type = "timer_#{params[:aircond][:status].downcase}"
+		trigger_time = Time.zone.parse(params.permit![:aircond][timer_type.to_sym])
+		job = Sidekiq::Cron::Job.new(name:"AcTimer worker - #{@aircond.alias} - #{timer_type}", cron: " #{trigger_time.min} #{trigger_time.hour} * * 1-5 #{Time.zone.name}", class:'AcTimerWorker', args:{aircond_id:@aircond.id,status:params[:aircond][:status]})
 		if job.save
-			@aircond.update(timer:Time.zone.local_to_utc(trigger_time))
+			@aircond.update(timer_type.to_sym =>Time.zone.local_to_utc(trigger_time))
 			redirect_to root_path
 		else
 			flash[:warning] = 'Invalid Job'
