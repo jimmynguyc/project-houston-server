@@ -73,6 +73,7 @@ GEM
     capistrano-rails (1.2.3)
       capistrano (~> 3.1)
       capistrano-bundler (~> 1.1)
+    classnames-rails (2.1.5)
     clearance (1.16.0)
       bcrypt
       email_validator (~> 1.4)
@@ -315,6 +316,7 @@ DEPENDENCIES
   byebug
   capistrano (~> 3.6)
   capistrano-rails (~> 1.2)
+  classnames-rails
   clearance
   coffee-rails (~> 4.2)
   factory_girl

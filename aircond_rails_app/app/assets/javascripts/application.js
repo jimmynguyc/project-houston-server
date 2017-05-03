@@ -12,8 +12,34 @@
 //
 //= require jquery
 //= require jquery_ujs
-
+//= require bootstrap
+//= require propeller
+//= require jquery.masonry.min
+//= require moment-with-locales
+//= require bootstrap-datetimepicker
+//= require classnames
 //= require react
 //= require react_ujs
 //= require components
-//= require_tree .
+
+// let toolTipInit = () => {
+//   $('[data-toggle="tooltip"]').tooltip()
+// }
+
+// let timerInit = () => {
+
+//   $('#on-timepicker').datetimepicker({
+//     format: 'LT',
+//     defaultDate: '1/1/2017 8:00'
+//   });
+
+//   $('#off-timepicker').datetimepicker({
+//     format: 'LT',
+//     defaultDate: '1/1/2017 21:00'
+//   });
+// }
+
+// $(document).ready(function() {
+//   toolTipInit();
+//   timerInit();
+// })

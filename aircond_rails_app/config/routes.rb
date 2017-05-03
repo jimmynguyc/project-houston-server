@@ -25,6 +25,8 @@ mount Sidekiq::Web => '/sidekiq'
   end
 
 
+  get '/react_test' => 'users#react_test'
+
 
   post '/firebase_update/:id' => 'airconds#update_website_from_firebase', as: :firebase_update
   resources :aircond_groups, only: [:create,:destroy,:index]

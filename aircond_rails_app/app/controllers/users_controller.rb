@@ -5,4 +5,7 @@ class UsersController < Clearance::UsersController
     @aircond_groups = AircondGroup.not_empty
 	end
 
+  def react_test
+  end
+
 end
