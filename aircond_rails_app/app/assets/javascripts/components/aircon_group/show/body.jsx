@@ -6,7 +6,7 @@ class AirconGroupShowBody extends React.Component {
       <div id="aircon-group-show-body">
         {
           aircons.map( (aircon) => {
-            return(<CardContainer aircon={aircon} />)
+            return(<CardContainer aircon={aircon} key={`aircon-${aircon.id}`} />)
           })
         }
       </div>

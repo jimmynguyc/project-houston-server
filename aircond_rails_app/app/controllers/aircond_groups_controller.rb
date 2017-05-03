@@ -8,7 +8,8 @@ class AircondGroupsController < ApplicationController
   end
 
   def show
-    @aircond_group = AircondGroup.find(params[:id]).includes(:airconds)
+    @aircond_groups = AircondGroups.includes(:airconds).all
+    @aircond_group = AircondGroup.includes(:airconds).find(params[:id])
   end
 
 

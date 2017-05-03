@@ -16,7 +16,7 @@ class AircondGroup < ApplicationRecord
     elsif length == 12
       length =6
     end
-          
+
     return length
   end
 
@@ -37,8 +37,18 @@ class AircondGroup < ApplicationRecord
   # def update_firebase
   #   firebase = Firebase::Client.new("https://nextaircon-6d849.firebaseio.com")
   #   data = self.slice(:title)
-  #   firebase.update('/aircond_group/'+self.id.to_s, data)    
+  #   firebase.update('/aircond_group/'+self.id.to_s, data)
   # end
+
+  def as_json(opts = {})
+    return(
+      {
+        id: id,
+        title: title,
+        airconds: airconds
+      }
+    )
+  end
 end
 
 

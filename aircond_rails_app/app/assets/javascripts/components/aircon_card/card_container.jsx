@@ -1,12 +1,14 @@
 class CardContainer extends React.Component {
   constructor(props) {
     super(props)
+    const {aircon} = this.props;
+
     this.state = {
-      power: this.props.aircon.power,
-      temp: this.props.aircon.temp,
-      mode: this.props.aircon.mode,
-      onTime: this.props.aircon.time,
-      offTime: this.props.aircon.offtime,
+      power: aircon.status,
+      temp: aircon.temperature,
+      mode: aircon.mode.toLowerCase(),
+      onTime: '8:00',
+      offTime: '21:00',
       timeOut: null,
       isRequesting: false
     }
