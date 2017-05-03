@@ -1,12 +1,12 @@
 class AirconGroupShow extends React.Component {
 
   render(){
-    const { aircon_group } = this.props;
-    const { airconds } = aircon_group;
+    const { airconGroup } = this.props;
+    const { airconds } = airconGroup;
 
     return(
       <div id="aircon-group-show-container">
-        <AirconGroupShowHeader airconGroup={ aircon_group } />
+        <AirconGroupShowHeader airconGroup={ airconGroup } />
         <AirconGroupShowBody aircons={ airconds } />
       </div>
     )

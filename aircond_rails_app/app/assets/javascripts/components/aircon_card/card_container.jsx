@@ -76,10 +76,6 @@ class CardContainer extends React.Component {
       {'hide-appear': !this.state.isRequesting}
     )
 
-    console.log(`----- rendering ${this.props.title} -----`)
-    console.log(this.state)
-    console.log(`----- ----- -----`)
-
     return (
       <div className="card-container">
         <div className={cardClass}>
@@ -87,7 +83,7 @@ class CardContainer extends React.Component {
             Sending Signal...
           </div>
           <CardHeader
-            title={this.props.aircon.title}
+            title={this.props.aircon.alias}
             power={this.state.power}
             powerToggleHandler={this.powerToggleHandler} />
           <CardMode

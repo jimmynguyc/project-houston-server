@@ -4,11 +4,13 @@ class AirconGroupShowBody extends React.Component {
 
     return(
       <div id="aircon-group-show-body">
-        {
-          aircons.map( (aircon) => {
-            return(<CardContainer aircon={aircon} key={`aircon-${aircon.id}`} />)
-          })
-        }
+        <div className="flex-container">
+          {
+            aircons.map( (aircon) => {
+              return(<CardContainer aircon={aircon} key={`aircon-${aircon.id}`} />)
+            })
+          }
+        </div>
       </div>
     )
   }
