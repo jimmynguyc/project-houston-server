@@ -25,6 +25,12 @@ class AirconGroupIndexTabs extends React.Component {
                 />)
             })
           }
+          <li role="presentation" className="pull-right">
+            <a href="/airconds/new">Add Aircon</a>
+          </li>
+          <li role="presentation" className="pull-right">
+            <a href="#">Mobile Apps</a>
+          </li>
         </ul>
       </div>
     )
