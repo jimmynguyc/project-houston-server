@@ -2,11 +2,11 @@ class CardContainer extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      power: this.props.power,
-      temp: this.props.temp,
-      mode: this.props.mode,
-      onTime: this.props.ontime,
-      offTime: this.props.offtime,
+      power: this.props.aircon.power,
+      temp: this.props.aircon.temp,
+      mode: this.props.aircon.mode,
+      onTime: this.props.aircon.time,
+      offTime: this.props.aircon.offtime,
       timeOut: null,
       isRequesting: false
     }
@@ -21,10 +21,6 @@ class CardContainer extends React.Component {
   componentDidMount() {
     $('[data-toggle="tooltip"]').tooltip()
   }
-  // componentDidUpdate(prevProps, prevState) {
-  //   clearTimeout(this.state.timeOut)
-  //   this.state.timeOut = setTimeout(this.sendSignal, 1000);
-  // }
 
   restartTimer() {
     clearTimeout(this.state.timeOut)
@@ -89,8 +85,8 @@ class CardContainer extends React.Component {
             Sending Signal...
           </div>
           <CardHeader
-            title={this.props.title}
-            power={this.state.power} 
+            title={this.props.aircon.title}
+            power={this.state.power}
             powerToggleHandler={this.powerToggleHandler} />
           <CardMode
             power={this.state.power}
@@ -102,7 +98,7 @@ class CardContainer extends React.Component {
             power={this.state.power}
             mode={this.state.mode}
             fan={this.props.fan} />
-          <CardTimer 
+          <CardTimer
             onTime={this.state.onTime}
             offTime={this.state.offTime}
             power={this.state.power} />
