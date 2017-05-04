@@ -74,10 +74,10 @@ class CardMode extends React.Component {
         <div className="media-right">
           <div className="pmd-display3" id="card-temp-display">{this.props.temp}°C</div>
           <div className="btn-group btn-group-xs card-temp-btns" role="group">
-            <button className={tempButtonClass} onClick={this.tempUp} id="temp-up" disabled={!this.props.power || this.props.mode == 'cold'} type="button">
+            <button className={tempButtonClass} onClick={this.tempUp} id="temp-up" disabled={!this.props.power || this.props.mode == 'fan'} type="button">
               <i className="fa fa-chevron-up"></i>
             </button>
-            <button className={tempButtonClass} onClick={this.tempDown} id="temp-down" disabled={!this.props.power || this.props.mode == 'cold'} type="button">
+            <button className={tempButtonClass} onClick={this.tempDown} id="temp-down" disabled={!this.props.power || this.props.mode == 'fan'} type="button">
               <i className="fa fa-chevron-down"></i>
             </button>
           </div>
