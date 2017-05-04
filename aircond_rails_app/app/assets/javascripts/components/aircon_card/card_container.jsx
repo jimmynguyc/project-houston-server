@@ -77,7 +77,7 @@ class CardContainer extends React.Component {
         status: this.parsePower(this.state.power),
         temperature: this.state.temp,
         mode: this.state.mode.toUpperCase(),
-        fan_speed: this.state.fanSpeed
+        fan_speed: "1"
       }
     }
 
