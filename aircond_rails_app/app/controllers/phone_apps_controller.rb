@@ -73,6 +73,9 @@ class PhoneAppsController < ApplicationController
 		end
 	end
 
+	def oauth_sign_in
+	end
+
 	private
 	def phone_app_params
 		params.require(:phone_app).permit('user_name','password')

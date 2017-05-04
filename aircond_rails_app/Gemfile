@@ -49,3 +49,4 @@ gem 'rails_12factor'
 gem 'redis'
 
 gem 'paper_trail'
+gem 'will_paginate', '~> 3.1.0'

@@ -1,17 +1,16 @@
   <div style = 'border-top-style:solid'>
-    <h1>Timer</h1>
-        <%formatted_timer_value = nil%>
-        <% formatted_timer_value = @current_timer.strftime('%H:%M') if !@current_timer.nil?%>
+    <h1><%= timer_input %>-Timer</h1>
         <%=form_for @aircond, url:timer_set_path(@aircond) do |f|%>
-          <%=f.time_field :timer, value: formatted_timer_value,class:'form-control right_align',style:'width:120px;'%>
-          <%=f.select :status, Aircond.statuses.keys,{},class:'form-control right_align',style:'width:120px'%>
+          <%=f.time_field "timer_#{timer_input.downcase}".to_sym, value: @aircond.formatted_timer(timer_input,'strf'),class:'form-control right_align',style:'width:120px;'%>
+          <%=f.hidden_field :status, value: timer_input%>
           <%=f.submit "Set Timer",class:"btn btn-primary submit-btn"%>
       <%end%>
 
       <div style = 'float:right'><span >Current Timer  :</span>
-        <% if !@current_timer.nil?%>
+        <% current_timer = @aircond.formatted_timer(timer_input) %>
+        <% if !current_timer.nil?%>
           <div id=current_timer style = 'float:right'>
-            <span id=hour><%= "#{@current_timer.hour}".rjust(2,'0')%></span>:<span id=min><%="#{@current_timer.min}".rjust(2,'0')%></span>:<span id=sec><%="#{@current_timer.sec}".rjust(2,'0')%></span>
+            <span id=hour><%= "#{current_timer.hour}".rjust(2,'0')%></span>:<span id=min><%="#{current_timer.min}".rjust(2,'0')%></span>:<span id=sec><%="#{current_timer.sec}".rjust(2,'0')%></span>
           </div>
         <%else%>
           <div> No Timer Set</div>
