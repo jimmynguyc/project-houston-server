@@ -46,7 +46,7 @@ class AircondsController < ApplicationController
 			if validate_AC_controls(cmd)
 				if @aircond.check_device_status
 					if @aircond.update(aircond_params)
-            render json: { aircond: @aircon }
+            render json: { aircond: @aircond }
             return
 					else
 						@error = "Aircond state was not change. Remains as #{@aircond.get_state[:status]}"
