@@ -20,6 +20,12 @@ class CardContainer extends React.Component {
       case 'OFF':
         return false
         break;
+      case true:
+        return "ON"
+        break;
+      case false:
+        return "OFF"
+        break;
     }
   }
 
@@ -68,7 +74,7 @@ class CardContainer extends React.Component {
 
     const data = {
       aircond: {
-        status: this.state.power,
+        status: this.parsePower(this.state.power),
         temperature: this.state.temp,
         mode: this.state.mode.toUpperCase()
       }
