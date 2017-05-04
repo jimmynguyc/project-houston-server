@@ -46,19 +46,19 @@ class AircondsController < ApplicationController
 			if validate_AC_controls(cmd)
 				if @aircond.check_device_status
 					if @aircond.update(aircond_params)
-						flash[:notice] = "Aircond state was successfuly changed. Mode: #{@aircond[:mode]},Temperature: #{@aircond[:temperature]}, Fan Speed : #{@aircond[:fan_speed]}"
-						@path = root_path
+            render json: { aircond: @aircon }
+            return
 					else
-						flash[:warning] = "Aircond state was not change. Remains as #{@aircond.get_state[:status]}"
+						@error = "Aircond state was not change. Remains as #{@aircond.get_state[:status]}"
 					end
 				else
-					flash[:warning] = 'Raspberry Pi might not be on.'
+					@error = 'Raspberry Pi might not be on.'
 				end
 			else
-				flash[:warning] = "Invalid command signal"
+				@error = "Invalid command signal"
 			end
 
-      render json: @aircond
+      render status: :bad_request, json: { error: @error }
 	end
 
 	def assign_group

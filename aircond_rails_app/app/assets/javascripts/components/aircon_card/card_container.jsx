@@ -96,6 +96,10 @@ class CardContainer extends React.Component {
       }.bind(this),
       complete: e => {
         this.setState({isRequesting: false})
+      },
+      error: e => {
+        console.log("Error")
+        console.log(e)
       }
     })
   }
