@@ -2,45 +2,24 @@
 <html>
   <head>
     <title>ProjectHoustonServer</title>
-  <script src="https://www.gstatic.com/firebasejs/3.6.5/firebase.js"></script>
-
-  <script>
-    var config = {
-      databaseURL: "https://nextaircon-6d849.firebaseio.com",
-    };
-    firebase.initializeApp(config);
-  </script>
     <%= csrf_meta_tags %>
-    <%= stylesheet_link_tag 'https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.css' %>
-    <%= javascript_include_tag 'https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.js'%>
+    <script src="https://www.gstatic.com/firebasejs/3.6.5/firebase.js"></script>
+    <script>
+      var config = {
+        databaseURL: "https://nextaircon-6d849.firebaseio.com",
+      };
+      firebase.initializeApp(config);
+    </script>
 
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400" rel="stylesheet">
+    
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>	
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <script
-      src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"
-      integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E="
-      crossorigin="anonymous"></script>
       
   </head>
 
   <body >
-
-  	<%= render '/layouts/navbar'%>
-    <div class=body_border>
-      <div class = true_body>
-        <div class="container" style = 'width:100%'>
-          <div class="row">
-            <div class="col-sm-1 side-element" style = 'text-align : right'>
-            </div>
-            <div class="col-sm-10 central-page" style='border-style: solid; padding: 20px'>
-             <%= yield %>   
-             </div>
-          </div>
-
-        </div>
-      </div>
-    </div> 
-    <div class ='footer'></div>
+  	<%# render '/layouts/navbar'%>
+    <%= yield %>
   </body>
 </html>

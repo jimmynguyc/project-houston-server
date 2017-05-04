@@ -5,8 +5,8 @@ class Aircond < ApplicationRecord
   belongs_to :aircond_group,  optional: true
 	belongs_to :aircond_state,  optional: true
   has_paper_trail
-	before_update :check_state
-	after_save :update_firebase
+	# before_update :check_state
+	# after_save :update_firebase
   scope :by_aircond_group,  -> (ac_grp_id){where('aircond_group_id =  ?', ac_grp_id)}
   scope :by_unassigned_aircond_group,  -> {where('aircond_group_id IS NULL')}
   
@@ -33,47 +33,47 @@ class Aircond < ApplicationRecord
 	def get_state
 		raspi = self.device
 		path = raspi.url + "/state.py"
-		response = Unirest.get(path,parameters:{access_token:raspi.access_token}) 
+		# response = Unirest.get(path,parameters:{access_token:raspi.access_token}) 
 		#assumes that receive a hash {status:"ON"}
-		return {status:response.body.strip}	
+		return {status:true}	
 	end
 
 	def send_signal(command)
 		raspi = self.device
 		path = raspi.url + "/state.py"
     params = {access_token:raspi.access_token, command:command}
-		response = Unirest.post(path,parameters:params)
+		# response = Unirest.post(path,parameters:params)
     
 		check_power_status(self.changes['status'][1]) if self.changes.keys.include?(:status) && !self.changes[key].nil?
 	end
 
-	def update_firebase
-    if from_firebase == false
-  		firebase = Firebase::Client.new("https://nextaircon-6d849.firebaseio.com")
-  		data = self.slice(:alias,:temperature,:mode,:fan_speed,:aircond_group_id)
-  		firebase.update('/airconds/'+self.id.to_s, data)		
-    end
-	end
+	# def update_firebase
+ #    if from_firebase == false
+ #  		firebase = Firebase::Client.new("https://nextaircon-6d849.firebaseio.com")
+ #  		data = self.slice(:alias,:temperature,:mode,:fan_speed,:aircond_group_id)
+ #  		firebase.update('/airconds/'+self.id.to_s, data)		
+ #    end
+	# end
 
-	def check_state
-    if from_firebase == false
-  		response = send_signal(get_command) if !(self.changes.keys & ["status","temperature","mode","fan_speed"]).empty?
-      throw :abort if response == false 
-    end
-	end
+	# def check_state
+ #    if from_firebase == false
+ #  		response = send_signal(get_command) if !(self.changes.keys & ["status","temperature","mode","fan_speed"]).empty?
+ #      throw :abort if response == false 
+ #    end
+	# end
 
 	def check_power_status(arg)	
 		get_state[:status] == arg
 	end
 
 	def check_device_status
-		begin
-			Unirest.get(self.device.url)
-		rescue Errno::EHOSTUNREACH
-			false
-		else
+		# begin
+		# 	Unirest.get(self.device.url)
+		# rescue Errno::EHOSTUNREACH
+		# 	false
+		# else
 			true
-		end
+		# end
 	end
 
 	def get_command
@@ -86,7 +86,7 @@ class Aircond < ApplicationRecord
 	end
 
   def set_id
-    response = Unirest.post(self.device.url + '/set_id.py',parameters:{id:self.id})
+    # response = Unirest.post(self.device.url + '/set_id.py',parameters:{id:self.id})
   end
 
 
