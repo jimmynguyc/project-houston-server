@@ -105,6 +105,23 @@ class CardContainer extends React.Component {
     })
   }
 
+  componentWillMount(){
+    const path = "airconds/" + this.props.aircon.id
+
+    const firebaseRef = firebase.database().ref(path)
+    firebaseRef.on('value', function(snapshot){
+      if (snapshot.val() != null) {
+        const aircon = snapshot.val()
+        // only set power state from firebase at the moment
+        this.setState({power: this.parsePower(aircon.status)})
+      }
+    }.bind(this))
+    this.setState({firebaseRef: firebaseRef})
+  }
+
+  componentWillUnmount(){
+    this.state.firebaseRef.off()
+  }
 
   render() {
     let cardClass = classNames(
@@ -149,19 +166,3 @@ class CardContainer extends React.Component {
     )
   }
 }
-
-
-// class CardContainer extends React.Component {
-//   render() {
-//     return (
-//       <div className="pmd-card pmd-card-default pmd-z-depth pmd-card-media-inline card">
-//         <CardHeader />
-//         <CardMode />
-//         <CardTemperature />
-//         <CardFan />
-//         <CardTimer />
-//       </div>
-//     )
-//   }
-// }
-
