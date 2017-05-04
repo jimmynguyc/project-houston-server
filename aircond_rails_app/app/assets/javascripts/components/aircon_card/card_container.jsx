@@ -90,7 +90,7 @@ class CardContainer extends React.Component {
         this.setState({isRequesting: true})
       },
       success: e => {
-        debugger
+        console.log(e)
         clearTimeout(this.state.timeOut)
         newState = this.stateFromAircon(e)
         this.setState(newState)
