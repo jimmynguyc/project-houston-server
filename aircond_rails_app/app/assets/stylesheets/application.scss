@@ -1,7 +1,7 @@
 @import "bootstrap.css";
-@import 'custom-fonts';
-@import 'propeller.css';
 @import 'font-awesome.css';
+@import 'custom-fonts';
+@import 'propeller.min.css';
 @import 'pmd-datetimepicker.css';
 // @import 'tooltip.css';
 
@@ -59,7 +59,7 @@
 
 #on-timer-container,
 #off-timer-container {
-  height: 53px;  
+  height: 53px;
 }
 
 h5.up {
@@ -131,7 +131,7 @@ $cyan-1: #009688;
 body {
   font-family: 'Open Sans', sans-serif;
   font-weight: 400;
-  letter-spacing: 0.5px; 
+  letter-spacing: 0.5px;
   background: #f9f9f9;
 }
 
@@ -510,7 +510,7 @@ nav {
   visibility: visible;
   opacity: 1;
   -webkit-transform: scale(1);
-  transform: scale(1);  
+  transform: scale(1);
   -webkit-transition: -webkit-transform 0.4s, opacity 0.4s;
   transition: transform 0.4s, opacity 0.4s;
 }
