@@ -92,7 +92,7 @@ class CardContainer extends React.Component {
       success: e => {
         console.log(e)
         clearTimeout(this.state.timeOut)
-        newState = this.stateFromAircon(e)
+        newState = this.stateFromAircon(e.aircond)
         this.setState(newState)
       }.bind(this),
       complete: e => {
