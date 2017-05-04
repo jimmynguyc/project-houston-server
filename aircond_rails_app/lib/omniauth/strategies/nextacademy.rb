@@ -15,8 +15,9 @@ module OmniAuth
       # request.env['omniauth.auth']['info']
       info do
         {
-          email: raw_info["email"],
-          name: raw_info["first_name"]
+          :email => raw_info["email"],
+          :name => raw_info["first_name"] + ' ' + raw_info["last_name"],
+          :admin => raw_info["oauth_admin"]
         }
       end
 

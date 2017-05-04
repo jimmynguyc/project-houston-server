@@ -9,7 +9,7 @@ class User < ApplicationRecord
   @@oauth = false
 
   def self.create_with_auth_and_hash(authentication, auth_hash)
-      if auth_hash["info"]["email"].match(/[^@]+@nextacademy.com\z/)
+      if auth_hash["info"]["admin"]==true
         user = User.create!(email: auth_hash["info"]["email"])
         user.authentications << (authentication)      
         return user
