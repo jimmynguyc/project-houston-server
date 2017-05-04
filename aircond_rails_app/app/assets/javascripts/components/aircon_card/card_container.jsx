@@ -76,7 +76,8 @@ class CardContainer extends React.Component {
       aircond: {
         status: this.parsePower(this.state.power),
         temperature: this.state.temp,
-        mode: this.state.mode.toUpperCase()
+        mode: this.state.mode.toUpperCase(),
+        fan_speed: this.state.fanSpeed
       }
     }
 
