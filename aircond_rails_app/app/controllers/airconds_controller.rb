@@ -1,5 +1,5 @@
 
-class AircondsController < ApplicationController 
+class AircondsController < ApplicationController
 	before_action :set_aircond, only: [:edit,:update,:timer,:timer_set,:app_set,:update_website_from_firebase,:assign_group]
 	before_action only: [:app_set] {validate_app_token(params[:user_name],params[:app_token])}
 	skip_before_filter  :verify_authenticity_token, only: [:app_get_all,:app_set]
@@ -10,14 +10,14 @@ class AircondsController < ApplicationController
 	end
 
 	def create
-		device= Device.new(device_params)	
+		device= Device.new(device_params)
 		if device.save
 			ac = Aircond.new(device_id:device.id,alias:aircond_params[:alias])
 			ac.save
 			ac.set_id
 			ac.update(status:'OFF',mode:'COLD',fan_speed:'AUTO',temperature:20)
 			redirect_to root_path
-		else 
+		else
 			@aircond = Aircond.new
 			flash[:warning] = "#{device.errors.full_messages[0]}"
 			render :new
@@ -25,7 +25,6 @@ class AircondsController < ApplicationController
 	end
 
 	def edit
-
 		generate_selection(@aircond.mode)
 		@current_timer = Time.zone.parse(@aircond.timer.to_s)
 		@current_time= Time.zone.now
@@ -39,34 +38,28 @@ class AircondsController < ApplicationController
 	end
 
 	def update
-			@current_timer = Time.zone.parse(@aircond.timer.to_s)
-			@current_time= Time.zone.now
-			@aircond.update(alias:aircond_params[:alias]) if aircond_params.keys.include? "alias"
-			cmd = decipher_command(aircond_params)
-			generate_selection(@aircond.mode)
-			@path = :edit
+    @current_timer = Time.zone.parse(@aircond.timer.to_s)
+    @current_time= Time.zone.now
+    @aircond.update(alias:aircond_params[:alias]) if aircond_params.keys.include? "alias"
+    cmd = decipher_command(aircond_params)
+    generate_selection(@aircond.mode)
+    @path = :edit
 
-			if validate_AC_controls(cmd)
-				if @aircond.check_device_status
-					if @aircond.update(aircond_params) 
-						flash[:notice] = "Aircond state was successfuly changed. Mode: #{@aircond[:mode]},Temperature: #{@aircond[:temperature]}, Fan Speed : #{@aircond[:fan_speed]}"
-						@path = root_path
-					else
-						flash[:warning] = "Aircond state was not change. Remains as #{@aircond.get_state[:status]}"
-					end
-				else
-					flash[:warning] = 'Raspberry Pi might not be on.'
-				end
-			else
-				flash[:warning] = "Invalid command signal"
-			end
-			respond_to do |format|
-				format.html {
-					redirect_to @path if @path == root_path
-					redirect_to edit_aircond_path(@aircond) if @path == :edit
-				}
-				format.js {render 'signal.js.erb'}
-			end
+    if validate_AC_controls(cmd)
+      if @aircond.check_device_status
+        if @aircond.update(aircond_params)
+          flash[:notice] = "Aircond state was successfuly changed. Mode: #{@aircond[:mode]},Temperature: #{@aircond[:temperature]}, Fan Speed : #{@aircond[:fan_speed]}"
+          @path = root_path
+        else
+          flash[:warning] = "Aircond state was not change. Remains as #{@aircond.get_state[:status]}"
+        end
+      else
+        flash[:warning] = 'Raspberry Pi might not be on.'
+      end
+    else
+      flash[:warning] = "Invalid command signal"
+    end
+    render json: @aircond
 	end
 
 	def assign_group
@@ -96,10 +89,10 @@ class AircondsController < ApplicationController
 
 		@airconds.each do |ac|
 			ac.from_firebase = false
-			# ac.send_signal(params[:status]) if ac.get_state[:status] != params[:status] 
+			# ac.send_signal(params[:status]) if ac.get_state[:status] != params[:status]
 			# ac.update(status:ac.get_state[:status])
 			ac.update(status:params[:status])
-		end	
+		end
 
 		flash[:warning] = "Airconds with aliases  #{Aircond.where('status != ?', Aircond.statuses[params[:status]]).pluck(:alias)} were not successfully #{params[:status]}"
 		redirect_to root_path
@@ -111,20 +104,20 @@ class AircondsController < ApplicationController
 		render json:{fan_speed:@fan_speed_selection, temperature:@temperature_selection}
 	end
 
-	def app_set	
+	def app_set
 		PaperTrail.whodunnit = params[:user_name]
 		if validate_app_token(params[:user_name],params[:app_token])
 			cmd = decipher_command(aircond_params)
 			if validate_AC_controls(cmd)
 				if @aircond.check_device_status
 					if @aircond.check_power_status(aircond_params['status'])
-						@aircond.update(aircond_params) 
+						@aircond.update(aircond_params)
 						msg = "Aircond is already #{aircond_params[:status]}. Mode: #{aircond_params[:mode]},Temperature: #{aircond_params[:temperature]}, Fan Speed : #{aircond_params[:fan_speed]}"
-					elsif @aircond.update(aircond_params) 
+					elsif @aircond.update(aircond_params)
 						msg = "Aircond state was successfuly changed. Mode: #{aircond_params[:mode]},Temperature: #{aircond_params[:temperature]}, Fan Speed : #{aircond_params[:fan_speed]}"
 					else
 						msg = "Aircond state was not change. Remains as #{@aircond.get_state[:status]}"
-					end	
+					end
 				else
 					msg = 'Raspberry Pi might not be on.'
 				end
@@ -142,7 +135,7 @@ class AircondsController < ApplicationController
 	# 	arguments = aircond_params
 	# 	sanitize_params(arguments)
 	# 	@aircond.from_firebase = true
-	# 	@aircond.update(arguments) 
+	# 	@aircond.update(arguments)
 
 	# 	render json:{response:'Updated'}
 	# end
@@ -164,7 +157,7 @@ class AircondsController < ApplicationController
 
 	def sanitize_params(arguments)
 		arguments[:temperature] = arguments[:temperature].to_i if !arguments[:temperature].nil?
-		arguments[:fan_speed] = Aircond.fan_speeds[arguments[:fan_speed]]		
+		arguments[:fan_speed] = Aircond.fan_speeds[arguments[:fan_speed]]
 	end
 
 	def generate_selection(mode)
@@ -186,8 +179,8 @@ class AircondsController < ApplicationController
 		#ENSURE no invalid commands sent
 		previous_cmd = true
 		cmd_validity = true
-		commands.split(' ').each do |command| 
-			current_cmd = InfraredSignal.pluck(:command).include? command	
+		commands.split(' ').each do |command|
+			current_cmd = InfraredSignal.pluck(:command).include? command
 			cmd_validity = previous_cmd && current_cmd
 			previous_cmd = cmd_validity
 		end
@@ -195,7 +188,7 @@ class AircondsController < ApplicationController
 	end
 
 	def validate_app_token(user_name,token)
-		app_token = PhoneApp.find_by(user_name:user_name)	
+		app_token = PhoneApp.find_by(user_name:user_name)
 		token == app_token.access_token if !app_token.nil?
 	end
 end

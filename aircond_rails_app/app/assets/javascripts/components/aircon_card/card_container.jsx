@@ -3,21 +3,39 @@ class CardContainer extends React.Component {
     super(props)
     const {aircon} = this.props;
 
-    this.state = {
-      power: aircon.status,
-      temp: aircon.temperature,
-      mode: aircon.mode.toLowerCase(),
-      onTime: '8:00',
-      offTime: '21:00',
-      timeOut: null,
-      isRequesting: false
-    }
+    this.state = this.stateFromAircon(aircon)
 
     this.tempChangeHandler = this.tempChangeHandler.bind(this)
     this.modeChangeHandler = this.modeChangeHandler.bind(this)
     this.powerToggleHandler = this.powerToggleHandler.bind(this)
     this.sendSignal = this.sendSignal.bind(this)
     this.restartTimer = this.restartTimer.bind(this)
+  }
+
+  parsePower(powerStatus){
+    switch (powerStatus) {
+      case 'ON':
+        return true
+        break;
+      case 'OFF':
+        return false
+        break;
+    }
+  }
+
+  stateFromAircon(aircon) {
+    return(
+      {
+        power: this.parsePower(aircon.status),
+        temp: aircon.temperature,
+        mode: aircon.mode.toLowerCase(),
+        fanSpeed: aircon.fan_speed,
+        onTime: '8:00',
+        offTime: '21:00',
+        timeOut: null,
+        isRequesting: false
+      }
+    )
   }
 
   componentDidMount() {
@@ -45,16 +63,30 @@ class CardContainer extends React.Component {
   }
 
   sendSignal() {
+    const { aircon } = this.props;
+    const endpoint = window.location.origin + "/airconds/" + aircon.id
+
+    const data = {
+      aircond: {
+        status: this.state.power,
+        temperature: this.state.temp,
+        mode: this.state.mode.toUpperCase()
+      }
+    }
+
     $.ajax({
-      url: 'http://slowwly.robertomurray.co.uk/delay/1000/url/https://jsonplaceholder.typicode.com/users/1',
-      method: 'get',
+      url: endpoint,
+      method: 'PATCH',
+      data: data,
+      dataType: 'JSON',
       beforeSend: () => {
         this.setState({isRequesting: true})
       },
       success: e => {
         clearTimeout(this.state.timeOut)
-        console.log(e)
-      },
+        newState = this.stateFromAircon(e)
+        this.setState(newState)
+      }.bind(this),
       complete: e => {
         this.setState({isRequesting: false})
       }

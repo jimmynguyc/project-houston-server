@@ -9,6 +9,13 @@ class AircondGroupsController < ApplicationController
 
   def show
     @aircond_groups = AircondGroup.includes(:airconds).order(:created_at).all
+    @aircond_group = AircondGroup.find(params[:id])
+    respond_to do |format|
+      format.html
+      format.js {
+        render json: @aircond_group
+      }
+    end
   end
 
 
