@@ -15,7 +15,7 @@ mount Sidekiq::Web => '/sidekiq'
   get "/sign_in" => "sessions#new", as: "sign_in"
   delete "/sign_out" => "sessions#destroy", as: "sign_out"
   constraints Clearance::Constraints::SignedIn.new do
-    root to: 'users#dashboard', as: :admin_root
+    root to: 'aircond_groups#index', as: :admin_root
   end
 
   constraints Clearance::Constraints::SignedOut.new do

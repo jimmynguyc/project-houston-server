@@ -1,4 +1,8 @@
 class AircondGroupsController < ApplicationController
+  def index
+    @aircond_groups = AircondGroup.order(:create_at).all
+  end
+
   def create
     ac_grp = AircondGroup.new(set_ac_grp_params)
     ac_grp.save
@@ -8,14 +12,8 @@ class AircondGroupsController < ApplicationController
   end
 
   def show
-    @aircond_groups = AircondGroup.includes(:airconds).order(:created_at).all
     @aircond_group = AircondGroup.find(params[:id])
-    respond_to do |format|
-      format.html
-      format.js {
-        render json: @aircond_group
-      }
-    end
+    render json: @aircond_group
   end
 
 
