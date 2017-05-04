@@ -13,6 +13,8 @@ class AirconGroupIndex extends React.Component {
   }
 
   switchGroup(group){
+    this.setState({currentGroup: group})
+
     const endpoint = window.location.origin + "/aircond_groups/" + group.id
     $.ajax({
       url: endpoint,
@@ -22,7 +24,6 @@ class AirconGroupIndex extends React.Component {
         this.setState({currentGroup: e})
       }.bind(this)
     })
-
   }
 
   render(){
