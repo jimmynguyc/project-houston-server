@@ -1,0 +1,15 @@
+<%
+
+air1 = { title: 'Far-Left',  ontime: '8:00', offtime: '21:00', power: true, mode: "cool", temp: 26, fan: 0 }
+air2 = { title: 'Middle-Left', ontime: '8:15', offtime: '21:30', power: false, mode: "dry", temp: 23, fan: 0 }
+air3 = { title: 'Middle-Right', ontime: '9:00', offtime: '21:40', power: false, mode: "cool", temp: 21, fan: 0 }
+air4 = { title: 'Far-Right', ontime: '10:00', offtime: '20:50', power: true, mode: "cool", temp: 19, fan: 0 }
+
+%>
+
+<div class="flex-container">
+  <div style="padding: 0px 12px;"><%= react_component("CardContainer", air1) %></div>
+  <div style="padding: 0px 12px;"><%= react_component("CardContainer", air2) %></div>
+  <div style="padding: 0px 12px;"><%= react_component("CardContainer", air3) %></div>
+  <div style="padding: 0px 12px;"><%= react_component("CardContainer", air4) %></div>
+</div>

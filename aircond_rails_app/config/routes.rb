@@ -14,7 +14,6 @@ mount Sidekiq::Web => '/sidekiq'
 
   get "/sign_in" => "sessions#new", as: "sign_in"
   delete "/sign_out" => "sessions#destroy", as: "sign_out"
-  
   constraints Clearance::Constraints::SignedIn.new do
     root to: 'users#dashboard', as: :admin_root
   end
@@ -24,9 +23,11 @@ mount Sidekiq::Web => '/sidekiq'
   end
 
 
+  get '/react_test' => 'users#react_test'
+
 
   post '/firebase_update/:id' => 'airconds#update_website_from_firebase', as: :firebase_update
-  resources :aircond_groups, only: [:create,:destroy,:index]
+  resources :aircond_groups, only: [:create,:destroy,:index,:show]
 
   resources :devices
   resources :airconds do
@@ -39,7 +40,7 @@ mount Sidekiq::Web => '/sidekiq'
   patch 'aircond/:id/assign_group' => 'airconds#assign_group', as: :assign_group
 
   post '/app_state/:id' => 'airconds#app_set', as: :app_set
-  
+
   get '/auth/nextacademy/callback' => 'sessions#create_from_omniauth'
 
   resources :phone_apps, only: [:index]
